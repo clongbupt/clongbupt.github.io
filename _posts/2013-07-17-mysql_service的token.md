@@ -5,7 +5,7 @@ tags: mysql_service token cloudfoundry
 description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
 ---
 
-## 前面的话
+### 前面的话
 
 本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
 
@@ -22,7 +22,7 @@ description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移�
 
 
 
-## 一. mysql_gateway配置文件中的token
+### 一. mysql_gateway配置文件中的token
 
 通过config和opts层层转包, 在AsynchronousServiceGateway类中转化为@token, 关键点如下：
 
@@ -31,7 +31,7 @@ description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移�
 
 通过读取配置文件中的`service_auth_tokens`域, 转为config[:token] -> opts[:token] -> AsynchronousServiceGateway::@token
 
-## 二. CC请求时进行token验证
+### 二. CC请求时进行token验证
 
 每次CC的HTTP请求到达mysql_gateway时都必须对请求进行验证，关键点如下：
 
@@ -53,7 +53,7 @@ description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移�
     # /vcap-common-f7653c1140e6/lib/services/api/const.rb第4行
     GATEWAY_TOKEN_HEADER = 'X-VCAP-Service-Token'
 
-## 三. CC请求中的token生成
+### 三. CC请求中的token生成
 
 根据前面知道, CC在向gateway发送请求时需要在请求头中带上token值, 而该token值是CC从数据库中获取得到, 然后在创建HTTP请求时，将token塞到HTTP头中，并发送给gateway。这个流程的关键点如下：
 
@@ -61,7 +61,7 @@ description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移�
   2. [vcap-common] `lib/services/api/clients/service_gateway_client.rb` Services::Api::ServiceGatewayClient.initialize - 62行
   3. [vcap-common] `lib/services/api/async_requests.rb.rb` Services::Api::AsyncHttpRequest.new - 19行
 
-## 四. 数据库中的token生成
+### 四. 数据库中的token生成
 
 service的token数据位于Postgres数据库服务的cloud_controller数据库的service_auth_tokens数据表。一般每个service都会在该表中创建唯一的一条记录。正常的创建方式为通过cf客户端调用create-auth-token方法创建。
 
@@ -76,13 +76,13 @@ service的token数据位于Postgres数据库服务的cloud_controller数据库�
       token       text        # 我的数据记录为6kFfnLwOa0nVS0edoRCoGw==+|5beb4679
       salt      text          
 
-### 4.1 通过cf客户端创建
+#### 4.1 通过cf客户端创建
 
       cf target
       cf login
       cf create-service-auth-token --label mysql --provider core --token '0xdeadbeef'
 
-### 4.2 手动创建 (已废)
+#### 4.2 手动创建 (已废)
 
 手动创建的方式是在发现cf客户端创建之前, 通过阅读源代码进行的一种尝试, 需要修改CC的源代码才能成功创建服务。因为此处的token值为原文，没有生成密文, CC无法解密。
 
