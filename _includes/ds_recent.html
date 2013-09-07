@@ -16,12 +16,25 @@ var duoshuoQuery = {short_name:"tang-blog"};
 
 <div class="topic well-header">
   <h3>最近文章：</h3>
+</div>
+
+{% for post in site.posts limit:5 %}
+  <div class="topic">
+      <a class="time-backgroud"></a>
+      <span class="time-meta">{{ post.date | date: "%Y年%m月%d日" }}</span>
+      <div class="title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+      <p>{{ post.description }}</p>
+  </div>
+{% endfor %}
+
+  <!--
   <ul>
-  {% for post in site.posts limit:5 %}
+  {% for post in site.posts limit:10 %}
     <li>{{ post.date | date: "%Y-%m-%d" }} »»» <a href="{{ post.url }}">{{ post.title }}</a></li>
+
   {% endfor %}
   </ul>
-</div>
+  -->
 
 <!-- <div class="topic well-header">
   <h3>最近评论：</h3>
