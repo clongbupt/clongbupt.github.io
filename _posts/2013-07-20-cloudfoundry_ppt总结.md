@@ -1,3 +1,10 @@
+---
+layout: post
+category: cloudfoundry
+tags: cloudfoundry  community  ppt
+description: 本文主要对7月中旬vmware组织的cloudfoundry社区分享的ppt进行阅读和总结
+---
+
 cloud foundry ppt总结
 =====
 

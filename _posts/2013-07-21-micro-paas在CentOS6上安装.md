@@ -1,5 +1,9 @@
-micro-paas在CentOS 6上安装
-=====
+---
+layout: post
+category: cloudfoundry
+tags: micro-paas  centos  
+description: 本文主要是描述如何将单机版的CFV2移植到CentOS6上
+---
 
 参考资料
 

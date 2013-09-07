@@ -1,8 +1,8 @@
 ---
 layout: post
-category: 其他
+category: cloudfoundry
 tags: mysql_service token cloudfoundry
-description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
+description: 本文主要描述了mysql\_gateway的token流程, 主要是尝试将cloud\_controller与service\_gateway之间通信用到的token按流程进行分析
 ---
 
 ### 综述

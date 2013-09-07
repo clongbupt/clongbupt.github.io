@@ -1,3 +1,10 @@
+---
+layout: post
+category: cloudfoundry
+tags: cloudfoundry  monitoring
+description: This article mainly focus on monitoring on cloudfoundry ng.
+---
+
 monitoring on cloudfoundry
 ===
 
