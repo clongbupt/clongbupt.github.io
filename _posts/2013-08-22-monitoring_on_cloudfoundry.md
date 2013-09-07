@@ -1,6 +1,6 @@
 ---
 layout: post
-category: cloudfoundry
+category: 云计算
 tags: cloudfoundry  monitoring
 description: This article mainly focus on monitoring on cloudfoundry ng.
 ---

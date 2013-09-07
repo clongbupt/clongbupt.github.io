@@ -1,6 +1,6 @@
 ---
 layout: post
-category: cloudfoundry
+category: 云计算
 tags: cloudfoundry  community  ppt
 description: 本文主要对7月中旬vmware组织的cloudfoundry社区分享的ppt进行阅读和总结
 ---

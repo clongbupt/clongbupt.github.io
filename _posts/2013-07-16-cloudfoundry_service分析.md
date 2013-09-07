@@ -1,6 +1,6 @@
 ---
 layout: post
-category: cloudfoundry
+category: 云计算
 tags: cloudfoundry service
 description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
 ---

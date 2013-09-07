@@ -1,6 +1,6 @@
 ---
 layout: post
-category: cloudfoundry
+category: 云计算
 tags: mysql_service token cloudfoundry
 description: 本文主要描述了mysql\_gateway的token流程, 主要是尝试将cloud\_controller与service\_gateway之间通信用到的token按流程进行分析
 ---

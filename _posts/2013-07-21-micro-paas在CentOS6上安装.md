@@ -1,6 +1,6 @@
 ---
 layout: post
-category: cloudfoundry
+category: 云计算
 tags: micro-paas  centos  
 description: 本文主要是描述如何将单机版的CFV2移植到CentOS6上
 ---
