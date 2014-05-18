@@ -1,12 +1,12 @@
-name: Your New Jekyll Site
-description: Blogging about stuffs
-meta_description: "Your New Jekyll Site, Blogging about stuffs"
+name: Clong 的博客
+description: 记录发生在身边的点滴小事。
+meta_description: "Clong的博客，记录发生在身边的点滴小事"
 
 markdown: redcarpet
 pygments: true
 logo: false
-paginate: 15
+paginate: 5
 
 # Details for the RSS feed generator
-url:            'blog url'
-author:         'Your Name'
+url:            'clongbupt.github.io'
+author:         'clongbupt'
