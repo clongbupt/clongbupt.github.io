@@ -7,6 +7,15 @@ tags: cloudfoundry service
 description:本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
 
 
+=======
+category: 云计算
+tags: cloudfoundry service
+description: 本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
+---
+
+
+## 一. 综述
+>>>>>>> 2b782300ec6a4cd7cb03d502fd8771dd605b572f
 
 本文章主要源自于项目组在向`Cloud Foundry V2`版本移植的大进程中, 在`msyql service`移植上遇到的一些问题总结。
 
@@ -43,7 +52,7 @@ description:本文章主要源自于项目组在向`Cloud Foundry V2`版本移�
 ### 2.1. mysql_gateway的启动
 
 mysql_gateway的启动线路图，后面会对其进行详细解析，其中引用代码的格式如下：
-	
+
 	[项目名] - `简写文件路径` - 关键调用处 : 行数 | 关键调用处 : 行数
 
 简写的文件路径主要有：
@@ -55,23 +64,22 @@ mysql_gateway的启动线路图，后面会对其进行详细解析，其中引�
 
 	1. [serivce-release] - `bin/mysql_gateway` - Mysql::Gateway.new.start : 31行 | Mysql::Gateway : 13行
 	2. [vcap-services-base] - `lib/base/gateway` - Base::Gateway.start : 77行 | Base::Gateway.async_gateway_class : 131行
-	3. [vcap-services-base] - `lib/base/asynchronous_service_gateway` - AsynchronousServiceGateway.initialize : 17行 | super : 18行 
+	3. [vcap-services-base] - `lib/base/asynchronous_service_gateway` - AsynchronousServiceGateway.initialize : 17行 | super : 18行
 	4. [vcap-services-base] - `lib/base/base_async_gateway` - BaseAsynchronousServiceGateway.initialize : 35行 | setup : 40行
-	5. [vcap-services-base] - `lib/base/asynchronous_service_gateway` - AsynchronousServiceGateway.setup : 22行 | CatalogManagerV2.new : 47行(调用*a) | send_heartbeat : 55行 | get_current_catalog : 504行 | GatewayServiceCatalog.new(调用*b) : 98行 | @catalog_manager.update_catalog(*c) : 502行 | 
+	5. [vcap-services-base] - `lib/base/asynchronous_service_gateway` - AsynchronousServiceGateway.setup : 22行 | CatalogManagerV2.new : 47行(调用*a) | send_heartbeat : 55行 | get_current_catalog : 504行 | GatewayServiceCatalog.new(调用*b) : 98行 | @catalog_manager.update_catalog(*c) : 502行 |
 		*a [vcap-services-base] - `lib/base/catalog_manager_v2` - CatalogManagerV2.initialize : 16行
 		*b [vcap-services-base] - `lib/base/gateway_service_catalog` - to_hash : 10行
 		*c [vcap-services-base] - `lib/base/catalog_manager_v2` - update_catalog : 80行
-	6. [vcap-services-base] - `lib/base/http_handler` 
+	6. [vcap-services-base] - `lib/base/http_handler`
 	7. [cf-uaa-lib-master] - `lib/uaa/token_issuer`
 	8. [cf-uaa-lib-master] - `lib/uaa/http`
 
 * 第1点和第2点是`service_gateway`的启动位置, 此处有`Mysql::Gateway`的定义, 该类继承自Base::Gateway。主要进行如下工作：
-	
-	* 处理启动参数 - OptionParser 
+
+	* 处理启动参数 - OptionParser
 	* 读取配置文件 - @config  再由config生成opts
 	* 实例化provisioner对象，并放到opts中
 	* 实例化AsynchronousServiceGateway对象，该类间接继承自Sinatra::Base类，通过Thin服务器监听HTTP请求, 主要是CC的请求
-	* 
 
 * 第3点是`service_gateway`的核心代码，`asynchronous_service_gateway`主要进行如下工作：
 
@@ -130,7 +138,7 @@ on_provision事件在监听到`ProvisionRequest`后，解析请求发过来的ms
 				port: 3306
 				socket: /var/run/mysqld/mysqld.sock
 				user: root
-				pass: mysql 
+				pass: mysql
 				mysqldump_bin: /usr/bin/mysqldump
 				mysql_bin: /usr/bin/mysql
 

@@ -23,7 +23,7 @@ description: 本文主要描述了mysql\_gateway的token流程, 主要是尝试�
 
 代码描述难免含糊不清, 而大段的源代码截取又会让文章显得过于冗长。因此，我定义了代码描述的关键点，其格式为：
 
-  [项目名] - `简写文件路径` - 关键调用处 : 行数 
+  [项目名] - `简写文件路径` - 关键调用处 : 行数
 
 ### mysql_gateway配置文件中的token
 
@@ -43,7 +43,7 @@ description: 本文主要描述了mysql\_gateway的token流程, 主要是尝试�
       * [vcap-services-base] - `lib/base/base_async_gateway` - VCAP::Services::AsynchronousServiceGateway < BaseAsynchronousServiceGateway.validate_incoming_request : 113行
 
       * 在validate_incoming_request方法内的119行
-          
+
           unless auth_token && (auth_token == @token)
 
 `auth_token`参见其父类`base_async_gateway`的76行, 解析后该函数返回HTTP请求头的`HTTP_X_VCAP_Service_Token`字段, 具体如下：
@@ -69,7 +69,7 @@ description: 本文主要描述了mysql\_gateway的token流程, 主要是尝试�
 service的token数据位于Postgres数据库服务的cloud_controller数据库的service_auth_tokens数据表。一般每个service都会在该表中创建唯一的一条记录。正常的创建方式为通过cf客户端调用create-auth-token方法创建。
 
 数据库表结构如下
-    
+
       id        integer
       guid      text
       created_at    timestamp
@@ -77,7 +77,7 @@ service的token数据位于Postgres数据库服务的cloud_controller数据库�
       label     citext      # mysql服务为mysql
       provider    citext      # mysql服务为core
       token       text        # 我的数据记录为6kFfnLwOa0nVS0edoRCoGw==+|5beb4679
-      salt      text          
+      salt      text
 
 #### 1 通过cf客户端创建
 

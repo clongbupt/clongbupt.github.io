@@ -9,7 +9,7 @@ description: 本文主要对7月中旬vmware组织的cloudfoundry社区分享的
 cloud foundry ppt总结
 =====
 
-## CFv2 Intro  俞勇 vmware   
+## CFv2 Intro  俞勇 vmware
 
 [ppt地址](http://vdisk.weibo.com/s/KF4II/1374238063)
 
@@ -30,12 +30,12 @@ Roadmap路线图
 			|-- Latency    				延时
 			|-- Bandwidth  				带宽
 			|-- HTTP Reponse codes		HTTP响应码
-		
+
 
 #### 1.2 DEA
 
 一个有意思的等式：
-	
+
 	Droplet = app code + runtime + framework + container + scripts
 
 Roadmap路线图
@@ -45,7 +45,7 @@ Roadmap路线图
 
 参考资料， 补充： **李梦云**是国内CF Redhat移植的大神， 多关注他的github和博客
 
-		http://limengyun.com/cloudfoundry/dea.html 
+		http://limengyun.com/cloudfoundry/dea.html
 
 通过NATS，DEA同CC交互的例子
 
@@ -57,12 +57,12 @@ DEA启动会在NATS上发布消息
 CC启动一个Droplet实例时
 
 a. DEA监听NATS 对自己UUID的消息主题进行订阅
-	
+
 	DEA: NATS.subscribe(‘dea.#{UUID}.start’) {|msg|process_dea_start(msg)}
 	Send message with the topic of “dea.#{uuid}.start” to start this DEA
 
 b. CC通过NATS向DEA发布启动命令
-	
+
 	Cloud Controller: NATS.publish(‘dea.#{dea_id}.start’,json)
 	DEA get the msg, call process_dea_start(msg)
 	msg = droplet_id, instance_index, service, runtime
@@ -100,7 +100,7 @@ Org & Space & Users 机构 -> 空间 -> 用户 三层角色结构
 
 大致关系如下：
 
-	Org 
+	Org
 		|-- Domains
 			|-- Routes <--> Applications
 		|-- Spaces
@@ -111,7 +111,7 @@ Org & Space & Users 机构 -> 空间 -> 用户 三层角色结构
 #### 1.5 Customized domain
 
 	* 更新DNS的cname **具体方法?**
-	
+
 	* 通过调用cd命令可以将`route`和`domain`映射
 
 			cf map-domain somedomain.com
@@ -134,68 +134,68 @@ Org & Space & Users 机构 -> 空间 -> 用户 三层角色结构
 
 	* [BuildPacks List](https://devcenter.heroku.com/articles/third-party-buildpacks)
 	* [buildPack示例](https://github.com/cdan/cf-mono-buildpack)
-	* [CF的buildpack文档](http://docs.cloudfoundry.com/docs/using/deploying-apps/buildpacks.html) 
+	* [CF的buildpack文档](http://docs.cloudfoundry.com/docs/using/deploying-apps/buildpacks.html)
 
 开发示例
 
 探测 detect
 
-			#!/usr/bin/env ruby 
-			gemfile_path = File.join ARGV[0], "Gemfile" 
+			#!/usr/bin/env ruby
+			gemfile_path = File.join ARGV[0], "Gemfile"
 
-			if File.exist?(gemfile_path) 
-				puts "Ruby" 
-				exit 0 
-			else 
-				exit 1 
+			if File.exist?(gemfile_path)
+				puts "Ruby"
+				exit 0
+			else
+				exit 1
 			end
 
 编译 compile
 
-			#!/usr/bin/env ruby 
-			#sync output 
+			#!/usr/bin/env ruby
+			#sync output
 
-			$stdout.sync = true 
+			$stdout.sync = true
 
-			build_path = ARGV[0] 
-			cache_path = ARGV[1] 
+			build_path = ARGV[0]
+			cache_path = ARGV[1]
 
-			install_ruby 
+			install_ruby
 
-			private 
+			private
 
-			def install_ruby 
-				puts "Installing Ruby" 
-				# !!! build tasks go here !!! 
-				# download ruby to cache_path 
-				# install ruby 
+			def install_ruby
+				puts "Installing Ruby"
+				# !!! build tasks go here !!!
+				# download ruby to cache_path
+				# install ruby
 			end
 
 发布 release
 
 config_vars：
 
-			{ 
-				"config_vars" => {}, # environment variables that should be set 
-				"default_process_types" => {} # 
+			{
+				"config_vars" => {}, # environment variables that should be set
+				"default_process_types" => {} #
 			}.to_yaml
 
-default\_process\_types: 
+default\_process\_types:
 
-			{ 
-				"config_vars" => { "RACK_ENV" => "production" }, 
-				"default_process_types" => { "web" => "bundle exec rackup config.ru -p $PORT" } 
+			{
+				"config_vars" => { "RACK_ENV" => "production" },
+				"default_process_types" => { "web" => "bundle exec rackup config.ru -p $PORT" }
 			}.to_yaml
 
 Roadmap 路线图
 
-	* vFabric Import tool    ? 
+	* vFabric Import tool    ?
 	* Buildpack manager      buildPack管理器
 	* Enhanced caching       增强的缓存
 	* Version policy         版本管理策略
 
 
-#### 1.7 Service Connector (CLI) 
+#### 1.7 Service Connector (CLI)
 
 `service gateway` 提供了一个接口，既可以是本地的、自身的服务， 也可以是外部的第三方服务
 
@@ -206,7 +206,7 @@ Roadmap 路线图
 	* 广播service catalog
 	* 向service_node发布create/delete/bind/unbind的命令
 	* 向CC请求现存的服务实例和服务绑定情况, 并在本地做缓存  这个是存在内存中的  __外链__
-	* 孤儿服务管理  孤儿服务是指在node上申请成功，但在CC数据库中没有记录的服务实例 
+	* 孤儿服务管理  孤儿服务是指在node上申请成功，但在CC数据库中没有记录的服务实例
 	* SaaS marketplace gateway   SaaS市场网关
 
 RoadMap 路线图
@@ -226,7 +226,7 @@ Service Connector   ? TODO
 还有两个主要组件CC和UAA， PPT中也有涉及但篇幅不多
 
 UAA的功能
-	
+
 	Token Server   一般会在HTTP头中得到  TODO增加service的理解
 	ID Server (User management)
 	OAuth Scopes (Groups)
@@ -254,7 +254,7 @@ CC RoadMap
 
 cloudfoundry Enterprise 企业版即将推出 基于vSphere, 非常容易安装, 自带很多app
 
-## Cloudfoundry实践 - fishbuaa(李梦云) - 网易有道   
+## Cloudfoundry实践 - fishbuaa(李梦云) - 网易有道
 
 [ppt地址](http://vdisk.weibo.com/s/KF8sy/1374238526)
 
@@ -271,7 +271,7 @@ PPT中的内容不太多, 而且有较多内容与我们做过的工作重复，
 3. Idap 自定义的验证源   即 cloud foundry中的login-server组件
 
 4. web console 也是对官方的cfoundry进行封装, 同样基于sinatra框架， [console地址](https://github.com/limengyun2008/console)
-	
+
 			* 任务队列beanstalkd，解决部署问题
 			* 根据guid创建svn目录
 

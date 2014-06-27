@@ -12,7 +12,7 @@ monitoring on cloudfoundry
 ## Introduction
 
 When mentioned monitoring on cloudfoundry, there are serveral levels to take. For sure, we have to monitor each component of cloudfoundry. Then, we should think about the machine runtime info which surpports cloudfoundry. And last, we also have to take into consideration about monitoring all applications running on cloudfoundry. It can be classified like that:
-	
+
 	1. machine monitoring : memory usage / CPU utilization / disk size
 
 	2. component monitoring : component status / app statisics / user statisics
@@ -35,7 +35,7 @@ Based on those questions we can pick up those useful info and classify them. The
 
 	|-- Components
 
-		|-- basic info 
+		|-- basic info
 
 			|-- name
 
@@ -83,7 +83,7 @@ Based on those questions we can pick up those useful info and classify them. The
 
 			|-- instance
 
-			|-- space name 
+			|-- space name
 
 		|-- Users
 
@@ -132,22 +132,22 @@ Here is the source code of component: [click]()
 
 In this file, we first initialize a thin server to provide http protocol on two endpoint `/varz` and `/healthz`. Then, we will initialize a `Varz` object and invoke a function `update_varz` and it will get a dup of `safe hash` varz.  `Safe Hash` is a very important structure, which provides thread safety and only one varz for one component.
 
-We can use `VCAP::Component.varz[XX] = XXX` to set the value of safe hash varz. 
+We can use `VCAP::Component.varz[XX] = XXX` to set the value of safe hash varz.
 
 ### Nats Mechanism
 
 Using nats server we can subcribe channels to get many info among components. Such as request `vcap.component.discover` channel, we can get the address of accessing each components' varz.
 
-Here is some nats channel address. 
+Here is some nats channel address.
 
-[click](https://github.com/nkaviani/cloudfoundry-bluedocs) 
+[click](https://github.com/nkaviani/cloudfoundry-bluedocs)
 
 From this link, you can find all the nats channel and message sequence in cloudfoundry V1 and V2.
 
 ### Database Accessing
 
 For database accessing, we need one important thing, the database access address, usually it is like this:
-	
+
 	postgres://username:password@10.1.59.185/cloud_controller
 
 But it is not easy to get this info as security privacy.
@@ -163,7 +163,7 @@ This is an example we made on health manager V2. Beacause when we monitoring on 
 Here is the procedure:
 
 For health manager enhencement, we add a file named `user_info.rb` just in `lib` directory of health manager project. And we add three lines in health_manager.rb, which is :
-	
+
 	* Line27 require 'health_manager/user_info.rb'
 
 	* Line64 @user_info = UserInfo.new(@varz)
@@ -171,12 +171,12 @@ For health manager enhencement, we add a file named `user_info.rb` just in `lib`
 	* Line106 @user_info.start
 
 In `lib/user_info.rb` file, we wrote many small function to implement fetch user info and insert it into `varz` safe hash. Here is the details:
- 
+
 First, we connect nats server and request `vcap.component.discover` channel, and receive all the response, decode it, then we can get address of accessing each components' varz.
 
-	NATS.request("vcap.component.discover") 
+	NATS.request("vcap.component.discover")
 
-Second, we will access each varz endpoint via http request to fetch monitoring info. As we want get the database address, we just pick out `uaa` varz response using regular expression and find uaa database access address. 
+Second, we will access each varz endpoint via http request to fetch monitoring info. As we want get the database address, we just pick out `uaa` varz response using regular expression and find uaa database access address.
 
 	db = result[:data]["config"]["uaa"]["object"]["database"]
     db_ip_port = /^.*(\d+\.\d+\.\d+\.\d+:\d+).*$/.match(db["url"])[1]
