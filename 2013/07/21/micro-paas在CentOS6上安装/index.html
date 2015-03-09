@@ -27,7 +27,7 @@
 
 
 
-  <title> One_Method_to_Debug_Heartbeat_Cluster // clongbupt的小窝 </title>
+  <title> micro-paas 在 CentOS6 上安装 // clongbupt的小窝 </title>
 </head>
 
 <body>
@@ -98,7 +98,7 @@
           
           
             
-              One_Method_to_Debug_Heartbeat_Cluster
+              micro-paas 在 CentOS6 上安装
             
           
         </h1>
@@ -107,7 +107,7 @@
       <div class="post-meta">
           <span class="post-time">
             
-              发表于 2015-02-16
+              发表于 2013-07-20
             
           </span>
         
@@ -123,7 +123,111 @@
         
 
         
-          
+          <p>参考资料</p>
+<ul>
+<li><a href="https://github.com/youdao-cf/docs/tree/master/install" target="_blank" rel="external">有道CF组的CentOS 6安装文档</a></li>
+</ul>
+<h4 id="1-1_nats安装">1.1 nats安装</h4><p>build.rb步骤</p>
+<pre><code><span class="bullet">* </span>安装ruby   # 可以先尝试yum安装  而后尝试编译安装, 具体可以参考[<span class="link_label">网址</span>](<span class="link_url">https://github.com/limengyun2008/vcap/blob/yae/dev_setup/cookbooks/ruby/libraries/ruby_install.rb</span>)
+
+<span class="bullet">* </span>git clone http://git.ebcloud.com/paas-cf-v2/nats.git  # 自行寻找详细地址
+<span class="bullet">* </span>git checkout  #固定版本
+<span class="bullet">* </span>git submodule update --init   # 进行子模块更新
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 生成nats的配置文件
+
+<span class="keyword">*</span> ./bin/nats-server -d -c router.yml   <span class="comment"># 执行启动命令 -d命令是启动debug</span>
+</code></pre><h4 id="1-2_gorouter安装">1.2 gorouter安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> go语言环境    <span class="comment"># 推荐寻找yum安装的方式</span>
+
+<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/gorouter.git
+<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
+<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> ./bin/go install router/router   <span class="comment"># router构建</span>
+</code></pre><p>control.rb步骤</p>
+<pre><code>* 修改<span class="keyword">router</span>的配置文件
+
+* ./bin/<span class="keyword">router</span> -c <span class="keyword">router</span>.yml   <span class="comment"># 执行启动命令</span>
+</code></pre><h4 id="1-3_uaa安装">1.3 uaa安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> 安装java和maven环境
+
+<span class="keyword">*</span> 安装postgres数据库    <span class="comment"># 此处不推荐用yum安装, 安装的版本可能不对, 版本务必统一为9.2.4, 最好编译安装, 如果遇到问题再一起研究</span>
+<span class="keyword">*</span> 编译citext拓展  <span class="comment"># 这个CC数据库需要用到</span>
+
+<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/uaa.git
+<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
+<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> 删除bin/uaa里面的<span class="string">"-P vcap"</span>这一块，是对uaa启动代码进行hack
+<span class="keyword">*</span> 调整maven repo的位置
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 判断是否第一次执行
+    如果是 创建uaa数据库 并创建访问uaa数据库的root角色
+
+<span class="keyword">*</span> 修改uaa的配置文件
+
+<span class="keyword">*</span> bin/uaa   <span class="comment"># 执行启动命令</span>
+</code></pre><h4 id="1-4_cloud_controller安装">1.4 cloud_controller安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/cloud_controller_ng.git
+<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
+<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> 安装基础库，主要包括libxml2-dev libmysql libsqlite libpq 它们分别是xml/mysql/sqlte/postgres的ruby支持
+不过在redhat下面的支持库不是以lib为前缀， 尝试执行
+sudo yum -y install mysql-devel postgresql-devel sqlite-devel
+
+<span class="keyword">*</span> bundle install
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="comment">* 判断是否第一次执行</span>
+    如果是 创建<span class="keyword">CC</span>数据库 并创建访问<span class="keyword">CC</span>数据库的root角色
+
+<span class="comment">* 修改cloud_controller的配置文件</span>
+
+<span class="comment">* bin/cloud_controller   # 执行启动命令</span>
+</code></pre><h4 id="1-5_health_manager安装">1.5 health_manager安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/health_manager.git
+<span class="keyword">*</span> git checkout  <span class="comment"># 固定版本</span>
+
+<span class="keyword">*</span> bundle install
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 修改health_manager的配置文件
+
+<span class="keyword">*</span> 设置BUNDLE_GEMFILE的env
+<span class="keyword">*</span> ./health_manager   <span class="comment"># 执行启动命令 health_manager必须要到bin目录下执行, 不能通过bin/health_manager执行</span>
+</code></pre><h4 id="1-6_dea安装">1.6 dea安装</h4><p>build.rb步骤</p>
+<pre><code><span class="bullet">* </span>先安装warden 参考之前的ubuntu下的build和control   TODO  考虑平台问题debootstrap quota apparmor-profiles在CentOS下是什么？具体请参考[<span class="link_label">网址</span>](<span class="link_url">https://github.com/youdao-cf/docs/blob/master/install/warden.html.md</span>)
+
+<span class="bullet">* </span>git clone http://git.ebcloud.com/paas-cf-v2/dea_ng.git
+<span class="bullet">* </span>git checkout  #固定版本
+<span class="bullet">* </span>git submodule update --init   # 进行子模块更新
+
+<span class="bullet">* </span>bundle install  # 如果带false参数 表示当前项目下的Gemfile中的test/production等group不会被调用
+
+<span class="bullet">* </span>go/bin/go get launchpad.net/goyaml   # 这一步是干什么
+
+<span class="bullet">* </span>bundle exec rake dir<span class="emphasis">_server:install  # 安装directory_</span>server
+
+<span class="bullet">* </span>修改buildpack获取语言包的位置
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 修改dea的配置文件
+
+<span class="keyword">*</span> bin/dea config_file   <span class="comment"># 之前需要先启动warden directory_server</span>
+</code></pre><h4 id="1-7_service安装">1.7 service安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> 预先安装mysql    <span class="comment"># 可以先用yum安装, 再编译安装  不过得注意版本统一</span>
+<span class="keyword">*</span> 预先安装redis    <span class="comment"># 编译安装即可</span>
+
+<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/cf-services-release.git
+<span class="keyword">*</span> git checkout  <span class="comment"># 固定版本</span>
+<span class="keyword">*</span> git submodule update --init  <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> bundle install
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="bullet">* </span>修改mysql<span class="emphasis">_gateway 和 mysql_</span>node 的配置文件
+
+<span class="bullet">* </span>bin/mysql<span class="emphasis">_gateway config_</span>file
+<span class="bullet">* </span>bin/mysql<span class="emphasis">_node config_</span>file
+</code></pre>
         
 
       </div>
@@ -132,18 +236,30 @@
     
       <div class="post-footer">
         
+          <div class="post-tags">
+            
+              <a href="/tags/centos/">
+                #centos
+              </a>
+            
+              <a href="/tags/micro-paas/">
+                #micro-paas
+              </a>
+            
+          </div>
+        
 
         
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="../../../03/09/hello-world/">Hello World</a>
+                <a href="../../../08/05/uaa_varz相关/">Uaa Varz 相关</a>
               
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="../../../../2014/04/24/博客搭建架构/">博客搭建架构</a>
+                <a href="../../20/cloudfoundry_ppt总结/">Cloud Foundry PPT 总结</a>
               
             </div>
           </div>
@@ -222,7 +338,7 @@
 
     
       <div class="post-toc sidebar-panel-active">
-        
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1_nats安装"><span class="nav-number">1.</span> <span class="nav-text">1.1 nats安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2_gorouter安装"><span class="nav-number">2.</span> <span class="nav-text">1.2 gorouter安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3_uaa安装"><span class="nav-number">3.</span> <span class="nav-text">1.3 uaa安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4_cloud_controller安装"><span class="nav-number">4.</span> <span class="nav-text">1.4 cloud_controller安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5_health_manager安装"><span class="nav-number">5.</span> <span class="nav-text">1.5 health_manager安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6_dea安装"><span class="nav-number">6.</span> <span class="nav-text">1.6 dea安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7_service安装"><span class="nav-number">7.</span> <span class="nav-text">1.7 service安装</span></a></li></ol>
       </div>
     
   </div>

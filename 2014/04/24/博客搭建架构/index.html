@@ -27,7 +27,7 @@
 
 
 
-  <title> One_Method_to_Debug_Heartbeat_Cluster // clongbupt的小窝 </title>
+  <title> 博客搭建架构 // clongbupt的小窝 </title>
 </head>
 
 <body>
@@ -98,7 +98,7 @@
           
           
             
-              One_Method_to_Debug_Heartbeat_Cluster
+              博客搭建架构
             
           
         </h1>
@@ -107,7 +107,7 @@
       <div class="post-meta">
           <span class="post-time">
             
-              发表于 2015-02-16
+              发表于 2014-04-23
             
           </span>
         
@@ -123,7 +123,55 @@
         
 
         
-          
+          <p>记录重新设计博客的点滴。</p>
+<h2 id="前言">前言</h2><p>去年的这个时候搭了一个简陋的博客。因为太简陋，便没有更新。然后就计划着等有时间了，稍微搭理下。计划是一个下午搞定，不料进行的不太顺利，便有了这篇博客。</p>
+<h3 id="准备工作">准备工作</h3><ul>
+<li><p>Jekyll</p>
+</li>
+<li><p>github.io</p>
+</li>
+<li><p>Flatboot</p>
+</li>
+<li><p>代码高亮</p>
+</li>
+<li><p>留言</p>
+</li>
+<li><p>Grunt</p>
+</li>
+<li><p>Bower</p>
+</li>
+</ul>
+<h2 id="Jekyll">Jekyll</h2><p>Jekyll是一个Ruby gems，可以在本地对github pages进行开发、调试，非常方便。</p>
+<h3 id="安装">安装</h3><p>安装rbenv</p>
+<p>安装ruby</p>
+<p>安装jekyll</p>
+<pre><code>gem <span class="keyword">install</span> jekyll
+</code></pre><h3 id="使用">使用</h3><p>入门：</p>
+<p><code>jekyll new</code> 创建一个新的项目</p>
+<p><code>jekyll build</code> 对已存在的项目进行构建，主要是将yaml和md格式的文档转换成html</p>
+<p><code>jekyll serve</code> 启动内置服务器，实现本地网站的浏览</p>
+<p>进阶：</p>
+<p><code>jekyll serve -w</code>  加入 <code>-w</code> 命令，使其支持在运行的过程中热加载，一旦有更新，即刻反映到页面。</p>
+<h2 id="flatboot">flatboot</h2><p>Flatboot是对bootstrap做扁平化设计的一个前端框架。</p>
+<h2 id="Grunt">Grunt</h2><p>Grunt可以是静态资源的管理，非常适合只有纯静态资源的github-pages博客。</p>
+<h3 id="安装-1">安装</h3><ul>
+<li>安装Node</li>
+<li>安装NPM</li>
+<li>安装Grunt</li>
+</ul>
+<h3 id="使用-1">使用</h3><p><code>grunt init</code> 初始化，会生成<code>Gruntfile.json</code>文件</p>
+<p>在<code>Gruntfile.json</code>文件中配置对前端资源文件的处理，如JS、CSS文件的合并，压缩。定制控制命令</p>
+<p><code>grunt [command]</code>  运行对应的命令，完成相应操作。</p>
+<h2 id="Bower">Bower</h2><p>js库的管理器，通过简单的命令可以实现对项目中引入的JS库进行版本控制和管理。</p>
+<h3 id="安装-2">安装</h3><ul>
+<li>安装Node</li>
+<li>安装NPM</li>
+<li>安装Bower</li>
+</ul>
+<h3 id="使用-2">使用</h3><p><code>bower init</code> 初始化功能，主要是生成<code>bower.json</code>文件</p>
+<p><code>bower install</code> 读取<code>bower.json</code> 文件，根据其中的<code>dependencies</code>域安装项目所需JS库。</p>
+<p><code>.bowerrc</code>   配置<code>bower install</code>下载的js库的存放位置</p>
+
         
 
       </div>
@@ -137,13 +185,13 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="../../../03/09/hello-world/">Hello World</a>
+                <a href="../../../../2015/02/16/One-Method-to-Debug-Heartbeat-Cluster/">One_Method_to_Debug_Heartbeat_Cluster</a>
               
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="../../../../2014/04/24/博客搭建架构/">博客搭建架构</a>
+                <a href="../../../../2013/08/22/monitoring_on_cloudfoundry/">Monitoring on Cloud Foundry</a>
               
             </div>
           </div>
@@ -222,7 +270,7 @@
 
     
       <div class="post-toc sidebar-panel-active">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jekyll"><span class="nav-number">2.</span> <span class="nav-text">Jekyll</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flatboot"><span class="nav-number">3.</span> <span class="nav-text">flatboot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grunt"><span class="nav-number">4.</span> <span class="nav-text">Grunt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">4.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-1"><span class="nav-number">4.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bower"><span class="nav-number">5.</span> <span class="nav-text">Bower</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-2"><span class="nav-number">5.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-2"><span class="nav-number">5.2.</span> <span class="nav-text">使用</span></a></li></ol></li></ol>
       </div>
     
   </div>

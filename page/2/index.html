@@ -1,0 +1,671 @@
+<!doctype html>
+<html class="theme-next use-motion">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="../../vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="../../css/main.css?v=0.3.0rc5"/>
+
+
+    <meta name="description" content="一个不会煮面的码农的自留地" />
+
+
+
+
+
+    <link rel="shorticon icon" type="image/x-icon" href="../..//favicon.ico?v=0.3.0rc5" />
+
+
+
+
+  <title> clongbupt的小窝 </title>
+</head>
+
+<body>
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+    <a href="/" class="brand">
+        <span class="logo">
+          <i class="icon-logo"></i>
+        </span>
+        <span class="site-title">clongbupt的小窝</span>
+    </a>
+</h1>
+
+
+  <ul id="menu" class="menu">
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="../..//">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="../..//archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="../..//tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+            
+          
+
+          <div id="posts" class="posts-expand">
+            
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="../../2013/07/16/cloudfoundry_service分析/">
+                Cloud Foundry Service 分析
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+          <span class="post-time">
+            
+              发表于 2013-07-15
+            
+          </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h2 id="一-_综述">一. 综述</h2><p>本文章主要源自于项目组在向<code>Cloud Foundry V2</code>版本移植的大进程中, 在<code>msyql service</code>移植上遇到的一些问题总结。</p>
+<p>由于V2版本更新迭代过快, 先列出我阅读的代码版本信息, 格式为<a href="下载地址">项目名</a> - 版本号(github上提交版本前6位)：</p>
+<pre><code><span class="bullet">* </span>[<span class="link_label">cloud_controller_ng</span>](<span class="link_url">https://www.github.com/cloudfoundry</span>) - d7e51a
+<span class="bullet">* </span>[<span class="link_label">service-release</span>](<span class="link_url">https://www.github.com</span>) - 15d8f2
+<span class="bullet">* </span>[<span class="link_label">    service-base</span>](<span class="link_url">https://www.github.com</span>) - ff9932
+</code></pre><h2 id="二-_service综述">二. service综述</h2><p>服务一直以来在PaaS平台上占据了很重要的位置，通过简单配置，用户便可以快速地部署应用，这也是PaaS平台最吸引人的地方之一。从分类上说，<code>Cloud Foundry V2</code>中的service主要有：</p>
+<pre><code><span class="bullet">1. </span>数据库服务(包括关系型和nosql)，常见的如：MySQL/Postgres/Redis/Mongodb等
+<span class="bullet">2. </span>存储类服务，比如：vblob/filesystem
+<span class="bullet">3. </span>其他服务，比如：rabbitMQ/Memcached等
+<span class="bullet">4. </span>第三方服务，用户自主开发和配置
+</code></pre><p>从功能上看，service的结构通常包含两个组件：<code>service gateway</code>和<code>service node</code>。它们两者的功能分别叙述如下：</p>
+<pre><code>* <span class="escape">`s</span>ervice gateway<span class="escape">`主</span>要是广播其提供的服务(advertise service offerings)，并接收来自<span class="escape">`c</span>loud_controller<span class="escape">`的</span>控制命令, 主要有四种：创建服务实例，删除服务实例，绑定服务实例和解绑服务实例。<span class="escape">`s</span>ervice gateway<span class="escape">`同</span>样会将从<span class="escape">`C</span>C(cloud_controller)<span class="escape">`发</span>送出来的命令传递给<span class="escape">`s</span>ervice node<span class="escape">`。</span>
+
+* <span class="escape">`s</span>ervice node<span class="escape">`主</span>要是接收<span class="escape">`s</span>ervice gateway<span class="escape">`转</span>送的CC的命令，并执行这些命令，如果执行成功会将唯一标识该服务实例的<span class="escape">`c</span>redencial<span class="escape">`返</span>回给<span class="escape">`s</span>ervice gateway<span class="escape">`。</span>一般地，提供该项服务的服务器进程会跟<span class="escape">`s</span>ervice node<span class="escape">`一</span>起跑在同一台机器上。
+</code></pre><p>本文章主要描述<code>mysql_service</code>的功能和流程情况，主要包括如下功能：</p>
+<pre><code><span class="number">1</span>. <span class="escape">`m</span>ysql_gateway<span class="escape">`的</span>启动，主要包括启动时通过读取配置文件设置程序参数，向<span class="escape">`C</span>C(cloud_controller)<span class="escape">`上</span>报信息，启动thin服务器监听特定端口，以响应CC的HTTP请求， 连接NATS并监听相关通道；
+<span class="number">2</span>. <span class="escape">`m</span>ysql_gateway<span class="escape">`对</span>来自CC的HTTP请求的接收和处理；
+<span class="number">3</span>. <span class="escape">`m</span>ysql_gateway<span class="escape">`通</span>过NATS接收<span class="escape">`m</span>sql_node<span class="escape">`的</span>信息，并转发CC的控制命令；
+<span class="number">4</span>. <span class="escape">`m</span>ysql_node<span class="escape">`的</span>启动，主要是启动时通过读取配置文件设置程序参数，连接NATS并发布信息，监听相关通道，连接服务的服务器进程；
+</code></pre><p>下面将一一进行叙述。</p>
+<h3 id="2-1-_mysql_gateway的启动">2.1. mysql_gateway的启动</h3><p>mysql_gateway的启动线路图，后面会对其进行详细解析，其中引用代码的格式如下：</p>
+<pre><code>[项目名] - `简写文件路径` - 关键调用处 : 行数 <span class="string">| 关键调用处 : 行数</span>
+</code></pre><p>简写的文件路径主要有：</p>
+<pre><code><span class="number">1.</span> [service-release] - bin/mysql_gateway  -&gt;  service-release/src/mysql_service/bin/mysql_gateway.rb
+<span class="number">2.</span> [vcap-services-<span class="keyword">base</span>] - lib/<span class="keyword">base</span>/gateway -&gt; vcap-services-<span class="keyword">base</span>-ff9932/lib/<span class="keyword">base</span>/gateway.rb
+</code></pre><p>具体流程如下：</p>
+<pre><code><span class="number">1.</span> [serivce-release] - `bin/mysql_gateway` - <span class="string">Mysql:</span>:Gateway.<span class="keyword">new</span>.<span class="string">start :</span> <span class="number">31</span>行 | <span class="string">Mysql:</span>:<span class="string">Gateway :</span> <span class="number">13</span>行
+<span class="number">2.</span> [vcap-services-base] - `lib<span class="regexp">/base/</span>gateway` - <span class="string">Base:</span>:Gateway.<span class="string">start :</span> <span class="number">77</span>行 | <span class="string">Base:</span>:Gateway.<span class="string">async_gateway_class :</span> <span class="number">131</span>行
+<span class="number">3.</span> [vcap-services-base] - `lib<span class="regexp">/base/</span>asynchronous_service_gateway` - AsynchronousServiceGateway.<span class="string">initialize :</span> <span class="number">17</span>行 | <span class="string">super :</span> <span class="number">18</span>行
+<span class="number">4.</span> [vcap-services-base] - `lib<span class="regexp">/base/</span>base_async_gateway` - BaseAsynchronousServiceGateway.<span class="string">initialize :</span> <span class="number">35</span>行 | <span class="string">setup :</span> <span class="number">40</span>行
+<span class="number">5.</span> [vcap-services-base] - `lib<span class="regexp">/base/</span>asynchronous_service_gateway` - AsynchronousServiceGateway.<span class="string">setup :</span> <span class="number">22</span>行 | CatalogManagerV2.<span class="string">new :</span> <span class="number">47</span>行(调用*a) | <span class="string">send_heartbeat :</span> <span class="number">55</span>行 | <span class="string">get_current_catalog :</span> <span class="number">504</span>行 | GatewayServiceCatalog.<span class="keyword">new</span>(调用*b) : <span class="number">98</span>行 | <span class="annotation">@catalog</span>_manager.update_catalog(*c) : <span class="number">502</span>行 |
+    *a [vcap-services-base] - `lib<span class="regexp">/base/</span>catalog_manager_v2` - CatalogManagerV2.<span class="string">initialize :</span> <span class="number">16</span>行
+    *b [vcap-services-base] - `lib<span class="regexp">/base/</span>gateway_service_catalog` - <span class="string">to_hash :</span> <span class="number">10</span>行
+    *c [vcap-services-base] - `lib<span class="regexp">/base/</span>catalog_manager_v2` - <span class="string">update_catalog :</span> <span class="number">80</span>行
+<span class="number">6.</span> [vcap-services-base] - `lib<span class="regexp">/base/</span>http_handler`
+<span class="number">7.</span> [cf-uaa-lib-master] - `lib<span class="regexp">/uaa/</span>token_issuer`
+<span class="number">8.</span> [cf-uaa-lib-master] - `lib<span class="regexp">/uaa/</span>http`
+</code></pre><ul>
+<li><p>第1点和第2点是<code>service_gateway</code>的启动位置, 此处有<code>Mysql::Gateway</code>的定义, 该类继承自Base::Gateway。主要进行如下工作：</p>
+<ul>
+<li>处理启动参数 - OptionParser</li>
+<li>读取配置文件 - @config  再由config生成opts</li>
+<li>实例化provisioner对象，并放到opts中</li>
+<li>实例化AsynchronousServiceGateway对象，该类间接继承自Sinatra::Base类，通过Thin服务器监听HTTP请求, 主要是CC的请求</li>
+</ul>
+</li>
+<li><p>第3点是<code>service_gateway</code>的核心代码，<code>asynchronous_service_gateway</code>主要进行如下工作：</p>
+<ul>
+<li>处理opts参数</li>
+<li>实例化CatalogManagerV2对象(针对V2版本)</li>
+<li>通过event_machine方法定时调用<code>send_heartbeat</code>, 向CC发布类似于心跳的信息，比如第一次时写入service/service_plan信息或者更新service信息</li>
+<li>通过event_machine方法定时调用<code>fetch_handles</code>, 来定时从CC处获取关于该gateway负责的service信息, 随时更新以保证不会漏掉任何service信息。当然此处还会定时检查orphan(孤儿)。</li>
+</ul>
+</li>
+<li><p>第4点是<code>asynchronous_service_gateway</code>的父类，主要是对sinatra框架进行自定义设置，增加相关helper方法，并对任何到来的请求进行验证</p>
+</li>
+<li><p>第5点</p>
+</li>
+</ul>
+<p>从CC(cloud_controller)的角度来查看mysql_gateway启动时的动作<br><code>mysql_gateway</code>连接cloud_controller并注册自己的信息。信息主要是两条一条是向cloud_controller的service表插入一条mysql服务的记录, 一条是向service_plans表插入一条plan记录</p>
+<h3 id="2-2-_mysql_node的启动">2.2. mysql_node的启动</h3><ul>
+<li><p><code>mysql_service/lib/mysql_service/node.rb</code> 在初始化时</p>
+<pre><code><span class="variable">@mysql_config</span> = options[:mysql]
+<span class="variable">@supported_versions</span> = options[:supported_versions]
+</code></pre></li>
+<li><p><code>ProvisionedService</code> 是一个数据结构, 位于<code>mysql_service/lib/mysql_service/node.rb</code> 814行, 主要包含这几个属性</p>
+<pre><code><span class="keyword">property</span> :name, <span class="built_in">String</span>, :<span class="keyword">key</span> =&gt; <span class="literal">true</span>
+<span class="keyword">property</span> :user, <span class="built_in">String</span>, :required =&gt; <span class="literal">true</span>
+<span class="keyword">property</span> :password, <span class="built_in">String</span>, :required =&gt; <span class="literal">true</span>
+<span class="keyword">property</span> :plan, <span class="built_in">Integer</span>, :required =&gt; <span class="literal">true</span>
+<span class="keyword">property</span> :quota_exceeded, <span class="built_in">Boolean</span>, :<span class="keyword">default</span> =&gt; <span class="literal">false</span>
+<span class="keyword">property</span> :version, <span class="built_in">String</span>
+</code></pre></li>
+<li><p><code>ProvisionedService</code> 的创建源于gateway发过来的请求, 大致流程是接收gateway的ProvisionRequest请求, 然后将其msg参数转换, 通过create等操作同ProvisionedService交互。 ProvisionRequest位于<code>vcap-services-base/lib/base/service_message.rb</code>第8行, 包含：</p>
+<pre><code><span class="tag">required</span> <span class="pseudo">:plan</span>, <span class="tag">String</span>
+<span class="tag">optional</span> <span class="pseudo">:credentials</span>
+<span class="tag">optional</span> <span class="pseudo">:version</span>
+</code></pre></li>
+<li><p>对于创建service的整体流程大致为：node节点在<code>/vcap-services-base/lib/base/base.rb</code>初始化时调用<code>/vcap-services-baselib/base/node.rb</code>文件中的<code>on_connect_node</code>方法, 然后触发很多监听事件, 如on_provision等;<br>on_provision事件在监听到<code>ProvisionRequest</code>后，解析请求发过来的msg参数，然后调用<code>mysql_service/lib/mysql_service/node.rb</code>的<code>provision</code>方法，创建<code>ProvisionService</code>对象, 至此服务创建成功</p>
+</li>
+<li><p><code>mysql_service/lib/mysql_service/node.rb</code>的<code>provision</code>方法与version有关：</p>
+<pre><code>raise ServiceError.<span class="built_in">new</span>(ServiceError::UNSUPPORTED_VERSION, <span class="built_in">version</span>) unless @supported_versions.<span class="built_in">include</span>?(<span class="built_in">version</span>)
+
+provisioned_service = mysqlProvisionedService.<span class="built_in">create</span>(new_port(credential[<span class="string">"port"</span>]), name, user, password, <span class="built_in">version</span>)
+</code></pre></li>
+<li><p><code>mysql_service/lib/mysql_service/node.rb</code>的第593行</p>
+<pre><code>config = <span class="keyword">@mysql_configs</span>[instance.<span class="keyword">version</span>]
+</code></pre></li>
+</ul>
+<p>此处的instance为一个<code>ProvisionedService</code>对象, 因此他的version为来自gateway的数据, 而@mysql_configs是从node的配置文件中得到的数据, @mysql_config到mysql那一层，其内层均包含在内部,具体如下</p>
+<pre><code><span class="attribute">mysql</span>:
+    <span class="string">"mysql-5.5"</span>:
+        <span class="attribute">host</span>: localhost
+        <span class="attribute">port</span>: <span class="number">3306</span>
+        <span class="attribute">socket</span>: /var/run/mysqld/mysqld.sock
+        <span class="attribute">user</span>: root
+        <span class="attribute">pass</span>: mysql
+        <span class="attribute">mysqldump_bin</span>: /usr/bin/mysqldump
+        <span class="attribute">mysql_bin</span>: /usr/bin/mysql
+</code></pre><h3 id="2-3-_创建一个service">2.3. 创建一个service</h3><p>首先利用cf客户端执行命令：</p>
+<pre><code>cf <span class="built_in">create</span>-service
+</code></pre><p>cf调用create-service命令时先到CC的<code>model/service_instance</code>下, 然后先调用plan.service.service_token查看token是否合理</p>
+<p>asynchronous_service_gateway的119行的auth_token, 参见其父类base_async_gateway的76行, 该函数返回HTTP请求头的<code>HTTP_X_VCAP_Service_Token</code>字段</p>
+<h2 id="三-参考文献">三.参考文献</h2><ol>
+<li>Cloud Foundry Service Gateway源码分析 - <a href="http://blog.csdn.net/shlazww/article/details/8112874" target="_blank" rel="external">http://blog.csdn.net/shlazww/article/details/8112874</a></li>
+<li>Cloud Foundry中Service Gateway功能以及通信机制 - <a href="http://blog.csdn.net/shlazww/article/details/8670233" target="_blank" rel="external">http://blog.csdn.net/shlazww/article/details/8670233</a></li>
+<li>Services docs - <a href="http://docs.cloudfoundry.com/docs/running/architecture/services/" target="_blank" rel="external">http://docs.cloudfoundry.com/docs/running/architecture/services/</a></li>
+</ol>
+
+        
+
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/cloudfoundry/">
+                #cloudfoundry
+              </a>
+            
+              <a href="/tags/service/">
+                #service
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="../../2013/03/10/用Jekyll搭建个人博客/">
+                用 Jekyll 搭建个人博客
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+          <span class="post-time">
+            
+              发表于 2013-03-09
+            
+          </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h3 id="使用理由">使用理由</h3><ol>
+<li>使用 Markdown， 专心写博客，无样式排版烦恼</li>
+<li>使用自己喜欢的本地编辑器，本地随时写博客，可以本地预览，方便自己使用</li>
+<li>并使用 Git 管理博客，内容永不丢失</li>
+<li>可以部署在 github 上，不用自己购买管理 VPS，甚至域名也可以不买，对学生来说很适合</li>
+<li>没有第三方博客系统的广告，限制，随心而写</li>
+</ol>
+<h3 id="如何搭建">如何搭建</h3><ol>
+<li>由于 Jekyll 是用 Ruby 写的，因此首先要搭建 Ruby 执行环境，同时安装 git 版本控制工具</li>
+<li>在 Github 上创建一个仓库，仓库名为 <code>github 账户名.github.com</code> 或者 <code>github 账户名.github.io</code></li>
+<li><p>克隆仓库到本地，并初始化仓库。然后发布博客，第一次发布后大约需要 <code>十分钟</code> 就可以通过 <code>yourname.github.com</code> 访问博客了</p>
+<p>   git clone <a href="https://github.com/yourname/yourname.github.com" target="_blank" rel="external">https://github.com/yourname/yourname.github.com</a> blog<br>   cd blog<br>   touch {README.md,index.html}        # 在 README.md 和 index.html 中加入内容<br>   git add .<br>   git commit -m “初始化提交”<br>   git push origin master</p>
+</li>
+<li><p>安装 Jekyll 规则搭建个人博客框架，具体参考 <a href="http://jekyllrb.com/" title="Jekyll 官方文档" target="_blank" rel="external">Jekyll官方文档</a></p>
+</li>
+</ol>
+<h3 id="Markdown_语法简记">Markdown 语法简记</h3><ul>
+<li><code>1--6 级标题</code> 在行首使用 1-6 个 # 号</li>
+<li><code>块引用</code> 在一段的第一行前面加上 &gt; 表示一个区块引用， &gt; 可以嵌套</li>
+<li><code>列表</code> 无序列表 使用 *、 + 或是 - 作为列表标记，有序列表 则使用 数字接着一个英文句点</li>
+<li><code>代码</code> 缩进 4 个空格 表示一个代码块， 使用 反引号（`）  标记一小段行内代码</li>
+<li><code>强调</code> 用一个 <em> 或 _ 包围转成 \<em> 标签，用两个 </em> 或 _ 包围转成 \<strong> 标签，</strong></em></li>
+<li><code>分割线</code> 用三个以上的 *、 -、 _ 来建立一个分隔线，行内不能有其他东西</li>
+<li><p><code>超链接和图片链接</code> 图片链接和超链接基本相同，图片链接多一个 ！。都有两种样式：行内式 和 参考式</p>
+<pre><code>行内式：
+    <span class="attr_selector">[唐久军的博客]</span>(<span class="attribute">http</span>:<span class="comment">//tangjiujun.github.io "唐久军的博客")</span>
+
+参考式：
+    [唐久军的博客][tangjiujun]
+    [tangjiujun]: <span class="attribute">http</span>:<span class="comment">//tangjiujun.github.io "唐久军的博客"        # 此行可以放在文章的任意位置</span>
+</code></pre></li>
+<li><p><code>反斜杠和自动链接</code> 特殊字符可用 \ 转义； 把 网址 或 电子邮件信箱 用 &lt;&gt; 包起来，会自动链接</p>
+</li>
+<li><p><code>表格</code> 不是 Markdown 的标准语法</p>
+<pre><code><span class="string">|     用户名     |     年龄     |</span>
+<span class="string">| ------------- | ----------- |</span>
+<span class="string">|     唐久军     |     21      |</span>
+<span class="string">|     成婉君     |     21      |</span>
+</code></pre></li>
+</ul>
+<h3 id="emacs_插件">emacs 插件</h3><p>  从 github 上找了一个 <a href="https://github.com/diasjorge/jekyll.el" title="Emacs Jekyll 插件" target="_blank" rel="external">emacs jekyll 插件</a>，并稍做修改（修改快捷键绑定，取消大小写转换，支持中文）。这里是<a href="https://github.com/tangjiujun/emacs.d/blob/master/custom-util/jekyll.el" title="修改后的 Emacs Jekyll 插件" target="_blank" rel="external">修改后的插件</a></p>
+<ol>
+<li><p>配置插件：</p>
+<p>   (setq jekyll-directory “/home/tangjiujun/Dropbox/Yunio/blog/“)        # 设置博客根目录<br>   (require ‘jekyll)<br>   (jekyll-init-keybindings)</p>
+</li>
+<li><p>插件使用：</p>
+<p>   C-c j n        # 新建草稿<br>   C-c j p        # 发布当前编辑的草稿</p>
+<p>   C-c j d        # 列出所有的草稿<br>   C-c j l        # 列出所有发布的文章</p>
+</li>
+</ol>
+
+        
+
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Git/">
+                #Git
+              </a>
+            
+              <a href="/tags/Jekyll/">
+                #Jekyll
+              </a>
+            
+              <a href="/tags/Markdown/">
+                #Markdown
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+
+          </div>
+
+          
+            <div class="pagination">
+              <a class="extend prev" rel="prev" href="../..//">&laquo;</a><a class="page-number" href="../..//">1</a><span class="page-number current">2</span>
+            </div>
+          
+        </div>
+
+        
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+
+    <div class="site-overview">
+      <div class="site-author motion-element">
+        <img class="site-author-image" src="../../images/default_avatar.jpg" alt="clongbupt" />
+        <p class="site-author-name">clongbupt</p>
+      </div>
+      <p class="site-description motion-element">一个不会煮面的码农的自留地</p>
+      <div class="site-state motion-element">
+        <div class="site-state-item site-state-posts">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </div>
+        <div class="site-state-item site-state-tags">
+            <span class="site-state-item-count">16</span>
+            <span class="site-state-item-name">标签</span>
+        </div>
+        <div class="site-state-item site-state-pages">
+            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-name">页面</span>
+        </div>
+      </div>
+
+      
+
+      <div class="social-info motion-element">
+        
+      </div>
+
+    </div>
+
+    
+  </div>
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">clongbupt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+</div>
+
+
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="../../vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="../../vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
+  </script>
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="../../vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="../../vendors/velocity/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" id="motion.page.home">
+    $(document).ready(function () {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200, sequenceQueue: false } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    });
+  </script>
+
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      $('.post').velocity('transition.slideDownIn', {stagger: 300, drag: true});
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+
+  
+</body>
+</html>
