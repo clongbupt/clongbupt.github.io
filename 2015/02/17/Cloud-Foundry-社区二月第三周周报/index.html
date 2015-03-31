@@ -39,7 +39,7 @@
   </script>
 
 
-  <title> 用 Jekyll 搭建个人博客 // clongbupt的小窝 </title>
+  <title> Cloud Foundry 社区二月第三周周报 // clongbupt的小窝 </title>
 </head>
 
 <body>
@@ -126,7 +126,7 @@
           
           
             
-              用 Jekyll 搭建个人博客
+              Cloud Foundry 社区二月第三周周报
             
           
         </h1>
@@ -135,15 +135,15 @@
       <div class="post-meta">
           <span class="post-time">
             
-              发表于 2013-03-09
+              发表于 2015-02-16
             
           </span>
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2013/03/10/用Jekyll搭建个人博客/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2013/03/10/用Jekyll搭建个人博客/"></span>
+            <a href="/2015/02/17/Cloud-Foundry-社区二月第三周周报/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/17/Cloud-Foundry-社区二月第三周周报/"></span>
             </a>
           </span>
           
@@ -158,56 +158,35 @@
         
 
         
-          <h3 id="使用理由">使用理由</h3><ol>
-<li>使用 Markdown， 专心写博客，无样式排版烦恼</li>
-<li>使用自己喜欢的本地编辑器，本地随时写博客，可以本地预览，方便自己使用</li>
-<li>并使用 Git 管理博客，内容永不丢失</li>
-<li>可以部署在 github 上，不用自己购买管理 VPS，甚至域名也可以不买，对学生来说很适合</li>
-<li>没有第三方博客系统的广告，限制，随心而写</li>
-</ol>
-<h3 id="如何搭建">如何搭建</h3><ol>
-<li>由于 Jekyll 是用 Ruby 写的，因此首先要搭建 Ruby 执行环境，同时安装 git 版本控制工具</li>
-<li>在 Github 上创建一个仓库，仓库名为 <code>github 账户名.github.com</code> 或者 <code>github 账户名.github.io</code></li>
-<li><p>克隆仓库到本地，并初始化仓库。然后发布博客，第一次发布后大约需要 <code>十分钟</code> 就可以通过 <code>yourname.github.com</code> 访问博客了</p>
-<p>   git clone <a href="https://github.com/yourname/yourname.github.com" target="_blank" rel="external">https://github.com/yourname/yourname.github.com</a> blog<br>   cd blog<br>   touch {README.md,index.html}        # 在 README.md 和 index.html 中加入内容<br>   git add .<br>   git commit -m “初始化提交”<br>   git push origin master</p>
+          <ol>
+<li><p>上周最大的新闻是Cloud Foundry的新CEO上任，欢迎Sam Ramji！在加入Cloud Foundry之前Sam Ramji在Appigee工作，并有在微软设计和领导开源战略的经验。</p>
 </li>
-<li><p>安装 Jekyll 规则搭建个人博客框架，具体参考 <a href="http://jekyllrb.com/" title="Jekyll 官方文档" target="_blank" rel="external">Jekyll官方文档</a></p>
+<li><p>在Youtube上的Cloud Foundry每周晚例会报告(Cloud Foundry After Dark hangout)</p>
+<ul>
+<li><p>企业级云发布管理工具Apache Brooklyn有望支持Cloud Foundry</p>
 </li>
-</ol>
-<h3 id="Markdown_语法简记">Markdown 语法简记</h3><ul>
-<li><code>1--6 级标题</code> 在行首使用 1-6 个 # 号</li>
-<li><code>块引用</code> 在一段的第一行前面加上 &gt; 表示一个区块引用， &gt; 可以嵌套</li>
-<li><code>列表</code> 无序列表 使用 *、 + 或是 - 作为列表标记，有序列表 则使用 数字接着一个英文句点</li>
-<li><code>代码</code> 缩进 4 个空格 表示一个代码块， 使用 反引号（`）  标记一小段行内代码</li>
-<li><code>强调</code> 用一个 <em> 或 _ 包围转成 \<em> 标签，用两个 </em> 或 _ 包围转成 \<strong> 标签，</strong></em></li>
-<li><code>分割线</code> 用三个以上的 *、 -、 _ 来建立一个分隔线，行内不能有其他东西</li>
-<li><p><code>超链接和图片链接</code> 图片链接和超链接基本相同，图片链接多一个 ！。都有两种样式：行内式 和 参考式</p>
-<pre><code>行内式：
-    <span class="attr_selector">[唐久军的博客]</span>(<span class="attribute">http</span>:<span class="comment">//tangjiujun.github.io "唐久军的博客")</span>
-
-参考式：
-    [唐久军的博客][tangjiujun]
-    [tangjiujun]: <span class="attribute">http</span>:<span class="comment">//tangjiujun.github.io "唐久军的博客"        # 此行可以放在文章的任意位置</span>
-</code></pre></li>
-<li><p><code>反斜杠和自动链接</code> 特殊字符可用 \ 转义； 把 网址 或 电子邮件信箱 用 &lt;&gt; 包起来，会自动链接</p>
+<li><p>Matt Stine 的新书 《Migrating to Cloud native App Architectures》</p>
 </li>
-<li><p><code>表格</code> 不是 Markdown 的标准语法</p>
-<pre><code><span class="string">|     用户名     |     年龄     |</span>
-<span class="string">| ------------- | ----------- |</span>
-<span class="string">|     唐久军     |     21      |</span>
-<span class="string">|     成婉君     |     21      |</span>
-</code></pre></li>
+<li><p>Cloudfoundry 的新运行时环境Diego示例介绍</p>
+</li>
+<li><p>Concouse.io 一个基于CF的CI解决方案介绍</p>
+</li>
 </ul>
-<h3 id="emacs_插件">emacs 插件</h3><p>  从 github 上找了一个 <a href="https://github.com/diasjorge/jekyll.el" title="Emacs Jekyll 插件" target="_blank" rel="external">emacs jekyll 插件</a>，并稍做修改（修改快捷键绑定，取消大小写转换，支持中文）。这里是<a href="https://github.com/tangjiujun/emacs.d/blob/master/custom-util/jekyll.el" title="修改后的 Emacs Jekyll 插件" target="_blank" rel="external">修改后的插件</a></p>
-<ol>
-<li><p>配置插件：</p>
-<p>   (setq jekyll-directory “/home/tangjiujun/Dropbox/Yunio/blog/“)        # 设置博客根目录<br>   (require ‘jekyll)<br>   (jekyll-init-keybindings)</p>
-</li>
-<li><p>插件使用：</p>
-<p>   C-c j n        # 新建草稿<br>   C-c j p        # 发布当前编辑的草稿</p>
-<p>   C-c j d        # 列出所有的草稿<br>   C-c j l        # 列出所有发布的文章</p>
 </li>
 </ol>
+<p>晚例会观看地址：<a href="http://youtu.be/TY_qOyp27X4" target="_blank" rel="external">http://youtu.be/TY_qOyp27X4</a></p>
+<ol>
+<li><p>Edison 发布的关于 Bosh Lite 在 AWS 上部署的文章。链接: <a href="https://cloudfoundryideas.wordpress.com/2015/01/28/building-a-cloudfoundry-sandbox-environment-in-15-minutes/" target="_blank" rel="external">Bosh-Lite on AWS</a></p>
+</li>
+<li><p>支持函数式语言 Elixir 的 buildpack 发布。链接：<a href="https://groups.google.com/a/cloudfoundry.org/forum/#!topic/vcap-dev/dOZ9il25u3Y" target="_blank" rel="external">Elixir Buildpack for Cloud Foundry</a></p>
+</li>
+<li><p>Pivotal 发布了基于开源MySQL版本的CF版MySQL版。链接：<a href="http://blog.pivotal.io/cloud-foundry-pivotal/products/mysql-service-on-pivotal-cloud-foundry-now-highly-available" target="_blank" rel="external">MySQL service for Pivotal CF</a></p>
+</li>
+</ol>
+<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/17/this-week-in-cloud-foundry-february-17th-2015/" target="_blank" rel="external">This Week in Cloud Foundry - February 17th 2015</a></p>
+<blockquote>
+<p>译者：clongbupt</p>
+</blockquote>
 
         
 
@@ -217,32 +196,18 @@
     
       <div class="post-footer">
         
-          <div class="post-tags">
-            
-              <a href="/tags/Git/">
-                #Git
-              </a>
-            
-              <a href="/tags/Jekyll/">
-                #Jekyll
-              </a>
-            
-              <a href="/tags/Markdown/">
-                #Markdown
-              </a>
-            
-          </div>
-        
 
         
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="../../../07/16/cloudfoundry_service分析/">Cloud Foundry Service 分析</a>
+                <a href="../../27/Cloud-Foundry-社区三月第一周周报/">Cloud Foundry 社区二月第四周周报</a>
               
             </div>
 
             <div class="post-nav-next post-nav-item">
+              
+                <a href="../../16/One-Method-to-Debug-Heartbeat-Cluster/">One_Method_to_Debug_Heartbeat_Cluster</a>
               
             </div>
           </div>
@@ -259,8 +224,8 @@
   
     <div class="comments" id="comments">
       
-        <div class="ds-thread" data-thread-key="2013/03/10/用Jekyll搭建个人博客/"
-             data-title="用 Jekyll 搭建个人博客" data-url="http://clongbupt.github.io/2013/03/10/用Jekyll搭建个人博客/">
+        <div class="ds-thread" data-thread-key="2015/02/17/Cloud-Foundry-社区二月第三周周报/"
+             data-title="Cloud Foundry 社区二月第三周周报" data-url="http://clongbupt.github.io/2015/02/17/Cloud-Foundry-社区二月第三周周报/">
         </div>
 
       
@@ -348,7 +313,7 @@
 
     
       <div class="post-toc sidebar-panel-active">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用理由"><span class="nav-number">1.</span> <span class="nav-text">使用理由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何搭建"><span class="nav-number">2.</span> <span class="nav-text">如何搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Markdown_语法简记"><span class="nav-number">3.</span> <span class="nav-text">Markdown 语法简记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#emacs_插件"><span class="nav-number">4.</span> <span class="nav-text">emacs 插件</span></a></li></ol>
+        
       </div>
     
   </div>

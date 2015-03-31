@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
 
 
   <link rel="stylesheet" type="text/css" href="vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
@@ -25,6 +27,16 @@
     <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.3.0rc5" />
 
 
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50c15455e37f70aea674ff4a663eef27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
   <title> clongbupt的小窝 </title>
@@ -67,10 +79,26 @@
       </li>
     
       
-      <li class="menu-item menu-item-tags">
-        <a href="/tags">
-          <i class="menu-item-icon icon-tags"></i> <br />
-          标签
+      <li class="menu-item menu-item-about">
+        <a href="/about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-gallery">
+        <a href="/gallery">
+          <i class="menu-item-icon icon-gallery"></i> <br />
+          menu.gallery
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-library">
+        <a href="/library">
+          <i class="menu-item-icon icon-library"></i> <br />
+          menu.library
         </a>
       </li>
     
@@ -101,6 +129,109 @@
           
           
             
+              <a class="post-title-link" href="2015/03/30/gem_example/">
+                如何创建一个简单的gem包
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+          <span class="post-time">
+            
+              发表于 2015-03-29
+            
+          </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/30/gem_example/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/gem_example/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h2 id="gem_example">gem_example</h2><p>通过<code>rubygem</code>内置的工具可以轻松地把代码打包成<code>gem</code>。下面创建一个简单的<code>gem_example</code>案例.</p>
+<h3 id="开始">开始</h3><p>首先，新建一个目录，并创建一个<code>gem_example.ruby</code>和<code>gem_example.gemspec</code>的文件，具体的目录结构如下:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-gem_example.gemspec</span><br><span class="line">`<span class="comment">--lib</span></span><br><span class="line">    `<span class="comment">--gem_example.rb</span></span><br></pre></td></tr></table></figure></p>
+<p><em>注意</em></p>
+<ol>
+<li>代码一般放在<code>lib</code>目录中</li>
+<li>约定俗成，<code>lib</code>内有一个文件的文件名与<code>gem</code>名称一样</li>
+</ol>
+<p>下面开始在<code>lib/gem_example.rb</code>中编写一点内容，具体如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi</span><br><span class="line">    puts <span class="string">"Hello world!"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>最后，介绍一下<code>gemspec</code>。其内部主要定义改<code>gem</code>的版本、依赖等。示例如下：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.<span class="built_in">new</span> <span class="built_in">do</span> |s|</span><br><span class="line">  s.name              = <span class="string">'gem_example'</span></span><br><span class="line">  s.<span class="built_in">version</span>           = <span class="string">'0.0.1'</span></span><br><span class="line">  s.<span class="built_in">date</span>              = <span class="string">'2015-02-24'</span></span><br><span class="line">  s.summary           = <span class="string">"An Simple Gem Example!"</span></span><br><span class="line">  s.description       = <span class="string">"A simple example of introducing how to use gem"</span></span><br><span class="line">  s.authors           = [<span class="string">"Changlong Wu"</span>]</span><br><span class="line">  s.email             = <span class="string">'clongbupt@gmail.com'</span></span><br><span class="line">  s.<span class="built_in">files</span>             = [<span class="string">"lib/gem_example.rb"</span>, <span class="string">"lib/gem_example/translator.rb"</span>]</span><br><span class="line">  s.executables &lt;&lt; <span class="string">'gem_example'</span> </span><br><span class="line">  s.homepage          = </span><br><span class="line">    <span class="string">'http://github.com/clongbupt/gem_example'</span></span><br><span class="line">  s.license           = <span class="string">'MIT'</span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<p><code>gem build</code>会读取<code>gemspec</code>，并以此标识和分发<code>gem</code>。具体命令如下：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">gem</span> build gem_example.gemspec</span><br></pre></td></tr></table></figure></p>
+<p>控制台输出的结果为:<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ gem build gem_example.gemspec</span><br><span class="line">  Successfully built RubyGem</span><br><span class="line">  Name: gem_example</span><br><span class="line">  <span class="keyword">Version</span>: <span class="number">0.0</span><span class="number">.1</span></span><br><span class="line">  <span class="keyword">File</span>: gem_example-<span class="number">0.0</span><span class="number">.1</span>.gem</span><br></pre></td></tr></table></figure></p>
+<p>在<code>irb</code>中可以对其进行测试。示例如下：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">irb </span><br><span class="line"><span class="built_in">require</span> ‘gem_example’ </span><br><span class="line"><span class="literal">true</span> </span><br><span class="line">GemExample.hi</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为<code>hello world</code>。</p>
+<h3 id="发布">发布</h3><p>发布之前，首先要配置登录到<code>rubygem</code>的信息:<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; curl -u yourusername_on_rubygem</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/rubygems.org/api</span><span class="regexp">/v1/api</span>_key.yaml &gt;</span><br><span class="line">~<span class="regexp">/.gem/credentials</span>; chmod <span class="number">0600</span> ~<span class="regexp">/.gem/credentials</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Enter </span>host password <span class="keyword">for</span> user <span class="string">'yourusername_on_rubygem'</span><span class="symbol">:</span></span><br></pre></td></tr></table></figure></p>
+<p>如果系统限制等,无法使用<code>curl</code>，<code>openssl</code>等,可以通过浏览器访问链接<code>https://rubygems.org/api/v1/api_key.yaml</code>,它会让你登录的,<br>成功则会下载一个认证信息文件<code>api_key.yaml</code>,完了直接把它放到<code>~/.gem/</code>文件夹下,重命名为<strong>credentials</strong><br>一切设置妥当之后,就可以<code>push</code>你的<code>gem</code>了。具体示例如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gem push hola-<span class="number">0.0</span>.<span class="number">0</span><span class="class">.gem</span></span><br><span class="line">    Pushing gem to RubyGems<span class="class">.org</span>...</span><br><span class="line">    Successfully registered gem: hola (<span class="number">0.0</span>.<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>上传成功后，你就可以通过下面命令<code>check</code>到自己的<code>gem</code>了:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="type">list</span> -r gem_example</span><br></pre></td></tr></table></figure></p>
+<p>然后尝试安装:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> gem_example</span><br></pre></td></tr></table></figure></p>
+<h3 id="进阶">进阶</h3><p>修改文件<code>lib/gem_example.rb</code>中的内容为：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi(language = <span class="string">"english"</span>)</span><br><span class="line">    translator = <span class="constant">Translator</span>.new(language)</span><br><span class="line">    translator.hi</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample::Translator</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>initialize(language)</span><br><span class="line">    <span class="variable">@language</span> = language</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>hi</span><br><span class="line">    <span class="keyword">case</span> <span class="variable">@language</span></span><br><span class="line">    <span class="keyword">when</span> <span class="string">"spanish"</span></span><br><span class="line">      <span class="string">"hola mundo"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="string">"hello world"</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>其中，可以将<code>Translator</code>进行拆分。一般推荐把目录结构调整为如示例所示样子:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">├── gem_example<span class="class">.gemspec</span></span><br><span class="line">└── lib</span><br><span class="line">    ├── gem_example</span><br><span class="line">    │   └── translator<span class="class">.rb</span></span><br><span class="line">    └── gem_example.rb</span><br></pre></td></tr></table></figure></p>
+<p>接着，修改<code>lib/gem_example.rb</code>文件:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'lib/translator'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi(language = <span class="string">"english"</span>)</span><br><span class="line">        translator = <span class="constant">Translator</span>.new(language)</span><br><span class="line">        translator.hi</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p><em>注意</em>同时还需要修改<code>gemspec</code>文件, 把新添加的目录和文件索引进去, 否则打包时无法找到新文件。<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.<span class="built_in">new</span> <span class="built_in">do</span> |s|</span><br><span class="line">  s.name              = <span class="string">'gem_example'</span></span><br><span class="line">  s.<span class="built_in">version</span>           = <span class="string">'0.0.1'</span></span><br><span class="line">  s.<span class="built_in">date</span>              = <span class="string">'2015-02-24'</span></span><br><span class="line">  s.summary           = <span class="string">"An Simple Gem Example!"</span></span><br><span class="line">  s.description       = <span class="string">"A simple example of introducing how to use gem"</span></span><br><span class="line">  s.authors           = [<span class="string">"Changlong Wu"</span>]</span><br><span class="line">  s.email             = <span class="string">'clongbupt@gmail.com'</span></span><br><span class="line">  s.<span class="built_in">files</span>             = [<span class="string">"lib/gem_example.rb"</span>, <span class="string">"lib/gem_example/translator.rb"</span>]</span><br><span class="line">  s.executables &lt;&lt; <span class="string">'gem_example'</span> </span><br><span class="line">  s.homepage          = </span><br><span class="line">    <span class="string">'http://github.com/clongbupt/gem_example'</span></span><br><span class="line">  s.license           = <span class="string">'MIT'</span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="添加可执行文件">添加可执行文件</h3><p>在与<code>lib/</code>目录同级的地方新建<code>bin/</code>目录。然后在<code>gemspec</code>里添加他们。具体操作如下：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mkdir</span> bin</span><br><span class="line">touch bin/gem_example</span><br><span class="line"><span class="keyword">chmod</span> a+<span class="keyword">x</span> bin/gem_example</span><br></pre></td></tr></table></figure></p>
+<p>在文件中添加如下代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env ruby</span><br><span class="line"></span><br><span class="line">require <span class="string">'gem_example'</span></span><br><span class="line">puts GemExample.<span class="function"><span class="title">hi</span><span class="params">(ARGV[<span class="number">0</span>])</span></span></span><br></pre></td></tr></table></figure></p>
+<p>之后在<code>gemspec</code>文件里添加可执行的文件配置说明:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s<span class="class">.name</span>        = <span class="string">'gem_example'</span></span><br><span class="line">s<span class="class">.version</span>     = <span class="string">'0.0.1'</span></span><br><span class="line">s<span class="class">.executables</span> &lt;&lt; <span class="string">'gem_example'</span>  #可执行文件</span><br></pre></td></tr></table></figure></p>
+<h3 id="测试">测试</h3><p>TEST YOUR GEM!<br>一般会用<code>TEST::Unit</code>。它是<code>ruby</code>内置的测试框架，有很多的教程在网上可以找到。<br>首先创建文件<code>Rakefile</code>和文件夹<code>test</code>，如下所示：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Rakefile</span><br><span class="line">├── bin</span><br><span class="line">│   └── gem_example</span><br><span class="line">├── gem_example<span class="class">.gemspec</span></span><br><span class="line">├── lib</span><br><span class="line">│   ├── gem_example</span><br><span class="line">│   │   └── translator<span class="class">.rb</span></span><br><span class="line">│   └── gem_example<span class="class">.rb</span></span><br><span class="line">└── test</span><br><span class="line">    └── test_gem_example.rb</span><br></pre></td></tr></table></figure></p>
+<p>编辑test_gem_example.rb。<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'test/unit'</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'gem_example'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExampleTest</span> <span class="inheritance">&lt; <span class="parent">Test::Unit</span></span>::<span class="title">TestCase</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>test_english_hello</span><br><span class="line">    assert_equal <span class="string">"hello world"</span>,</span><br><span class="line">      <span class="constant">GemExample</span>.hi(<span class="string">"english"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>test_any_hello</span><br><span class="line">    assert_equal <span class="string">"hello world"</span>,</span><br><span class="line">      <span class="constant">GemExample</span>.hi(<span class="string">"ruby"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>test_spanish_hello</span><br><span class="line">    assert_equal <span class="string">"hola mundo"</span>,</span><br><span class="line">      <span class="constant">GemExample</span>.hi(<span class="string">"spanish"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>在<code>Rakefile</code>里添加一些简单的测试用例。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">require <span class="string">'rake/testtask'</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Rake:</span><span class="symbol">:TestTask</span>.new <span class="keyword">do</span> |t|</span><br><span class="line">  t.libs &lt;&lt; <span class="string">'test'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">desc <span class="string">"Run tests"</span></span><br><span class="line">task <span class="symbol">:default</span> =&gt; <span class="symbol">:test</span></span><br></pre></td></tr></table></figure></p>
+<p>之后执行命令<code>rake test</code>或者直接<code>rake</code>，执行结果如下：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">% rake <span class="keyword">test</span></span><br><span class="line">Loaded suite</span><br><span class="line">Started</span><br><span class="line">....</span><br><span class="line">Finished <span class="keyword">in</span> 0.000943 seconds.</span><br><span class="line"></span><br><span class="line">4 tests, 4 assertions, 0 failures, 0 errors, 0 skips</span><br><span class="line"></span><br><span class="line"><span class="keyword">Test</span> <span class="keyword">run</span> options: --seed 15331</span><br></pre></td></tr></table></figure></p>
+<h2 id="文档">文档</h2><p>大部分的gem会使用默认内建RDoc来生成文档.有很多的教程可以学习.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">  <span class="comment"># Say hi to the world!</span></span><br><span class="line">  <span class="comment">#</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment">#   &gt;&gt; Hola.hi("spanish")</span></span><br><span class="line">  <span class="comment">#   =&gt; hola mundo</span></span><br><span class="line">  <span class="comment">#</span></span><br><span class="line">  <span class="comment"># Arguments:</span></span><br><span class="line">  <span class="comment">#   language: (String)</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi(language = <span class="string">"english"</span>)</span><br><span class="line">    translator = <span class="constant">Translator</span>.new(language)</span><br><span class="line">    puts translator.hi</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2><blockquote>
+<ol>
+<li><a href="http://guides.rubygems.org/gems-with-extensions/" target="_blank" rel="external">http://guides.rubygems.org/gems-with-extensions/</a> </li>
+<li><a href="http://qiita.com/xiangzhuyuan/items/7d3659bcebbaf52a1f12" target="_blank" rel="external">http://qiita.com/xiangzhuyuan/items/7d3659bcebbaf52a1f12</a></li>
+</ol>
+</blockquote>
+
+        
+
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="2015/03/09/hello-world/">
                 Hello World
               </a>
@@ -116,6 +247,13 @@
             
           </span>
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/09/hello-world/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/09/hello-world/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -170,8 +308,190 @@
           
           
             
-              <a class="post-title-link" href="2015/02/17/Cloud-Foundry-社区周报/">
-                Cloud Foundry 社区周报
+              <a class="post-title-link" href="2015/03/03/Cloud-Foundry-社区二月第四周周报/">
+                Cloud Foundry 社区三月第一周周报
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+          <span class="post-time">
+            
+              发表于 2015-03-02
+            
+          </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/03/Cloud-Foundry-社区二月第四周周报/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/03/Cloud-Foundry-社区二月第四周周报/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <p>欢迎阅读本周的CF周报。经过了两年半英文作者终于同他的好基友Dr Nic在一起了！并且作者表示希望更多的同仁加入基友大家庭。开个玩笑，回到正题。</p>
+<ol>
+<li><p>新官上任三把火，新上任的CEO Sam Ramji在Bernard Golden的面谈中阐述了他对Cloud Foundry Foundation和PaaS的理解。</p>
+</li>
+<li><p>Diego 增加了对 .NET 的支持。Pivotal公司的 Mark Kropf 特意发表博文 <a href="http://www.markkropf.com/blog/2015/2/18/windows-cloud-foundy-now-public" target="_blank" rel="external">REPOS FOR WINDOWS SUPPORT IN CLOUD FOUNDRY NOW PUBLIC</a>，博文总结了CF社区在Windows下可运性的组件，如lifecycle, garden, containerizer, diego。不得不说，CF社区的影响力正在迅速扩大，都开始触及Windows了，哈哈。</p>
+</li>
+<li><p>应用程序员的福利。同样出自 Mark Kropf 之手，<a href="http://www.markkropf.com/blog/2015/2/19/an-applications-view-of-the-cf-stack" target="_blank" rel="external">The Dev View of CF</a>。 站在应用开发者的视角，CF是怎样的一番风景。</p>
+</li>
+<li><p>Hubot是Github开发的一个好玩的专门用来集成类似于IRC、Slack、Twitter等的bot。具体参见博文：<a href="http://purevirtual.eu/2015/02/18/deploy-githubs-hubot-for-slack-automatically-with-travis-ci-and-cloudfoundry-part-1/" target="_blank" rel="external">installing the Github Hubot on CloudFoundry</a></p>
+</li>
+<li><p>最近业界的其他PaaS的发展怎样。这两篇文章值得一读：<a href="http://www.paasify.it/vendors" target="_blank" rel="external">Find your Platform as a Service</a> 和 <a href="https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/wiai_lehrstuehle/praktische_informatik/Dateien/Publikationen/sose14-towards-application-portability-in-paas.pdf" target="_blank" rel="external">Towards Application Portability in Platform as a service</a></p>
+</li>
+<li><p>业界新闻。来自BlueMix的 Niklas Heidloff 介绍了 Docker 和 Cloud Foundry 结合的可能性和前景。<a href="http://heidloff.net/nh/home.nsf/article.xsp?id=20.02.2015092308NHEBUJ.htm" target="_blank" rel="external">Cloud Foundry and Containers</a></p>
+</li>
+<li><p>感谢 Altoros 为社区贡献了一篇关于GO的博文：<a href="http://blog.altoros.com/golang-part-1-main-concepts-and-project-structure.html" target="_blank" rel="external">The main concepts of Go</a></p>
+</li>
+<li><p>Node迷请鼓掌！ Kendrick Coleman 根据其经验分享的一篇博文：<a href="http://kendrickcoleman.com/index.php/Tech-Blog/deploying-a-node-js-webapp-with-mongodb-to-cloud-foundry.html" target="_blank" rel="external">Node.js and MongoDB app</a></p>
+</li>
+<li><p>与以往一样，<a href="https://www.youtube.com/watch?v=6JrHWEYTV1I&amp;feature=youtu.be." target="_blank" rel="external">CloudFoundry After Dark</a></p>
+</li>
+<li><p>在波特兰(Portland)的CF聚会上，Intel讨论他们的私有云和CF Service Brokers研究情况，<a href="http://www.meetup.com/Portland-Cloud-Foundry-Meetup/events/220425691/" target="_blank" rel="external">文章请点击</a>. </p>
+</li>
+<li><p>另外Uber的CF聚会也马上要开始了，最后别忘了 <a href="http://www.cfsummit.com/" target="_blank" rel="external">CF Summit 2015</a></p>
+</li>
+</ol>
+<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/27/this-week-in-cloud-foundry-28th-february-2015/" target="_blank" rel="external">This Week in Cloud Foundry 3 March 2015</a></p>
+<blockquote>
+<p>译者：clongbupt</p>
+</blockquote>
+
+        
+
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="2015/02/27/Cloud-Foundry-社区三月第一周周报/">
+                Cloud Foundry 社区二月第四周周报
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+          <span class="post-time">
+            
+              发表于 2015-02-26
+            
+          </span>
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/27/Cloud-Foundry-社区三月第一周周报/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/27/Cloud-Foundry-社区三月第一周周报/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <ol>
+<li><p>巨变即将到来。我们处在巨变前的黎明。或许是下周，Cloud Foundry生态体系将会迎来新的客人，那么具体是什么呢？先卖个关子，敬请期待。</p>
+</li>
+<li><p>Netflix OSS项目，查了下中文资料，发现大家介绍的不是很多。Netflix是AWS最大的用户之一，在AWS各方工具还不太完善的时候，Netflix的技术团队开发了很多有用的工具，来辅助AWS的维护、管理和监控。后来，Netflix将很多有用的工具整理并开源出来了，就是Netflix OSS。项目地址：<a href="https://github.com/Netflix/" target="_blank" rel="external">https://github.com/Netflix/</a></p>
+</li>
+<li><p>CAB会议，全名Cloudfoundry Advisory Board Meeting。目测是Cloud Foundry社区最重要的会议，参会人员主要是社区各大公司的代表，很多大佬们也一步步坚持到2014年11月的CloudFoundry基金会的成立。最早一期记录：<a href="http://www.activestate.com/blog/2014/01/cloud-foundry-advisory-board-meeting-2014-january" target="_blank" rel="external">2014年一月</a>，最近的一期记录：<a href="http://www.activestate.com/blog/2015/01/cloud-foundry-advisory-board-meeting-2015-january" target="_blank" rel="external">2015年1月</a>。</p>
+</li>
+<li><p>Doc. Nic这周又给我们带来了惊喜，发布了一个ops工具：<a href="https://github.com/cloudfoundry-community/bosh_cli_plugin_consul#view-services" target="_blank" rel="external">BOSH CLI Consul plugin</a>，通过它可以容易的看到通过bosh deployments部署的服务。</p>
+</li>
+<li><p><a href="https://blog.starkandwayne.com/2014/12/17/introduction-to-cloud-foundrys-health-monitor/" target="_blank" rel="external">Health Monitor</a> 这篇文章值得关注，它详细讲解了Health manager如何保证app存活以及如何进行错误跟踪。</p>
+</li>
+<li><p>另外一篇播客也很棒，对于初学者而言，简单的一个push背后究竟发生了什么？播客描述地址：<a href="http://blog.pivotal.io/cloud-foundry-pivotal/features/all-things-pivotal-podcast-episode-11-so-what-happens-when-i-push-an-app-anyway?utm_source=social&amp;account_id&amp;utm_medium=TWITTER&amp;pivotal&amp;utm_campaign=Apps&amp;20150114" target="_blank" rel="external">introduction to the CF concepts</a>。真正的播放地址：<a href="http://traffic.libsyn.com/pivotalsoftwarepodcast/All_Things_Pivotal_Episode_11.mp3" target="_blank" rel="external">http://traffic.libsyn.com/pivotalsoftwarepodcast/All_Things_Pivotal_Episode_11.mp3</a></p>
+</li>
+</ol>
+<p>今天就到这儿啦。三月忽地就来了，天气暖和了，大家在编程之余，也要多出去走走哈。</p>
+<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/27/this-week-in-cloud-foundry-28th-february-2015/" target="_blank" rel="external">http://www.thisweekincf.com/blog/2015/02/27/this-week-in-cloud-foundry-28th-february-2015/</a></p>
+<blockquote>
+<p>译者：clongbupt</p>
+</blockquote>
+
+        
+
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="2015/02/17/Cloud-Foundry-社区二月第三周周报/">
+                Cloud Foundry 社区二月第三周周报
               </a>
             
           
@@ -185,6 +505,13 @@
             
           </span>
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/17/Cloud-Foundry-社区二月第三周周报/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/17/Cloud-Foundry-社区二月第三周周报/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -275,6 +602,13 @@
           </span>
         
           
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/16/One-Method-to-Debug-Heartbeat-Cluster/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/16/One-Method-to-Debug-Heartbeat-Cluster/"></span>
+            </a>
+          </span>
+          
         
       </div>
     </div>
@@ -334,6 +668,13 @@
             
           </span>
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/04/24/博客搭建架构/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/24/博客搭建架构/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -442,6 +783,13 @@
             
           </span>
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/08/22/monitoring_on_cloudfoundry/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/22/monitoring_on_cloudfoundry/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -650,6 +998,13 @@ users = Users.<span class="function"><span class="title">all</span><span class="
             
           </span>
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/08/12/chef相关知识/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/12/chef相关知识/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -899,6 +1254,13 @@ Resolving deltas: <span class="number">100</span>% (<span class="number">71</spa
           </span>
         
           
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2013/08/11/knife命令/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/11/knife命令/"></span>
+            </a>
+          </span>
+          
         
       </div>
     </div>
@@ -1047,697 +1409,6 @@ Resolving deltas: <span class="number">100</span>% (<span class="number">71</spa
 
 
   
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="2013/08/05/uaa_varz相关/">
-                Uaa Varz 相关
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-          <span class="post-time">
-            
-              发表于 2013-08-04
-            
-          </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          <h1 id="用户账号和鉴权服务API">用户账号和鉴权服务API</h1><h1 id="概述">概述</h1><p>用户账户和鉴权服务(UAA):</p>
-<ul>
-<li>从CC提出来的一个单独的应用</li>
-<li>拥有用户账户和鉴权源码</li>
-<li>通过JSON的方式调用</li>
-<li>支持标准的协议以向web应用提供单点登录(single sign-on)和权限委派(delegated authorization), 并且JSON API支持CC和CF的团队特性</li>
-<li>支持APIs和基本的登录和授权(login/approval)的界面</li>
-<li>支持外部WEB界面的用户账号管理的APIs</li>
-</ul>
-<p>大部分的API都是遵照OAuth2/OpenID Connect/SCIM标准</p>
-<h1 id="配置参数">配置参数</h1><p>一些操作模型和可选的特性可以通过配置文件来设置. 通过改变环境变量和系统属性可以设置很多标准化的脚本</p>
-<ul>
-<li><p>内部的username/password 鉴权源</p>
-<p>  UAA管理一个用户账户数据库. 这些账户可以通过基于密码的鉴权方式被使用, 这个类似于现存的CF用户账户. UAA</p>
-</li>
-<li><p>其他的鉴权源</p>
-<p>  其他的标准外部鉴权源也可以被使用. 最通用的是LDAP服务器, 或者一个外部的OpenID提供者. 其他的认证源可以是水平应用管理器, 比如OAuth2或者SAML协议。SAML2支持暂时还不在计划列表中, 但是很快会被开发.</p>
-</li>
-</ul>
-<h1 id="鉴权和授权的认证APIs">鉴权和授权的认证APIs</h1><p>这一节处理机器之间的联调, 而不是浏览器, 尽管他们中的有些可能有认真用户可以通过浏览器访问的内容. 所有机器的请求都接受JSON格式的Header</p>
-<p><code>/userinfo</code> <code>/check_id</code>和<code>/token</code>这些访问点在<code>OpenID Connect</code> 和 <code>OAuth2</code>标准中被指定, 并且应该被CF实例的web应用使用, 比如micro, www, support, 但是不能被vmc使用</p>
-<h1 id="OAuth范围">OAuth范围</h1><p>OAuth2的定义里面有一个scope参数的作为token授权请求的一部分, 该授权包含了一堆的scope变量.</p>
-<p>范围变量是完全任意的并且可以被任何资源服务器通过token取得</p>
-<ol>
-<li><p>在客户端注册的时候有可选的步骤，客户端声明它要请求哪一个scopes或者鉴权服务器来限制它可以请求的scopes. 然后鉴权服务器便会检查包含合法scope的token请求.</p>
-</li>
-<li><p>每一个资源服务器都有一个唯一的ID, 比如一个URI. 并且另一个在客户端注册时可选的部分是提供一个允许资源的列表给询问的客户端. 鉴权服务器将token同允许的资源id绑定, 并且通过<code>/check_token</code>的URL来提供信息, 这样资源服务器可以在提供资源前检查它们自己的ID同token的绑定是不是在允许的列表中.</p>
-</li>
-<li><p>资源ID有scope一些字符, 除非客户端不需要知道这些信息, 这些信息会在鉴权服务器和资源服务器之间交换. 这个文档中的示例使用<code>scope</code>参数来标识一个资源服务器. 比如： 一个Cloud Controller实例. </p>
-</li>
-</ol>
-<h1 id="鉴权码的授权">鉴权码的授权</h1><p>OAuth2定义的实现<br>干货来了, 重点标注一下<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="header">浏览器请求码: `GET /oauth/authorize`</span><br><span class="line">~~~~~~~~~~~~~~~~~~</span></span><br></pre></td></tr></table></figure></p>
-<p><em>HTML响应码</em></p>
-<ul>
-<li>请求: <code>GET /oauth/authorize</code></li>
-<li><p>请求体: spec中规定的一些参数, 再加上<code>application/x-www-form-urlencoded</code>格式的查询模块</p>
-<ul>
-<li><code>response_type=code</code></li>
-<li><code>client_id=www</code></li>
-<li><code>scope=read write password</code></li>
-<li><code>redirect_uri</code>是可选的, 因为可以预先注册</li>
-</ul>
-</li>
-<li><p>请求头：</p>
-<ul>
-<li><code>Cookie:JSESSIONID=ADHGFKHDSJGFGF; Path /</code> - UAA给客户端的鉴权cookie. 如果用户浏览器没有cookie的话会被跳转到<code>/login</code>, 并且最终会跳转到<code>/oauth/authrize</code></li>
-</ul>
-</li>
-<li><p>响应头： location跟spec里面定义的一样, 包含<code>access_token</code>, 如果成功的话:</p>
-<pre><code><span class="status">HTTP/1.1 <span class="number">302</span> Found</span>
-<span class="attribute">Location</span>: <span class="string">https://www.cloudfoundry.example.com?code=F45jH</span>
-</code></pre></li>
-<li><p>响应码:</p>
-<pre><code>302 - Found
-</code></pre></li>
-</ul>
-<p>非浏览器请求码: <code>GET /oauth/authorize</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;*JSON Response*&#10;&#10;&#22914;&#26524;&#23458;&#25143;&#31471;&#35831;&#27714;&#19968;&#20010;JSON&#30340;&#21709;&#24212;(&#36890;&#36807;`Accept`&#30340;header)&#24182;&#19988;&#29992;&#25143;&#36824;&#27809;&#26377;&#35748;&#21487;&#25480;&#26435;, UAA&#20250;&#21457;&#36865;&#19968;&#20010;&#24102;&#26377;&#19968;&#20123;&#26377;&#29992;&#20449;&#24687;&#30340;JSON&#23545;&#35937;, &#36825;&#20123;&#20869;&#23481;&#21487;&#20197;&#35753;&#29992;&#25143;&#38405;&#35835;&#24182;&#19988;&#35814;&#23613;&#22320;&#35748;&#21487;&#25480;&#26435;.&#10;&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#34;message&#34;:&#34;To confirm or deny access POST to the following locations with the parameters requested.&#34;&#10;&#9;&#9;&#9;&#34;scopes&#34;:[&#10;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;text&#34;:&#34;Access your data with scope &#39;openid&#39;&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;code&#34;:&#34;scope.openid&#34;&#10;&#9;&#9;&#9;&#9;&#125;,&#10;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;text&#34;:&#34;Access your &#39;cloud_controller&#39; resources with scope &#39;read&#39;&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;code&#34;:&#34;scope.cloud_controller.read&#34;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;...&#10;&#9;&#9;&#9;],&#10;&#9;&#9;&#9;&#34;client_id&#34;:&#34;idtestapp&#34;,&#10;&#9;&#9;&#9;&#34;redirect_uri&#34;:&#34;http://nowhere.com&#34;,&#10;&#9;&#9;&#9;&#34;options&#34;:&#123;&#10;&#9;&#9;&#9;&#9;&#34;deny&#34;:&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;location&#34;:&#34;https://uaa.cloudfoundry.com/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;value&#34;:&#34;false&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;path&#34;:&#34;/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;key&#34;:&#34;user_oauth_approval&#34;&#10;&#9;&#9;&#9;&#9;&#125;&#65292;&#10;&#9;&#9;&#9;&#9;&#34;confirm&#34;:&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;location&#34;:&#34;https://uaa.cloudfoundry.com/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;value&#34;:&#34;true&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;path&#34;:&#34;/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;key&#34;:&#34;user_oauth_approval&#34;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#125;&#10;&#10;&#21019;&#24314;&#19968;&#20010;&#29992;&#25143;&#25480;&#26435;&#39029;&#38754;&#26368;&#26377;&#29992;&#30340;&#20449;&#24687;&#26159;&#35831;&#27714;&#30340;scope&#21015;&#34920;, &#23458;&#25143;&#31471;ID&#21644;&#35831;&#27714;&#36339;&#36716;URI&#10;&#10;&#23458;&#25143;&#31471;&#21253;&#21547;Token: `POST /oauth/token`</span><br></pre></td></tr></table></figure></p>
-<p>参见 <code>oauth2 token endpoint</code></p>
-<h1 id="管理节点">管理节点</h1><h2 id="基本概念_GET_/varz">基本概念 <code>GET /varz</code></h2><p>鉴权是使用携带配置文件中配置的验证信息的HTTP<br>通过 <code>varz.username</code> 和 <code>varz.password</code>从<code>/varz</code>节点拉取信息</p>
-<p>data是通过JMX <code>MBeanServer</code> 暴露出的细节信息</p>
-<p>更多详细的信息是通过下面的链接提供</p>
-<ul>
-<li>Request <code>GET /varz</code></li>
-<li><p>响应体：</p>
-<pre><code>{
-    "<span class="attribute">type</span>": <span class="value"><span class="string">"UAA"</span></span>,
-    "<span class="attribute">links</span>": <span class="value">{
-        "<span class="attribute">Users</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/Users"</span></span>,
-        "<span class="attribute">JMImplementtation</span>":
-        <span class="value"><span class="string">"http://localhost:8080/uaa/varz/JMImplement"</span></span>,
-        "<span class="attribute">spring.application</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/com.sun.management"</span></span>,
-        "<span class="attribute">Catalina</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/Catalina"</span></span>,
-        "<span class="attribute">env</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/env"</span></span>,
-        "<span class="attribute">java.lang</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/java.lang"</span></span>,
-        "<span class="attribute">java.util.logging</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/java.util.logging"</span>
-    </span>}</span>,
-    "<span class="attribute">mem</span>": <span class="value"><span class="number">191734496</span></span>,
-    "<span class="attribute">memory</span>": <span class="value">{
-        "<span class="attribute">verbose</span>": <span class="value"><span class="literal">false</span></span>,
-        "<span class="attribute">non\_heap\_memory\_usage</span>": <span class="value">{
-            "<span class="attribute">max</span>": <span class="value"><span class="number">1845493376</span></span>,
-            "<span class="attribute">committed</span>": <span class="value"><span class="number">30834688</span></span>,
-            "<span class="attribute">init</span>": <span class="value"><span class="number">19136512</span></span>,
-            "<span class="attribute">used</span>": <span class="value"><span class="number">30577744</span>
-        </span>}</span>,
-        "<span class="attribute">object\_pending\_finalization_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">heap\_memory_usage</span>": <span class="value">{
-            "<span class="attribute">max</span>": <span class="value"><span class="number">9022996648</span></span>,
-            "<span class="attribute">committed</span>": <span class="value"><span class="number">84475904</span></span>,
-            "<span class="attribute">init</span>": <span class="value"><span class="number">63338494</span></span>,
-            "<span class="attribute">used</span>": <span class="value"><span class="number">19173496</span>
-        </span>}
-    </span>}</span>,
-    "<span class="attribute">token_store</span>": <span class="value">{
-        "<span class="attribute">refresh\_token\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">access\_token\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">flush_interval</span>": <span class="value"><span class="number">1000</span>
-    </span>}</span>,
-    "<span class="attribute">audit_service</span>": <span class="value">{
-        "<span class="attribute">user\_authentication\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">user\_not\_fount\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">principal\_authentication\_failure\_count</span>": <span class="value"><span class="number">1</span></span>,
-        "<span class="attribute">user\_authentication\_failure\_count</span>": <span class="value"><span class="number">0</span>
-    </span>}
-    <span class="string">"spring.profiles.active"</span>: []
-</span>}
-</code></pre></li>
-</ul>
-<h2 id="详细的概念_GET_/varz/{domain}">详细的概念  <code>GET /varz/{domain}</code></h2><p>更多详细的信息可以通过<code>/varz</code>后面的link取得</p>
-<p><code>/varz/env</code> 链接是高层的JMX的<code>MBeanServer</code>域名信息</p>
-<p><code>/varz/Catalina</code> 对于对象图中有一些已知的循环, 我们可以避免</p>
-<ul>
-<li>请求: <code>GET /varz/{domain}</code></li>
-<li><p>响应体 (domain=Catalina)</p>
-<pre><code>{
-    "<span class="attribute">global\_request\_processor</span>": <span class="value">{
-        "<span class="attribute">http-8080</span>": <span class="value">{
-            "<span class="attribute">processing_time</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">max_time</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">request_count</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">bytes_sent</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">bytes_received</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">error_count</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">modeler_type</span>": <span class="value"><span class="string">"org.apache.coyote.RequestGroupInfo"</span>
-        </span>}
-    </span>}</span>
-</code></pre></li>
-</ul>
-<pre><code>}
-</code></pre><p>Spring应用的Beans通过<code>/varz/spring.application</code>暴露出来</p>
-
-        
-
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/uaa/">
-                #uaa
-              </a>
-            
-              <a href="/tags/varz/">
-                #varz
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="2013/07/21/micro-paas在CentOS6上安装/">
-                micro-paas 在 CentOS6 上安装
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-          <span class="post-time">
-            
-              发表于 2013-07-20
-            
-          </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          <p>参考资料</p>
-<ul>
-<li><a href="https://github.com/youdao-cf/docs/tree/master/install" target="_blank" rel="external">有道CF组的CentOS 6安装文档</a></li>
-</ul>
-<h4 id="1-1_nats安装">1.1 nats安装</h4><p>build.rb步骤</p>
-<pre><code><span class="bullet">* </span>安装ruby   # 可以先尝试yum安装  而后尝试编译安装, 具体可以参考[<span class="link_label">网址</span>](<span class="link_url">https://github.com/limengyun2008/vcap/blob/yae/dev_setup/cookbooks/ruby/libraries/ruby_install.rb</span>)
-
-<span class="bullet">* </span>git clone http://git.ebcloud.com/paas-cf-v2/nats.git  # 自行寻找详细地址
-<span class="bullet">* </span>git checkout  #固定版本
-<span class="bullet">* </span>git submodule update --init   # 进行子模块更新
-</code></pre><p>control.rb步骤</p>
-<pre><code><span class="keyword">*</span> 生成nats的配置文件
-
-<span class="keyword">*</span> ./bin/nats-server -d -c router.yml   <span class="comment"># 执行启动命令 -d命令是启动debug</span>
-</code></pre><h4 id="1-2_gorouter安装">1.2 gorouter安装</h4><p>build.rb步骤</p>
-<pre><code><span class="keyword">*</span> go语言环境    <span class="comment"># 推荐寻找yum安装的方式</span>
-
-<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/gorouter.git
-<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
-<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
-
-<span class="keyword">*</span> ./bin/go install router/router   <span class="comment"># router构建</span>
-</code></pre><p>control.rb步骤</p>
-<pre><code>* 修改<span class="keyword">router</span>的配置文件
-
-* ./bin/<span class="keyword">router</span> -c <span class="keyword">router</span>.yml   <span class="comment"># 执行启动命令</span>
-</code></pre><h4 id="1-3_uaa安装">1.3 uaa安装</h4><p>build.rb步骤</p>
-<pre><code><span class="keyword">*</span> 安装java和maven环境
-
-<span class="keyword">*</span> 安装postgres数据库    <span class="comment"># 此处不推荐用yum安装, 安装的版本可能不对, 版本务必统一为9.2.4, 最好编译安装, 如果遇到问题再一起研究</span>
-<span class="keyword">*</span> 编译citext拓展  <span class="comment"># 这个CC数据库需要用到</span>
-
-<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/uaa.git
-<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
-<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
-
-<span class="keyword">*</span> 删除bin/uaa里面的<span class="string">"-P vcap"</span>这一块，是对uaa启动代码进行hack
-<span class="keyword">*</span> 调整maven repo的位置
-</code></pre><p>control.rb步骤</p>
-<pre><code><span class="keyword">*</span> 判断是否第一次执行
-    如果是 创建uaa数据库 并创建访问uaa数据库的root角色
-
-<span class="keyword">*</span> 修改uaa的配置文件
-
-<span class="keyword">*</span> bin/uaa   <span class="comment"># 执行启动命令</span>
-</code></pre><h4 id="1-4_cloud_controller安装">1.4 cloud_controller安装</h4><p>build.rb步骤</p>
-<pre><code><span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/cloud_controller_ng.git
-<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
-<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
-
-<span class="keyword">*</span> 安装基础库，主要包括libxml2-dev libmysql libsqlite libpq 它们分别是xml/mysql/sqlte/postgres的ruby支持
-不过在redhat下面的支持库不是以lib为前缀， 尝试执行
-sudo yum -y install mysql-devel postgresql-devel sqlite-devel
-
-<span class="keyword">*</span> bundle install
-</code></pre><p>control.rb步骤</p>
-<pre><code><span class="comment">* 判断是否第一次执行</span>
-    如果是 创建<span class="keyword">CC</span>数据库 并创建访问<span class="keyword">CC</span>数据库的root角色
-
-<span class="comment">* 修改cloud_controller的配置文件</span>
-
-<span class="comment">* bin/cloud_controller   # 执行启动命令</span>
-</code></pre><h4 id="1-5_health_manager安装">1.5 health_manager安装</h4><p>build.rb步骤</p>
-<pre><code><span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/health_manager.git
-<span class="keyword">*</span> git checkout  <span class="comment"># 固定版本</span>
-
-<span class="keyword">*</span> bundle install
-</code></pre><p>control.rb步骤</p>
-<pre><code><span class="keyword">*</span> 修改health_manager的配置文件
-
-<span class="keyword">*</span> 设置BUNDLE_GEMFILE的env
-<span class="keyword">*</span> ./health_manager   <span class="comment"># 执行启动命令 health_manager必须要到bin目录下执行, 不能通过bin/health_manager执行</span>
-</code></pre><h4 id="1-6_dea安装">1.6 dea安装</h4><p>build.rb步骤</p>
-<pre><code><span class="bullet">* </span>先安装warden 参考之前的ubuntu下的build和control   TODO  考虑平台问题debootstrap quota apparmor-profiles在CentOS下是什么？具体请参考[<span class="link_label">网址</span>](<span class="link_url">https://github.com/youdao-cf/docs/blob/master/install/warden.html.md</span>)
-
-<span class="bullet">* </span>git clone http://git.ebcloud.com/paas-cf-v2/dea_ng.git
-<span class="bullet">* </span>git checkout  #固定版本
-<span class="bullet">* </span>git submodule update --init   # 进行子模块更新
-
-<span class="bullet">* </span>bundle install  # 如果带false参数 表示当前项目下的Gemfile中的test/production等group不会被调用
-
-<span class="bullet">* </span>go/bin/go get launchpad.net/goyaml   # 这一步是干什么
-
-<span class="bullet">* </span>bundle exec rake dir<span class="emphasis">_server:install  # 安装directory_</span>server
-
-<span class="bullet">* </span>修改buildpack获取语言包的位置
-</code></pre><p>control.rb步骤</p>
-<pre><code><span class="keyword">*</span> 修改dea的配置文件
-
-<span class="keyword">*</span> bin/dea config_file   <span class="comment"># 之前需要先启动warden directory_server</span>
-</code></pre><h4 id="1-7_service安装">1.7 service安装</h4><p>build.rb步骤</p>
-<pre><code><span class="keyword">*</span> 预先安装mysql    <span class="comment"># 可以先用yum安装, 再编译安装  不过得注意版本统一</span>
-<span class="keyword">*</span> 预先安装redis    <span class="comment"># 编译安装即可</span>
-
-<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/cf-services-release.git
-<span class="keyword">*</span> git checkout  <span class="comment"># 固定版本</span>
-<span class="keyword">*</span> git submodule update --init  <span class="comment"># 进行子模块更新</span>
-
-<span class="keyword">*</span> bundle install
-</code></pre><p>control.rb步骤</p>
-<pre><code><span class="bullet">* </span>修改mysql<span class="emphasis">_gateway 和 mysql_</span>node 的配置文件
-
-<span class="bullet">* </span>bin/mysql<span class="emphasis">_gateway config_</span>file
-<span class="bullet">* </span>bin/mysql<span class="emphasis">_node config_</span>file
-</code></pre>
-        
-
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/centos/">
-                #centos
-              </a>
-            
-              <a href="/tags/micro-paas/">
-                #micro-paas
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
-    
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="2013/07/20/cloudfoundry_ppt总结/">
-                Cloud Foundry PPT 总结
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-          <span class="post-time">
-            
-              发表于 2013-07-19
-            
-          </span>
-        
-          
-        
-      </div>
-    </div>
-
-    
-      <div class="post-body">
-
-        
-        
-
-        
-          <h1 id="cloud_foundry_ppt总结">cloud foundry ppt总结</h1><h2 id="CFv2_Intro_俞勇_vmware">CFv2 Intro  俞勇 vmware</h2><p><a href="http://vdisk.weibo.com/s/KF4II/1374238063" target="_blank" rel="external">ppt地址</a></p>
-<h3 id="1-_Cloud_foundry_V2版的主要更新">1. Cloud foundry V2版的主要更新</h3><h4 id="1-1_Go_Router">1.1 Go Router</h4><p>支持WebSocket以及其他方式   是指带Nginx或不带Nginx?</p>
-<p>支持/varz和/healthz路由的http监控</p>
-<p>Roadmap路线图</p>
-<pre><code>* HTTP Connect support  HTTP连接支持
-* Non-HTTP protocols 非HTTP协议支持
-* App-specific metric gathering    应用特定信息收集
-    <span class="string">|-- Throught                   吞吐量</span>
-    <span class="string">|-- Latency                    延时</span>
-    <span class="string">|-- Bandwidth                  带宽</span>
-    <span class="string">|-- HTTP Reponse codes        HTTP响应码</span>
-</code></pre><h4 id="1-2_DEA">1.2 DEA</h4><p>一个有意思的等式：</p>
-<pre><code>Droplet = app <span class="tag">code</span> + runtime + framework + container + scripts
-</code></pre><p>Roadmap路线图</p>
-<pre><code><span class="bullet">* </span>Placement pools 一个存放实例的池子
-<span class="bullet">* </span>Shared runtimes 一个共享的运行时
-</code></pre><p>参考资料， 补充： <strong>李梦云</strong>是国内CF Redhat移植的大神， 多关注他的github和博客</p>
-<pre><code><span class="string">http:</span><span class="comment">//limengyun.com/cloudfoundry/dea.html</span>
-</code></pre><p>通过NATS，DEA同CC交互的例子</p>
-<p>DEA启动会在NATS上发布消息</p>
-<pre><code><span class="attribute">DEA</span>: NATS.<span class="function">publish</span>(‘dea.start’, <span class="variable">@hello_message_json</span>)
-<span class="variable">@hello_message_json</span> for UUID, IP, Port, Version of the DEA
-</code></pre><p>CC启动一个Droplet实例时</p>
-<p>a. DEA监听NATS 对自己UUID的消息主题进行订阅</p>
-<pre><code>DEA: NATS.subscribe(‘dea.<span class="comment">#{UUID}.start’) {|msg|process_dea_start(msg)}</span>
-Send message <span class="operator">with</span> <span class="operator">the</span> topic <span class="operator">of</span> “dea.<span class="comment">#{uuid}.start” to start this DEA</span>
-</code></pre><p>b. CC通过NATS向DEA发布启动命令</p>
-<pre><code>Cloud Controller: NATS.<span class="function"><span class="title">publish</span><span class="params">(‘dea.#{dea_id}.start’,json)</span></span>
-DEA get the msg, call <span class="function"><span class="title">process_dea_start</span><span class="params">(msg)</span></span>
-msg = droplet_id, instance_index, service, runtime
-</code></pre><p>TODO</p>
-<h4 id="1-3_Warden">1.3 Warden</h4><p>科普知识：</p>
-<ul>
-<li><p>源自于<a href="http://en.wikipedia.org/wiki/Cgroups" target="_blank" rel="external">Cgroup</a>, 非硬件类<a href="https://en.wikipedia.org/wiki/Hypervisor" target="_blank" rel="external">Hypervisor</a>的一种隔离技术</p>
-</li>
-<li><p>Warden是一个孤立的环境，Droplet只可以获得受限的CPU,内存，磁盘访问权限，网络权限</p>
-</li>
-<li><p>目前在GCE，OpenShift等IaaS/PaaS平台中广泛使用</p>
-</li>
-<li><p>满足应用隔离要求的同时，获得高性能和伸缩性</p>
-</li>
-<li><p><strong>不直接使用Cgroup，以确保Cloud Foundry DEA对操作系统无依赖性</strong></p>
-</li>
-</ul>
-<h4 id="1-4_Build_Pack">1.4 Build Pack</h4><p>New CF CLI 新的CF客户端</p>
-<pre><code><span class="bullet">* </span>支持http代理?
-<span class="bullet">* </span>支持CC<span class="emphasis">_ng的api</span>
-</code></pre><p>Org &amp; Space &amp; Users 机构 -&gt; 空间 -&gt; 用户 三层角色结构</p>
-<pre><code>* org是CF架构里面最顶级的对象
-* 一个机构(org)可以包含多个空间(space)
-* 用户可以是机构管理员, 机构审核员 <span class="keyword">...</span> 你能想到的很多的有三层角色组成权限集合
-</code></pre><p>大致关系如下：</p>
-<pre><code><span class="comment">Org</span>
-    <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span> <span class="comment">Domains</span>
-        <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span> <span class="comment">Routes</span> &lt;<span class="literal">-</span><span class="literal">-</span>&gt; <span class="comment">Applications</span>
-    <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span> <span class="comment">Spaces</span>
-        <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span> <span class="comment">Applications</span> &lt;<span class="literal">-</span><span class="literal">-</span>&gt; <span class="comment">Routes</span>
-        <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span> <span class="comment">Services</span>
-    <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span> <span class="comment">Users</span>
-</code></pre><h4 id="1-5_Customized_domain">1.5 Customized domain</h4><pre><code>* 更新DNS的cname **具体方法?**
-
-* 通过调用<span class="keyword">cd</span>命令可以将`route`和`domain`映射
-
-        <span class="keyword">cf</span> <span class="built_in">map</span>-domain somedomain.<span class="keyword">com</span>
-        <span class="keyword">cf</span> <span class="built_in">map</span> sintra-hello foo somedomain.<span class="keyword">com</span>
-        <span class="keyword">cf</span> restart sinatra-hell
-</code></pre><h4 id="1-6_Customized_Buildpacks">1.6 Customized Buildpacks</h4><p>主要分为三部分：</p>
-<pre><code><span class="bullet">* </span>Runtime 运行时 Ruby/Java/Node/Python
-<span class="bullet">* </span>Container 容器 Tomcat/Websphere/Karaf
-<span class="bullet">* </span>Application .WAR / .rb / .py
-</code></pre><p>如何使用</p>
-<pre><code><span class="keyword">cf</span> push my-<span class="keyword">new</span>-app --buildpack=gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/johndoe/my-buildpack.git
-</code></pre><p>相关资料</p>
-<pre><code><span class="bullet">* </span>[<span class="link_label">BuildPacks List</span>](<span class="link_url">https://devcenter.heroku.com/articles/third-party-buildpacks</span>)
-<span class="bullet">* </span>[<span class="link_label">buildPack示例</span>](<span class="link_url">https://github.com/cdan/cf-mono-buildpack</span>)
-<span class="bullet">* </span>[<span class="link_label">CF的buildpack文档</span>](<span class="link_url">http://docs.cloudfoundry.com/docs/using/deploying-apps/buildpacks.html</span>)
-</code></pre><p>开发示例</p>
-<p>探测 detect</p>
-<pre><code><span class="shebang">#!/usr/bin/env ruby</span>
-gemfile_path = File.join ARGV[<span class="number">0</span>], <span class="string">"Gemfile"</span>
-
-<span class="keyword">if</span> File.exist?(gemfile_path)
-    puts <span class="string">"Ruby"</span>
-    exit <span class="number">0</span>
-<span class="keyword">else</span>
-    exit <span class="number">1</span>
-end
-</code></pre><p>编译 compile</p>
-<pre><code><span class="comment">#!/usr/bin/env ruby</span>
-<span class="comment">#sync output</span>
-
-$<span class="keyword">stdout</span>.sync = <span class="constant">true</span>
-
-build_path = ARGV[<span class="number">0</span>]
-cache_path = ARGV[<span class="number">1</span>]
-
-install_ruby
-
-<span class="keyword">private</span>
-
-def install_ruby
-    puts <span class="string">"Installing Ruby"</span>
-    <span class="comment"># !!! build tasks go here !!!</span>
-    <span class="comment"># download ruby to cache_path</span>
-    <span class="comment"># install ruby</span>
-<span class="function"><span class="keyword">end</span></span>
-</code></pre><p>发布 release</p>
-<p>config_vars：</p>
-<pre><code>{
-    <span class="string">"config_vars"</span> =&gt; {}, <span class="comment"># environment variables that should be set</span>
-    <span class="string">"default_process_types"</span> =&gt; {} <span class="comment">#</span>
-}.to_yaml
-</code></pre><p>default_process_types:</p>
-<pre><code>{
-    <span class="string">"config_vars"</span> =&gt; { <span class="string">"RACK_ENV"</span> =&gt; <span class="string">"production"</span> },
-    <span class="string">"default_process_types"</span> =&gt; { <span class="string">"web"</span> =&gt; <span class="string">"bundle exec rackup config.ru -p $PORT"</span> }
-}.to_yaml
-</code></pre><p>Roadmap 路线图</p>
-<pre><code><span class="bullet">* </span>vFabric Import tool    ?
-<span class="bullet">* </span>Buildpack manager      buildPack管理器
-<span class="bullet">* </span>Enhanced caching       增强的缓存
-<span class="bullet">* </span>Version policy         版本管理策略
-</code></pre><h4 id="1-7_Service_Connector_(CLI)">1.7 Service Connector (CLI)</h4><p><code>service gateway</code> 提供了一个接口，既可以是本地的、自身的服务， 也可以是外部的第三方服务</p>
-<p>服务可以是在<code>service node</code>上面跑的服务如mysql，也可以是第三方的SaaS服务</p>
-<p><code>service gateway</code>的功能：</p>
-<pre><code><span class="bullet">* </span>广播service catalog
-<span class="bullet">* </span>向service_node发布create/delete/bind/unbind的命令
-<span class="bullet">* </span>向CC请求现存的服务实例和服务绑定情况, 并在本地做缓存  这个是存在内存中的  <span class="strong">__外链__</span>
-<span class="bullet">* </span>孤儿服务管理  孤儿服务是指在node上申请成功，但在CC数据库中没有记录的服务实例
-<span class="bullet">* </span>SaaS marketplace gateway   SaaS市场网关
-</code></pre><p>RoadMap 路线图</p>
-<pre><code><span class="bullet">* </span>API Update   估计是CC同Gateway的交互位置   目前仍然用的是V1接口
-<span class="bullet">* </span>Multi-node support  多节点支持
-<span class="bullet">* </span>Standalone services 单实例服务
-<span class="bullet">* </span>looser coupling     松散耦合
-</code></pre><p>Service Connector   ? TODO</p>
-<pre><code>* Service type templates : Prompts <span class="keyword">for</span> creating instances known service types such <span class="keyword">as</span> Oracle <span class="keyword">and</span> SQLServer 服务类型模板的支持   对于常见的服务提供
-* <span class="keyword">Option</span> <span class="keyword">for</span> a service instances <span class="keyword">shared</span> across spaces   提供跨空间的服务实例共享功能选项
-</code></pre><h4 id="1-8_其他">1.8 其他</h4><p>还有两个主要组件CC和UAA， PPT中也有涉及但篇幅不多</p>
-<p>UAA的功能</p>
-<pre><code>Token <span class="built_in">Server</span>   一般会在HTTP头中得到  TODO增加service的理解
-ID <span class="built_in">Server</span> (User management)
-OAuth Scopes (Groups)
-Login UI
-Access auditing
-</code></pre><p>UAA Roadmap路线图</p>
-<pre><code>LDAP Login <span class="built_in">Server</span>
-Active Directory Login <span class="built_in">Server</span>
-Horizontally scalable Login <span class="built_in">Server</span>
-App User Management Service
-</code></pre><p>CC RoadMap</p>
-<pre><code>Availability zone aware placement
-Configurable network policy
-OAuth scope <span class="keyword">and</span> role mapping
-Richer auditing <span class="keyword">with</span> queries
-OpenStack Swift blob <span class="keyword">configuration</span>
-</code></pre><h3 id="2-_其他资讯">2. 其他资讯</h3><p>cloudfoundry Enterprise 企业版即将推出 基于vSphere, 非常容易安装, 自带很多app</p>
-<h2 id="Cloudfoundry实践_-_fishbuaa(李梦云)_-_网易有道">Cloudfoundry实践 - fishbuaa(李梦云) - 网易有道</h2><p><a href="http://vdisk.weibo.com/s/KF8sy/1374238526" target="_blank" rel="external">ppt地址</a></p>
-<p>主要内容是： 用源码方式部署一个cloudfoundry集群及其中的要点   <strong>这个跟我们组类似</strong></p>
-<p>PPT所说的视频： <a href="http://limengyun.com/cloudfoundry/index.html" target="_blank" rel="external">http://limengyun.com/cloudfoundry/index.html</a></p>
-<p>PPT中的内容不太多, 而且有较多内容与我们做过的工作重复，更多内容需要参考他的博客理解，根据他的博客，我整理了一些要点：</p>
-<ol>
-<li><p>ccdb 必须支持transaction</p>
-</li>
-<li><p>cc同uaa之间是进行的对称加密</p>
-</li>
-<li><p>Idap 自定义的验证源   即 cloud foundry中的login-server组件</p>
-</li>
-<li><p>web console 也是对官方的cfoundry进行封装, 同样基于sinatra框架， <a href="https://github.com/limengyun2008/console" target="_blank" rel="external">console地址</a></p>
-<pre><code><span class="bullet">* </span>任务队列beanstalkd，解决部署问题
-<span class="bullet">* </span>根据guid创建svn目录
-</code></pre></li>
-<li><p>CF V1.0 同 CF V2.0 的主要区别</p>
-<ul>
-<li>1.0中router使用的是nginx+lua+ruby server的方式，2.0使用了go语言gorouter，据称支持了websocket且极大提升了性能。</li>
-<li>2.0中cloud contoller新增了quota，org，space等新的概念，更方便的进行权限和资源管理。</li>
-<li>1.0中为应用打包使用的是stager组件，2.0中移除了该组件，将打包功能加入到dea中，并将所有语言的打包程序以submodule的形式放在buildpacks/vendors 目录下。</li>
-<li>完全重写了health manager<br>*1.0里 dea可以独立运行，一个dea负责的所有app都以子进程的形式挂在dea主进程下。但2.0之后dea强依赖于warden提供的安全容器来运行app了</li>
-</ul>
-</li>
-<li><p>小道消息 : 2.0用了go重写了1.0用nginx+lua嵌入脚本的router 改称gorouter 号称比1.0有4X的性能提升，如果属实，go前途无量。</p>
-</li>
-<li><p>其他可能有用的组件</p>
-<p> Syslog Aggregator : 归集log的组件<br> Collector : 监听nats中的各类消息来监控各组件的运行状态</p>
-</li>
-<li><p>Cloud Controller的主要功能:</p>
-<ul>
-<li>对apps的增删改读；</li>
-<li>启动、停止应用程序；</li>
-<li>Staging apps（把apps打包成一个droplet）；   TODO完成</li>
-<li>修改应用程序运行环境，包括instance、mem等等；</li>
-<li>管理service，包括service与app的绑定等；</li>
-<li>Cloud环境的管理；</li>
-<li>修改Cloud的用户信息；</li>
-<li>查看Cloud Foundry，以及每一个app的log信息。</li>
-</ul>
-</li>
-<li><p>CC和uaa对用户进行认证   主要是uaa在认证用户后生成token，然后用户请求cloud_controller时, 将这个token以request的Authentication header的形式伴随HTTP请求发送, 一个代码示例</p>
-<p> REQUEST: GET <a href="http://api.vcap.me/v2/spaces/1136694c-1bc2-495e-9aac-1b89894a6dcc/summary" target="_blank" rel="external">http://api.vcap.me/v2/spaces/1136694c-1bc2-495e-9aac-1b89894a6dcc/summary</a><br> REQUEST_HEADERS:<br>   Accept : application/json<br>   Authorization : bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzZjMyMTNmZS1jODMzLTQ4YmMtYTYwZi00ZmM0NTAzODk0ZjAiLCJzdWIiOiJkNmE2M2Q1OC04ZmQ4LTRhNzUtOGZhOC1mNWI2ZDJjOGQwMDAiLCJzY29wZSI6WyJwYXNzd29yZC53cml0ZSIsImNsb3VkX2NvbnRyb2xsZXIud3JpdGUiLCJvcGVuaWQiLCJjbG91ZF9jb250cm9sbGVyLnJlYWQiXSwiY2xpZW50X2lkIjoiY2YiLCJjaWQiOiJjZiIsInVzZXJfaWQiOiJkNmE2M2Q1OC04ZmQ4LTRhNzUtOGZhOC1mNWI2ZDJjOGQwMDAiLCJ1c2VyX25hbWUiOiJsaW15IiwiZW1haWwiOiJsaW15QHJkLm5ldGVhc2UuY29tIiwiaWF0IjoxMzcxMzcyNjQyLCJleHAiOjEzNzE5Nzc0NDIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC91YWEvb2F1dGgvdG9rZW4iLCJhdWQiOlsib3BlbmlkIiwiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIl19.cd11MxTrbCCpG_5fU9_DV1_bE9Nz_2lQ_c1kari1WXI<br>   Content-Length : 0<br> RESPONSE: [200]<br> RESPONSE_HEADERS:<br>   connection : keep-alive<br>   content-length : 88<br>   content-type : application/json;charset=utf-8<br>   date : Mon, 17 Jun 2013 10:38:41 GMT<br>   server : nginx<br>   x-frame-options : sameorigin<br>   x-vcap-request-id : a9f046ec-9e1d-423d-ae8e-985495504d08<br>   x-xss-protection : 1; mode=block</p>
-</li>
-<li><p>cloud_controller的数据库 需要事物支持 比如postgresql, 而如果选用mysql的话，请务必使用innodb或其它支持事物处理的引擎， 而默认的Myisam不支持事务。<br>示例请看lib/cloud_controller/rest_controller/model_controller.rb</p>
-<pre><code><span class="comment"># Create operation</span>
-<span class="function"><span class="keyword">def</span> </span>create
-  logger.debug <span class="string">"create: <span class="subst">#{request_attrs}</span>"</span>
-
-  json_msg = <span class="keyword">self</span>.<span class="keyword">class</span><span class="constant">::CreateMessage</span>.decode(body)
-  <span class="variable">@request_attrs</span> = json_msg.extract(<span class="symbol">:stringify_keys</span> =&gt; <span class="keyword">true</span>)
-  raise <span class="constant">InvalidRequest</span> <span class="keyword">unless</span> request_attrs
-
-  before_create <span class="keyword">if</span> respond_to? <span class="symbol">:before_create</span>
-  obj = <span class="keyword">nil</span>
-  model.db.transaction <span class="keyword">do</span>
-    obj = model.create_from_hash(request_attrs)
-    validate_access(<span class="symbol">:create</span>, obj, user, roles)
-  <span class="keyword">end</span>
-
-  [
-    <span class="constant">HTTP::CREATED</span>,
-    { <span class="string">"Location"</span> =&gt; <span class="string">"<span class="subst">#{<span class="keyword">self</span>.<span class="keyword">class</span>.path}</span>/<span class="subst">#{obj.guid}</span>"</span> },
-    serialization.render_json(<span class="keyword">self</span>.<span class="keyword">class</span>, obj, <span class="variable">@opts</span>)
-  ]
-<span class="keyword">end</span>
-</code></pre></li>
-<li><p>Health Manager (简称HM) 主要负责监控app的状态，确保已经启动的app处于running状态，以及这些app的版本和instance数量是正确的。 这些确保机制主要是通过维护应用状态实现的，每个app有一个Actual State 实际运行状态，用来比较它和app的Desired State 期望状态。 当不匹配的情况出现的时候，就要把app的状态调整到期望状态，比如通过start/stop命令来控制missing/extra的instance。</p>
-</li>
-<li><p>cloud controller对请求的验证是通过解密在Authorization header中的token来实现的。 UAA可以仅仅起一个token分发者的作用，然后将用户认证的部分委托出去。</p>
-<p>cloudfoundry已经替我们考虑到了这一点。 只需要在cloud controller的配置项里配置到login这个配置为自己的登录服务器（假设叫login-server） 再使用cf或者cfoundry api 进行登录都会使用login-server来进行登录验证。</p>
-<p>其实登录请求分两种，一种是implicit登陆，即使用命令行客户端登陆的方式，另一种是专门给浏览器使用的登陆逻辑。 为了图省事我们浏览器和客户端都是用了同样的implicit登陆接口，直接把token存在cookie里，仅仅为了测试</p>
-</li>
-<li><p>dea的概念</p>
-<p>在提到buildpack之前 有必要解释一下DEA，dea全称是 droplet execution agency，即执行droplet的代理。</p>
-<p>droplet是cloudfoundry自创的一个概念，它是一个app的可运行实例配合实例启停脚本的压缩包。</p>
-<p>举例来说，如果我把一个php应用放置在某个路径下，然后将apache配置好，最后写一个启动脚本，然后将apache, php应用代码和启动脚本打成一个压缩包。 在另外一台环境完全相同的机器上，你只需要下载这个压缩包，解压到对应目录下，然后启动脚本，应用就可以完美的复制到这台机器上。 这就是cloudfoundry进行动态扩容的原理和基础。 一个打好压缩包就是一个droplet，打压缩包的程序就叫buildpack，打包的过程叫staging。 不同的应用类型对应的buildpack代码也不同。如果要增加一门cloudfoundry默认不支持的语言或者应用类型，就需要自定义buildpack。</p>
-</li>
-<li><p><a href="http://www.appfog.com" target="_blank" rel="external">http://www.appfog.com</a> 是一个基于cloudfoundry的paas，他自定义了许多语言的buildpack支持并在github上开源出来（github： <a href="https://github.com/appfog/" target="_blank" rel="external">https://github.com/appfog/</a> ）</p>
-</li>
-</ol>
-
-        
-
-      </div>
-    
-
-    
-      <div class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/cloudfoundry/">
-                #cloudfoundry
-              </a>
-            
-              <a href="/tags/community/">
-                #community
-              </a>
-            
-              <a href="/tags/ppt/">
-                #ppt
-              </a>
-            
-          </div>
-        
-
-        
-
-        
-        
-          <div class="post-eof"></div>
-        
-      </div>
-    
-  </div>
-
-
-  
 
           </div>
 
@@ -1770,7 +1441,7 @@ OpenStack Swift blob <span class="keyword">configuration</span>
       <p class="site-description motion-element">一个不会煮面的码农的自留地</p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
@@ -1778,7 +1449,7 @@ OpenStack Swift blob <span class="keyword">configuration</span>
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">3</span>
             <span class="site-state-item-name">页面</span>
         </div>
       </div>
@@ -1786,6 +1457,28 @@ OpenStack Swift blob <span class="keyword">configuration</span>
       
 
       <div class="social-info motion-element">
+        
+          
+            <span class="social-item">
+              <a href="https://github.com/clongbupt/">GitHub</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="https://facebook.com/clongbupt/">Facebook</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="https://twitter.com/clongbupt">Twitter</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="http://www.weibo.com/u/1085595672">Weibo</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="http://weibo.com/clongbupt">DouBan</a>
+            </span>
+          
         
       </div>
 
@@ -1803,7 +1496,7 @@ OpenStack Swift blob <span class="keyword">configuration</span>
       <div class="footer-inner">
         <div class="copyright">
   
-  &copy; &nbsp; 
+  &copy; &nbsp;  2013 - 
   2015
   <span class="with-love">
     <i class="icon-heart"></i>
@@ -1820,6 +1513,12 @@ OpenStack Swift blob <span class="keyword">configuration</span>
 </div>
 
 
+
+  <div class="cc-license">
+    <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+      <img src="images/cc-by-nc-sa.svg" alt="Creative Commons" />
+    </a>
+  </div>
 
 
 
@@ -2003,11 +1702,24 @@ OpenStack Swift blob <span class="keyword">configuration</span>
   
 
   
-  
 
   
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
   
 </body>
 </html>

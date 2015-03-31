@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
 
 
   <link rel="stylesheet" type="text/css" href="../../../../vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
@@ -26,8 +28,18 @@
 
 
 
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50c15455e37f70aea674ff4a663eef27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
-  <title> Cloud Foundry 社区周报 // clongbupt的小窝 </title>
+
+  <title> Cloud Foundry 社区二月第四周周报 // clongbupt的小窝 </title>
 </head>
 
 <body>
@@ -65,10 +77,26 @@
       </li>
     
       
-      <li class="menu-item menu-item-tags">
-        <a href="../../../..//tags">
-          <i class="menu-item-icon icon-tags"></i> <br />
-          标签
+      <li class="menu-item menu-item-about">
+        <a href="../../../..//about">
+          <i class="menu-item-icon icon-about"></i> <br />
+          关于
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-gallery">
+        <a href="../../../..//gallery">
+          <i class="menu-item-icon icon-gallery"></i> <br />
+          menu.gallery
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-library">
+        <a href="../../../..//library">
+          <i class="menu-item-icon icon-library"></i> <br />
+          menu.library
         </a>
       </li>
     
@@ -98,7 +126,7 @@
           
           
             
-              Cloud Foundry 社区周报
+              Cloud Foundry 社区二月第四周周报
             
           
         </h1>
@@ -107,10 +135,17 @@
       <div class="post-meta">
           <span class="post-time">
             
-              发表于 2015-02-16
+              发表于 2015-02-26
             
           </span>
         
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/02/27/Cloud-Foundry-社区三月第一周周报/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/27/Cloud-Foundry-社区三月第一周周报/"></span>
+            </a>
+          </span>
           
         
       </div>
@@ -124,31 +159,21 @@
 
         
           <ol>
-<li><p>上周最大的新闻是Cloud Foundry的新CEO上任，欢迎Sam Ramji！在加入Cloud Foundry之前Sam Ramji在Appigee工作，并有在微软设计和领导开源战略的经验。</p>
+<li><p>巨变即将到来。我们处在巨变前的黎明。或许是下周，Cloud Foundry生态体系将会迎来新的客人，那么具体是什么呢？先卖个关子，敬请期待。</p>
 </li>
-<li><p>在Youtube上的Cloud Foundry每周晚例会报告(Cloud Foundry After Dark hangout)</p>
-<ul>
-<li><p>企业级云发布管理工具Apache Brooklyn有望支持Cloud Foundry</p>
+<li><p>Netflix OSS项目，查了下中文资料，发现大家介绍的不是很多。Netflix是AWS最大的用户之一，在AWS各方工具还不太完善的时候，Netflix的技术团队开发了很多有用的工具，来辅助AWS的维护、管理和监控。后来，Netflix将很多有用的工具整理并开源出来了，就是Netflix OSS。项目地址：<a href="https://github.com/Netflix/" target="_blank" rel="external">https://github.com/Netflix/</a></p>
 </li>
-<li><p>Matt Stine 的新书 《Migrating to Cloud native App Architectures》</p>
+<li><p>CAB会议，全名Cloudfoundry Advisory Board Meeting。目测是Cloud Foundry社区最重要的会议，参会人员主要是社区各大公司的代表，很多大佬们也一步步坚持到2014年11月的CloudFoundry基金会的成立。最早一期记录：<a href="http://www.activestate.com/blog/2014/01/cloud-foundry-advisory-board-meeting-2014-january" target="_blank" rel="external">2014年一月</a>，最近的一期记录：<a href="http://www.activestate.com/blog/2015/01/cloud-foundry-advisory-board-meeting-2015-january" target="_blank" rel="external">2015年1月</a>。</p>
 </li>
-<li><p>Cloudfoundry 的新运行时环境Diego示例介绍</p>
+<li><p>Doc. Nic这周又给我们带来了惊喜，发布了一个ops工具：<a href="https://github.com/cloudfoundry-community/bosh_cli_plugin_consul#view-services" target="_blank" rel="external">BOSH CLI Consul plugin</a>，通过它可以容易的看到通过bosh deployments部署的服务。</p>
 </li>
-<li><p>Concouse.io 一个基于CF的CI解决方案介绍</p>
+<li><p><a href="https://blog.starkandwayne.com/2014/12/17/introduction-to-cloud-foundrys-health-monitor/" target="_blank" rel="external">Health Monitor</a> 这篇文章值得关注，它详细讲解了Health manager如何保证app存活以及如何进行错误跟踪。</p>
 </li>
-</ul>
+<li><p>另外一篇播客也很棒，对于初学者而言，简单的一个push背后究竟发生了什么？播客描述地址：<a href="http://blog.pivotal.io/cloud-foundry-pivotal/features/all-things-pivotal-podcast-episode-11-so-what-happens-when-i-push-an-app-anyway?utm_source=social&amp;account_id&amp;utm_medium=TWITTER&amp;pivotal&amp;utm_campaign=Apps&amp;20150114" target="_blank" rel="external">introduction to the CF concepts</a>。真正的播放地址：<a href="http://traffic.libsyn.com/pivotalsoftwarepodcast/All_Things_Pivotal_Episode_11.mp3" target="_blank" rel="external">http://traffic.libsyn.com/pivotalsoftwarepodcast/All_Things_Pivotal_Episode_11.mp3</a></p>
 </li>
 </ol>
-<p>晚例会观看地址：<a href="http://youtu.be/TY_qOyp27X4" target="_blank" rel="external">http://youtu.be/TY_qOyp27X4</a></p>
-<ol>
-<li><p>Edison 发布的关于 Bosh Lite 在 AWS 上部署的文章。链接: <a href="https://cloudfoundryideas.wordpress.com/2015/01/28/building-a-cloudfoundry-sandbox-environment-in-15-minutes/" target="_blank" rel="external">Bosh-Lite on AWS</a></p>
-</li>
-<li><p>支持函数式语言 Elixir 的 buildpack 发布。链接：<a href="https://groups.google.com/a/cloudfoundry.org/forum/#!topic/vcap-dev/dOZ9il25u3Y" target="_blank" rel="external">Elixir Buildpack for Cloud Foundry</a></p>
-</li>
-<li><p>Pivotal 发布了基于开源MySQL版本的CF版MySQL版。链接：<a href="http://blog.pivotal.io/cloud-foundry-pivotal/products/mysql-service-on-pivotal-cloud-foundry-now-highly-available" target="_blank" rel="external">MySQL service for Pivotal CF</a></p>
-</li>
-</ol>
-<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/17/this-week-in-cloud-foundry-february-17th-2015/" target="_blank" rel="external">This Week in Cloud Foundry - February 17th 2015</a></p>
+<p>今天就到这儿啦。三月忽地就来了，天气暖和了，大家在编程之余，也要多出去走走哈。</p>
+<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/27/this-week-in-cloud-foundry-28th-february-2015/" target="_blank" rel="external">http://www.thisweekincf.com/blog/2015/02/27/this-week-in-cloud-foundry-28th-february-2015/</a></p>
 <blockquote>
 <p>译者：clongbupt</p>
 </blockquote>
@@ -166,13 +191,13 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="../../../03/09/hello-world/">Hello World</a>
+                <a href="../../../03/03/Cloud-Foundry-社区二月第四周周报/">Cloud Foundry 社区三月第一周周报</a>
               
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="../../16/One-Method-to-Debug-Heartbeat-Cluster/">One_Method_to_Debug_Heartbeat_Cluster</a>
+                <a href="../../17/Cloud-Foundry-社区二月第三周周报/">Cloud Foundry 社区二月第三周周报</a>
               
             </div>
           </div>
@@ -188,6 +213,11 @@
 
   
     <div class="comments" id="comments">
+      
+        <div class="ds-thread" data-thread-key="2015/02/27/Cloud-Foundry-社区三月第一周周报/"
+             data-title="Cloud Foundry 社区二月第四周周报" data-url="http://clongbupt.github.io/2015/02/27/Cloud-Foundry-社区三月第一周周报/">
+        </div>
+
       
     </div>
   
@@ -228,7 +258,7 @@
       <p class="site-description motion-element">一个不会煮面的码农的自留地</p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">
@@ -236,7 +266,7 @@
             <span class="site-state-item-name">标签</span>
         </div>
         <div class="site-state-item site-state-pages">
-            <span class="site-state-item-count">0</span>
+            <span class="site-state-item-count">3</span>
             <span class="site-state-item-name">页面</span>
         </div>
       </div>
@@ -244,6 +274,28 @@
       
 
       <div class="social-info motion-element">
+        
+          
+            <span class="social-item">
+              <a href="https://github.com/clongbupt/">GitHub</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="https://facebook.com/clongbupt/">Facebook</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="https://twitter.com/clongbupt">Twitter</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="http://www.weibo.com/u/1085595672">Weibo</a>
+            </span>
+          
+            <span class="social-item">
+              <a href="http://weibo.com/clongbupt">DouBan</a>
+            </span>
+          
         
       </div>
 
@@ -265,7 +317,7 @@
       <div class="footer-inner">
         <div class="copyright">
   
-  &copy; &nbsp; 
+  &copy; &nbsp;  2013 - 
   2015
   <span class="with-love">
     <i class="icon-heart"></i>
@@ -282,6 +334,12 @@
 </div>
 
 
+
+  <div class="cc-license">
+    <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+      <img src="../../../../images/cc-by-nc-sa.svg" alt="Creative Commons" />
+    </a>
+  </div>
 
 
 
@@ -758,11 +816,24 @@
   
 
   
-  
 
   
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
+  
   
 </body>
 </html>
