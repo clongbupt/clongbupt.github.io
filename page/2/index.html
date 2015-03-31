@@ -101,6 +101,136 @@
           
           
             
+              <a class="post-title-link" href="../../2013/07/17/mysql_service的token/">
+                MySQL Service 的 Token
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+          <span class="post-time">
+            
+              发表于 2013-07-16
+            
+          </span>
+        
+          
+        
+      </div>
+    </div>
+
+    
+      <div class="post-body">
+
+        
+        
+
+        
+          <h3 id="综述">综述</h3><p>本文主要描述了mysql_gateway的token流程, 主要是尝试将cloud_controller与service_gateway之间通信用到的token按流程进行分析。</p>
+<h3 id="前面的话">前面的话</h3><p>本文章主要源自于项目组在向<code>Cloud Foundry V2</code>版本移植的大进程中, 在<code>msyql service</code>移植上遇到的一些问题总结。</p>
+<p>由于V2版本更新迭代过快, 先列出我阅读的代码版本信息, 格式为 [项目名] (下载地址) - 版本号(github上提交版本前6位)：</p>
+<ul>
+<li>[cloud_controller_ng] (<a href="https://github.com/cloudfoundry/cloud_controller_ng" target="_blank" rel="external">https://github.com/cloudfoundry/cloud_controller_ng</a>) - d7e51a</li>
+<li>[service-release] (<a href="https://github.com/cloudfoundry/cf-services-release" target="_blank" rel="external">https://github.com/cloudfoundry/cf-services-release</a>) - 15d8f2</li>
+<li>[service-base] (<a href="https://github.com/cloudfoundry/vcap-services-base" target="_blank" rel="external">https://github.com/cloudfoundry/vcap-services-base</a>) - ff9932</li>
+<li>[vcap-common] (<a href="https://github.com/cloudfoundry/vcap-common" target="_blank" rel="external">https://github.com/cloudfoundry/vcap-common</a>) - f7653c</li>
+</ul>
+<p>代码描述难免含糊不清, 而大段的源代码截取又会让文章显得过于冗长。因此，我定义了代码描述的关键点，其格式为：</p>
+<p>  [项目名] - <code>简写文件路径</code> - 关键调用处 : 行数</p>
+<h3 id="mysql_gateway配置文件中的token">mysql_gateway配置文件中的token</h3><p>通过config和opts层层转包, 在AsynchronousServiceGateway类中转化为@token, 关键点如下：</p>
+<pre><code>* [vcap-services-base] - `lib<span class="regexp">/base/</span>gateway` - <span class="string">Services:</span>:<span class="string">Base:</span>:Gateway.<span class="string">parse_gateway_config :</span> <span class="number">136</span> - <span class="number">156</span>行
+* [vcap-services-base] - `lib<span class="regexp">/base/</span>gateway` - <span class="string">Services:</span>:AsynchronousServiceGateway.<span class="string">setup :</span> <span class="number">26</span>行
+</code></pre><p>通过读取配置文件中的<code>service_auth_tokens</code>域, 转为config[:token] -&gt; opts[:token] -&gt; AsynchronousServiceGateway::@token</p>
+<h3 id="CC请求时进行token验证">CC请求时进行token验证</h3><p>每次CC的HTTP请求到达mysql_gateway时都必须对请求进行验证，关键点如下：</p>
+<pre><code>* [vcap-services-base] - `lib<span class="regexp">/base/</span>base_async_gateway` - <span class="string">VCAP:</span>:<span class="string">Services:</span>:BaseAsynchronousServiceGateway &lt; <span class="string">Sinatra:</span>:Base.<span class="string">before :</span> <span class="number">44</span>行
+
+* [vcap-services-base] - `lib<span class="regexp">/base/</span>base_async_gateway` - <span class="string">VCAP:</span>:<span class="string">Services:</span>:AsynchronousServiceGateway &lt; BaseAsynchronousServiceGateway.<span class="string">validate_incoming_request :</span> <span class="number">113</span>行
+
+* 在validate_incoming_request方法内的<span class="number">119</span>行
+
+    unless auth_token &amp;&amp; (auth_token == <span class="annotation">@token</span>)
+</code></pre><p><code>auth_token</code>参见其父类<code>base_async_gateway</code>的76行, 解析后该函数返回HTTP请求头的<code>HTTP_X_VCAP_Service_Token</code>字段, 具体如下：</p>
+<pre><code><span class="function"><span class="keyword">def</span> <span class="title">auth_token</span>  <span class="variable">@auth_token</span> ||= request_header(<span class="constant">VCAP:</span><span class="symbol">:Services</span><span class="symbol">:</span><span class="symbol">:Api</span><span class="symbol">:</span><span class="symbol">:GATEWAY_TOKEN_HEADER</span>)  <span class="variable">@auth_token</span><span class="keyword">end</span><span class="comment"># /vcap-common-f7653c1140e6/lib/services/api/const.rb第4行</span><span class="constant">GATEWAY_TOKEN_HEADER </span>= <span class="string">'X-VCAP-Service-Token'</span></span>
+</code></pre><h3 id="CC请求中的token生成">CC请求中的token生成</h3><p>根据前面知道, CC在向gateway发送请求时需要在请求头中带上token值, 而该token值是CC从数据库中获取得到, 然后在创建HTTP请求时，将token塞到HTTP头中，并发送给gateway。这个流程的关键点如下：</p>
+<pre><code>* [cloud_controller_ng] - `lib<span class="regexp">/cloud_controller/</span>models/managed_service_instance` - <span class="string">CloudController:</span>:<span class="string">Models:</span>:NGServiceGatewayClient.service_gateway_client - <span class="number">169</span>行
+* [vcap-common] `lib<span class="regexp">/services/</span>api<span class="regexp">/clients/</span>service_gateway_client.rb` <span class="string">Services:</span>:<span class="string">Api:</span>:ServiceGatewayClient.initialize - <span class="number">62</span>行
+* [vcap-common] `lib<span class="regexp">/services/</span>api/async_requests.rb.rb` <span class="string">Services:</span>:<span class="string">Api:</span>:AsyncHttpRequest.<span class="keyword">new</span> - <span class="number">19</span>行
+</code></pre><h3 id="数据库中的token生成">数据库中的token生成</h3><p>service的token数据位于Postgres数据库服务的cloud_controller数据库的service_auth_tokens数据表。一般每个service都会在该表中创建唯一的一条记录。正常的创建方式为通过cf客户端调用create-auth-token方法创建。</p>
+<p>数据库表结构如下</p>
+<pre><code><span class="property">id</span>        <span class="type">integer</span>
+guid      <span class="type">text</span>
+created_at    timestamp
+updated_at    timestamp
+label     citext      <span class="comment"># mysql服务为mysql</span>
+provider    citext      <span class="comment"># mysql服务为core</span>
+token       <span class="type">text</span>        <span class="comment"># 我的数据记录为6kFfnLwOa0nVS0edoRCoGw==+|5beb4679</span>
+salt      <span class="type">text</span>
+</code></pre><h4 id="1_通过cf客户端创建">1 通过cf客户端创建</h4><pre><code><span class="keyword">cf</span> target
+<span class="keyword">cf</span> login
+<span class="keyword">cf</span> create-service-auth-<span class="keyword">token</span> --<span class="keyword">label</span> mysql --provider core --<span class="keyword">token</span> '0xdeadbeef'
+</code></pre><h4 id="2_手动创建_(已废)">2 手动创建 (已废)</h4><p>手动创建的方式是在发现cf客户端创建之前, 通过阅读源代码进行的一种尝试, 需要修改CC的源代码才能成功创建服务。因为此处的token值为原文，没有生成密文, CC无法解密。</p>
+<p>  向cloud_controller库的servie_auth_token插入一条记录</p>
+<pre><code><span class="operator"><span class="keyword">insert</span> <span class="keyword">into</span> service_auth_tokens(guid,created_time,name,label,token,salt) <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">'20130706'</span>,<span class="string">'mysql'</span>,<span class="string">'mysql'</span>,<span class="string">'0xdeadbeef'</span>,<span class="string">'deadbeef'</span>);</span>
+</code></pre><ul>
+<li><p>修改CC源码 <code>model/service_auth_token.rb</code>的token方法第29行</p>
+<p>  def token</p>
+<pre><code><span class="keyword">return</span> <span class="keyword">super</span>
+#<span class="keyword">return</span> unless <span class="keyword">super</span>
+<span class="string">VCAP:</span>:<span class="string">CloudController:</span>:Encryptor.decrypt(<span class="keyword">super</span>, salt)
+</code></pre><p>  end</p>
+</li>
+</ul>
+
+        
+
+      </div>
+    
+
+    
+      <div class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/cloudfoundry/">
+                #cloudfoundry
+              </a>
+            
+              <a href="/tags/mysql-service/">
+                #mysql_service
+              </a>
+            
+              <a href="/tags/token/">
+                #token
+              </a>
+            
+          </div>
+        
+
+        
+
+        
+        
+          <div class="post-eof"></div>
+        
+      </div>
+    
+  </div>
+
+
+  
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="../../2013/07/16/cloudfoundry_service分析/">
                 Cloud Foundry Service 分析
               </a>
@@ -428,7 +558,7 @@ provisioned_service = mysqlProvisionedService.<span class="built_in">create</spa
       <p class="site-description motion-element">一个不会煮面的码农的自留地</p>
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </div>
         <div class="site-state-item site-state-tags">

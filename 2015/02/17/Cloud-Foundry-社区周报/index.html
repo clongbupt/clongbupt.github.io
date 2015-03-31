@@ -27,7 +27,7 @@
 
 
 
-  <title> Uaa Varz 相关 // clongbupt的小窝 </title>
+  <title> Cloud Foundry 社区周报 // clongbupt的小窝 </title>
 </head>
 
 <body>
@@ -98,7 +98,7 @@
           
           
             
-              Uaa Varz 相关
+              Cloud Foundry 社区周报
             
           
         </h1>
@@ -107,7 +107,7 @@
       <div class="post-meta">
           <span class="post-time">
             
-              发表于 2013-08-04
+              发表于 2015-02-16
             
           </span>
         
@@ -123,136 +123,35 @@
         
 
         
-          <h1 id="用户账号和鉴权服务API">用户账号和鉴权服务API</h1><h1 id="概述">概述</h1><p>用户账户和鉴权服务(UAA):</p>
-<ul>
-<li>从CC提出来的一个单独的应用</li>
-<li>拥有用户账户和鉴权源码</li>
-<li>通过JSON的方式调用</li>
-<li>支持标准的协议以向web应用提供单点登录(single sign-on)和权限委派(delegated authorization), 并且JSON API支持CC和CF的团队特性</li>
-<li>支持APIs和基本的登录和授权(login/approval)的界面</li>
-<li>支持外部WEB界面的用户账号管理的APIs</li>
-</ul>
-<p>大部分的API都是遵照OAuth2/OpenID Connect/SCIM标准</p>
-<h1 id="配置参数">配置参数</h1><p>一些操作模型和可选的特性可以通过配置文件来设置. 通过改变环境变量和系统属性可以设置很多标准化的脚本</p>
-<ul>
-<li><p>内部的username/password 鉴权源</p>
-<p>  UAA管理一个用户账户数据库. 这些账户可以通过基于密码的鉴权方式被使用, 这个类似于现存的CF用户账户. UAA</p>
+          <ol>
+<li><p>上周最大的新闻是Cloud Foundry的新CEO上任，欢迎Sam Ramji！在加入Cloud Foundry之前Sam Ramji在Appigee工作，并有在微软设计和领导开源战略的经验。</p>
 </li>
-<li><p>其他的鉴权源</p>
-<p>  其他的标准外部鉴权源也可以被使用. 最通用的是LDAP服务器, 或者一个外部的OpenID提供者. 其他的认证源可以是水平应用管理器, 比如OAuth2或者SAML协议。SAML2支持暂时还不在计划列表中, 但是很快会被开发.</p>
+<li><p>在Youtube上的Cloud Foundry每周晚例会报告(Cloud Foundry After Dark hangout)</p>
+<ul>
+<li><p>企业级云发布管理工具Apache Brooklyn有望支持Cloud Foundry</p>
+</li>
+<li><p>Matt Stine 的新书 《Migrating to Cloud native App Architectures》</p>
+</li>
+<li><p>Cloudfoundry 的新运行时环境Diego示例介绍</p>
+</li>
+<li><p>Concouse.io 一个基于CF的CI解决方案介绍</p>
 </li>
 </ul>
-<h1 id="鉴权和授权的认证APIs">鉴权和授权的认证APIs</h1><p>这一节处理机器之间的联调, 而不是浏览器, 尽管他们中的有些可能有认真用户可以通过浏览器访问的内容. 所有机器的请求都接受JSON格式的Header</p>
-<p><code>/userinfo</code> <code>/check_id</code>和<code>/token</code>这些访问点在<code>OpenID Connect</code> 和 <code>OAuth2</code>标准中被指定, 并且应该被CF实例的web应用使用, 比如micro, www, support, 但是不能被vmc使用</p>
-<h1 id="OAuth范围">OAuth范围</h1><p>OAuth2的定义里面有一个scope参数的作为token授权请求的一部分, 该授权包含了一堆的scope变量.</p>
-<p>范围变量是完全任意的并且可以被任何资源服务器通过token取得</p>
-<ol>
-<li><p>在客户端注册的时候有可选的步骤，客户端声明它要请求哪一个scopes或者鉴权服务器来限制它可以请求的scopes. 然后鉴权服务器便会检查包含合法scope的token请求.</p>
-</li>
-<li><p>每一个资源服务器都有一个唯一的ID, 比如一个URI. 并且另一个在客户端注册时可选的部分是提供一个允许资源的列表给询问的客户端. 鉴权服务器将token同允许的资源id绑定, 并且通过<code>/check_token</code>的URL来提供信息, 这样资源服务器可以在提供资源前检查它们自己的ID同token的绑定是不是在允许的列表中.</p>
-</li>
-<li><p>资源ID有scope一些字符, 除非客户端不需要知道这些信息, 这些信息会在鉴权服务器和资源服务器之间交换. 这个文档中的示例使用<code>scope</code>参数来标识一个资源服务器. 比如： 一个Cloud Controller实例. </p>
 </li>
 </ol>
-<h1 id="鉴权码的授权">鉴权码的授权</h1><p>OAuth2定义的实现<br>干货来了, 重点标注一下<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="header">浏览器请求码: `GET /oauth/authorize`</span><br><span class="line">~~~~~~~~~~~~~~~~~~</span></span><br></pre></td></tr></table></figure></p>
-<p><em>HTML响应码</em></p>
-<ul>
-<li>请求: <code>GET /oauth/authorize</code></li>
-<li><p>请求体: spec中规定的一些参数, 再加上<code>application/x-www-form-urlencoded</code>格式的查询模块</p>
-<ul>
-<li><code>response_type=code</code></li>
-<li><code>client_id=www</code></li>
-<li><code>scope=read write password</code></li>
-<li><code>redirect_uri</code>是可选的, 因为可以预先注册</li>
-</ul>
+<p>晚例会观看地址：<a href="http://youtu.be/TY_qOyp27X4" target="_blank" rel="external">http://youtu.be/TY_qOyp27X4</a></p>
+<ol>
+<li><p>Edison 发布的关于 Bosh Lite 在 AWS 上部署的文章。链接: <a href="https://cloudfoundryideas.wordpress.com/2015/01/28/building-a-cloudfoundry-sandbox-environment-in-15-minutes/" target="_blank" rel="external">Bosh-Lite on AWS</a></p>
 </li>
-<li><p>请求头：</p>
-<ul>
-<li><code>Cookie:JSESSIONID=ADHGFKHDSJGFGF; Path /</code> - UAA给客户端的鉴权cookie. 如果用户浏览器没有cookie的话会被跳转到<code>/login</code>, 并且最终会跳转到<code>/oauth/authrize</code></li>
-</ul>
+<li><p>支持函数式语言 Elixir 的 buildpack 发布。链接：<a href="https://groups.google.com/a/cloudfoundry.org/forum/#!topic/vcap-dev/dOZ9il25u3Y" target="_blank" rel="external">Elixir Buildpack for Cloud Foundry</a></p>
 </li>
-<li><p>响应头： location跟spec里面定义的一样, 包含<code>access_token</code>, 如果成功的话:</p>
-<pre><code><span class="status">HTTP/1.1 <span class="number">302</span> Found</span>
-<span class="attribute">Location</span>: <span class="string">https://www.cloudfoundry.example.com?code=F45jH</span>
-</code></pre></li>
-<li><p>响应码:</p>
-<pre><code>302 - Found
-</code></pre></li>
-</ul>
-<p>非浏览器请求码: <code>GET /oauth/authorize</code><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;*JSON Response*&#10;&#10;&#22914;&#26524;&#23458;&#25143;&#31471;&#35831;&#27714;&#19968;&#20010;JSON&#30340;&#21709;&#24212;(&#36890;&#36807;`Accept`&#30340;header)&#24182;&#19988;&#29992;&#25143;&#36824;&#27809;&#26377;&#35748;&#21487;&#25480;&#26435;, UAA&#20250;&#21457;&#36865;&#19968;&#20010;&#24102;&#26377;&#19968;&#20123;&#26377;&#29992;&#20449;&#24687;&#30340;JSON&#23545;&#35937;, &#36825;&#20123;&#20869;&#23481;&#21487;&#20197;&#35753;&#29992;&#25143;&#38405;&#35835;&#24182;&#19988;&#35814;&#23613;&#22320;&#35748;&#21487;&#25480;&#26435;.&#10;&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#34;message&#34;:&#34;To confirm or deny access POST to the following locations with the parameters requested.&#34;&#10;&#9;&#9;&#9;&#34;scopes&#34;:[&#10;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;text&#34;:&#34;Access your data with scope &#39;openid&#39;&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;code&#34;:&#34;scope.openid&#34;&#10;&#9;&#9;&#9;&#9;&#125;,&#10;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;text&#34;:&#34;Access your &#39;cloud_controller&#39; resources with scope &#39;read&#39;&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;code&#34;:&#34;scope.cloud_controller.read&#34;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;...&#10;&#9;&#9;&#9;],&#10;&#9;&#9;&#9;&#34;client_id&#34;:&#34;idtestapp&#34;,&#10;&#9;&#9;&#9;&#34;redirect_uri&#34;:&#34;http://nowhere.com&#34;,&#10;&#9;&#9;&#9;&#34;options&#34;:&#123;&#10;&#9;&#9;&#9;&#9;&#34;deny&#34;:&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;location&#34;:&#34;https://uaa.cloudfoundry.com/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;value&#34;:&#34;false&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;path&#34;:&#34;/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;key&#34;:&#34;user_oauth_approval&#34;&#10;&#9;&#9;&#9;&#9;&#125;&#65292;&#10;&#9;&#9;&#9;&#9;&#34;confirm&#34;:&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#34;location&#34;:&#34;https://uaa.cloudfoundry.com/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;value&#34;:&#34;true&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;path&#34;:&#34;/oauth/authorize&#34;,&#10;&#9;&#9;&#9;&#9;&#9;&#34;key&#34;:&#34;user_oauth_approval&#34;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#125;&#10;&#10;&#21019;&#24314;&#19968;&#20010;&#29992;&#25143;&#25480;&#26435;&#39029;&#38754;&#26368;&#26377;&#29992;&#30340;&#20449;&#24687;&#26159;&#35831;&#27714;&#30340;scope&#21015;&#34920;, &#23458;&#25143;&#31471;ID&#21644;&#35831;&#27714;&#36339;&#36716;URI&#10;&#10;&#23458;&#25143;&#31471;&#21253;&#21547;Token: `POST /oauth/token`</span><br></pre></td></tr></table></figure></p>
-<p>参见 <code>oauth2 token endpoint</code></p>
-<h1 id="管理节点">管理节点</h1><h2 id="基本概念_GET_/varz">基本概念 <code>GET /varz</code></h2><p>鉴权是使用携带配置文件中配置的验证信息的HTTP<br>通过 <code>varz.username</code> 和 <code>varz.password</code>从<code>/varz</code>节点拉取信息</p>
-<p>data是通过JMX <code>MBeanServer</code> 暴露出的细节信息</p>
-<p>更多详细的信息是通过下面的链接提供</p>
-<ul>
-<li>Request <code>GET /varz</code></li>
-<li><p>响应体：</p>
-<pre><code>{
-    "<span class="attribute">type</span>": <span class="value"><span class="string">"UAA"</span></span>,
-    "<span class="attribute">links</span>": <span class="value">{
-        "<span class="attribute">Users</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/Users"</span></span>,
-        "<span class="attribute">JMImplementtation</span>":
-        <span class="value"><span class="string">"http://localhost:8080/uaa/varz/JMImplement"</span></span>,
-        "<span class="attribute">spring.application</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/com.sun.management"</span></span>,
-        "<span class="attribute">Catalina</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/Catalina"</span></span>,
-        "<span class="attribute">env</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/env"</span></span>,
-        "<span class="attribute">java.lang</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/java.lang"</span></span>,
-        "<span class="attribute">java.util.logging</span>": <span class="value"><span class="string">"http://localhost:8080/uaa/varz/java.util.logging"</span>
-    </span>}</span>,
-    "<span class="attribute">mem</span>": <span class="value"><span class="number">191734496</span></span>,
-    "<span class="attribute">memory</span>": <span class="value">{
-        "<span class="attribute">verbose</span>": <span class="value"><span class="literal">false</span></span>,
-        "<span class="attribute">non\_heap\_memory\_usage</span>": <span class="value">{
-            "<span class="attribute">max</span>": <span class="value"><span class="number">1845493376</span></span>,
-            "<span class="attribute">committed</span>": <span class="value"><span class="number">30834688</span></span>,
-            "<span class="attribute">init</span>": <span class="value"><span class="number">19136512</span></span>,
-            "<span class="attribute">used</span>": <span class="value"><span class="number">30577744</span>
-        </span>}</span>,
-        "<span class="attribute">object\_pending\_finalization_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">heap\_memory_usage</span>": <span class="value">{
-            "<span class="attribute">max</span>": <span class="value"><span class="number">9022996648</span></span>,
-            "<span class="attribute">committed</span>": <span class="value"><span class="number">84475904</span></span>,
-            "<span class="attribute">init</span>": <span class="value"><span class="number">63338494</span></span>,
-            "<span class="attribute">used</span>": <span class="value"><span class="number">19173496</span>
-        </span>}
-    </span>}</span>,
-    "<span class="attribute">token_store</span>": <span class="value">{
-        "<span class="attribute">refresh\_token\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">access\_token\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">flush_interval</span>": <span class="value"><span class="number">1000</span>
-    </span>}</span>,
-    "<span class="attribute">audit_service</span>": <span class="value">{
-        "<span class="attribute">user\_authentication\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">user\_not\_fount\_count</span>": <span class="value"><span class="number">0</span></span>,
-        "<span class="attribute">principal\_authentication\_failure\_count</span>": <span class="value"><span class="number">1</span></span>,
-        "<span class="attribute">user\_authentication\_failure\_count</span>": <span class="value"><span class="number">0</span>
-    </span>}
-    <span class="string">"spring.profiles.active"</span>: []
-</span>}
-</code></pre></li>
-</ul>
-<h2 id="详细的概念_GET_/varz/{domain}">详细的概念  <code>GET /varz/{domain}</code></h2><p>更多详细的信息可以通过<code>/varz</code>后面的link取得</p>
-<p><code>/varz/env</code> 链接是高层的JMX的<code>MBeanServer</code>域名信息</p>
-<p><code>/varz/Catalina</code> 对于对象图中有一些已知的循环, 我们可以避免</p>
-<ul>
-<li>请求: <code>GET /varz/{domain}</code></li>
-<li><p>响应体 (domain=Catalina)</p>
-<pre><code>{
-    "<span class="attribute">global\_request\_processor</span>": <span class="value">{
-        "<span class="attribute">http-8080</span>": <span class="value">{
-            "<span class="attribute">processing_time</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">max_time</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">request_count</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">bytes_sent</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">bytes_received</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">error_count</span>": <span class="value"><span class="number">0</span></span>,
-            "<span class="attribute">modeler_type</span>": <span class="value"><span class="string">"org.apache.coyote.RequestGroupInfo"</span>
-        </span>}
-    </span>}</span>
-</code></pre></li>
-</ul>
-<pre><code>}
-</code></pre><p>Spring应用的Beans通过<code>/varz/spring.application</code>暴露出来</p>
+<li><p>Pivotal 发布了基于开源MySQL版本的CF版MySQL版。链接：<a href="http://blog.pivotal.io/cloud-foundry-pivotal/products/mysql-service-on-pivotal-cloud-foundry-now-highly-available" target="_blank" rel="external">MySQL service for Pivotal CF</a></p>
+</li>
+</ol>
+<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/17/this-week-in-cloud-foundry-february-17th-2015/" target="_blank" rel="external">This Week in Cloud Foundry - February 17th 2015</a></p>
+<blockquote>
+<p>译者：clongbupt</p>
+</blockquote>
 
         
 
@@ -262,30 +161,18 @@
     
       <div class="post-footer">
         
-          <div class="post-tags">
-            
-              <a href="/tags/uaa/">
-                #uaa
-              </a>
-            
-              <a href="/tags/varz/">
-                #varz
-              </a>
-            
-          </div>
-        
 
         
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="../../11/knife命令/">knife 命令</a>
+                <a href="../../../03/09/hello-world/">Hello World</a>
               
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="../../../07/21/micro-paas在CentOS6上安装/">micro-paas 在 CentOS6 上安装</a>
+                <a href="../../16/One-Method-to-Debug-Heartbeat-Cluster/">One_Method_to_Debug_Heartbeat_Cluster</a>
               
             </div>
           </div>
@@ -364,7 +251,7 @@
 
     
       <div class="post-toc sidebar-panel-active">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#用户账号和鉴权服务API"><span class="nav-number">1.</span> <span class="nav-text">用户账号和鉴权服务API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置参数"><span class="nav-number">3.</span> <span class="nav-text">配置参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鉴权和授权的认证APIs"><span class="nav-number">4.</span> <span class="nav-text">鉴权和授权的认证APIs</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OAuth范围"><span class="nav-number">5.</span> <span class="nav-text">OAuth范围</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#鉴权码的授权"><span class="nav-number">6.</span> <span class="nav-text">鉴权码的授权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管理节点"><span class="nav-number">7.</span> <span class="nav-text">管理节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念_GET_/varz"><span class="nav-number">7.1.</span> <span class="nav-text">基本概念 GET /varz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细的概念_GET_/varz/{domain}"><span class="nav-number">7.2.</span> <span class="nav-text">详细的概念  GET /varz/{domain}</span></a></li></ol></li></ol>
+        
       </div>
     
   </div>
