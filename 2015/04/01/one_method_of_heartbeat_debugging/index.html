@@ -39,7 +39,7 @@
   </script>
 
 
-  <title> Cloud Foundry 社区三月第一周周报 // clongbupt的小窝 </title>
+  <title> One Method of Heartbeat Debugging // clongbupt的小窝 </title>
 </head>
 
 <body>
@@ -126,7 +126,7 @@
           
           
             
-              Cloud Foundry 社区三月第一周周报
+              One Method of Heartbeat Debugging
             
           
         </h1>
@@ -135,15 +135,15 @@
       <div class="post-meta">
           <span class="post-time">
             
-              发表于 2015-03-02
+              发表于 2015-03-31
             
           </span>
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/03/03/Cloud-Foundry-社区二月第四周周报/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/03/Cloud-Foundry-社区二月第四周周报/"></span>
+            <a href="/2015/04/01/one_method_of_heartbeat_debugging/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/01/one_method_of_heartbeat_debugging/"></span>
             </a>
           </span>
           
@@ -158,35 +158,38 @@
         
 
         
-          <p>欢迎阅读本周的CF周报。经过了两年半英文作者终于同他的好基友Dr Nic在一起了！并且作者表示希望更多的同仁加入基友大家庭。开个玩笑，回到正题。</p>
-<ol>
-<li><p>新官上任三把火，新上任的CEO Sam Ramji在Bernard Golden的面谈中阐述了他对Cloud Foundry Foundation和PaaS的理解。</p>
-</li>
-<li><p>Diego 增加了对 .NET 的支持。Pivotal公司的 Mark Kropf 特意发表博文 <a href="http://www.markkropf.com/blog/2015/2/18/windows-cloud-foundy-now-public" target="_blank" rel="external">REPOS FOR WINDOWS SUPPORT IN CLOUD FOUNDRY NOW PUBLIC</a>，博文总结了CF社区在Windows下可运性的组件，如lifecycle, garden, containerizer, diego。不得不说，CF社区的影响力正在迅速扩大，都开始触及Windows了，哈哈。</p>
-</li>
-<li><p>应用程序员的福利。同样出自 Mark Kropf 之手，<a href="http://www.markkropf.com/blog/2015/2/19/an-applications-view-of-the-cf-stack" target="_blank" rel="external">The Dev View of CF</a>。 站在应用开发者的视角，CF是怎样的一番风景。</p>
-</li>
-<li><p>Hubot是Github开发的一个好玩的专门用来集成类似于IRC、Slack、Twitter等的bot。具体参见博文：<a href="http://purevirtual.eu/2015/02/18/deploy-githubs-hubot-for-slack-automatically-with-travis-ci-and-cloudfoundry-part-1/" target="_blank" rel="external">installing the Github Hubot on CloudFoundry</a></p>
-</li>
-<li><p>最近业界的其他PaaS的发展怎样。这两篇文章值得一读：<a href="http://www.paasify.it/vendors" target="_blank" rel="external">Find your Platform as a Service</a> 和 <a href="https://www.uni-bamberg.de/fileadmin/uni/fakultaeten/wiai_lehrstuehle/praktische_informatik/Dateien/Publikationen/sose14-towards-application-portability-in-paas.pdf" target="_blank" rel="external">Towards Application Portability in Platform as a service</a></p>
-</li>
-<li><p>业界新闻。来自BlueMix的 Niklas Heidloff 介绍了 Docker 和 Cloud Foundry 结合的可能性和前景。<a href="http://heidloff.net/nh/home.nsf/article.xsp?id=20.02.2015092308NHEBUJ.htm" target="_blank" rel="external">Cloud Foundry and Containers</a></p>
-</li>
-<li><p>感谢 Altoros 为社区贡献了一篇关于GO的博文：<a href="http://blog.altoros.com/golang-part-1-main-concepts-and-project-structure.html" target="_blank" rel="external">The main concepts of Go</a></p>
-</li>
-<li><p>Node迷请鼓掌！ Kendrick Coleman 根据其经验分享的一篇博文：<a href="http://kendrickcoleman.com/index.php/Tech-Blog/deploying-a-node-js-webapp-with-mongodb-to-cloud-foundry.html" target="_blank" rel="external">Node.js and MongoDB app</a></p>
-</li>
-<li><p>与以往一样，<a href="https://www.youtube.com/watch?v=6JrHWEYTV1I&amp;feature=youtu.be." target="_blank" rel="external">CloudFoundry After Dark</a></p>
-</li>
-<li><p>在波特兰(Portland)的CF聚会上，Intel讨论他们的私有云和CF Service Brokers研究情况，<a href="http://www.meetup.com/Portland-Cloud-Foundry-Meetup/events/220425691/" target="_blank" rel="external">文章请点击</a>. </p>
-</li>
-<li><p>另外Uber的CF聚会也马上要开始了，最后别忘了 <a href="http://www.cfsummit.com/" target="_blank" rel="external">CF Summit 2015</a></p>
-</li>
-</ol>
-<p>原文链接：<a href="http://www.thisweekincf.com/blog/2015/02/27/this-week-in-cloud-foundry-28th-february-2015/" target="_blank" rel="external">This Week in Cloud Foundry 3 March 2015</a></p>
-<blockquote>
-<p>译者：clongbupt</p>
-</blockquote>
+          <p>This article mainly focuses on introducing one method of heartbeat debugging. It will include some key points listed as below:  </p>
+<ul>
+<li>Some basic thoughts on how to diagnose a network bug among cluster</li>
+<li>How to handle network level 2 problem</li>
+<li>Some frequently used commands or tools: tcpdump, arp, etc.</li>
+</ul>
+<h2 id="Prerequirements">Prerequirements</h2><p>First of all assume that we have two nodes installed heartbeat.<br>Well, if you do not know about heartbeat, here is some useful resource links:</p>
+<ul>
+<li>Heartbeat Official User Guide</li>
+<li>Rakuten DBA HeartBeat Setting manual</li>
+</ul>
+<h2 id="Environment">Environment</h2><p>As mentioned above, We’ve got two nodes that which had already installed heartbeat. Let us assume their IP listed as below:<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.40.64</span><br><span class="line">192.168.41.63</span><br></pre></td></tr></table></figure></p>
+<p>Before start them, we need setup their configuration files, generally speaking it includs:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ha<span class="class">.cf</span></span><br><span class="line">haresource</span><br><span class="line">authkeys</span><br></pre></td></tr></table></figure></p>
+<p>For <code>ha.cf</code>, the configuration is listed as below:</p>
+<p><img src="img/201504011.png" alt="Configuration of ha.cf"></p>
+<p>Among ha.cf, some fields has is easy to know, some we would pick up and describe. ‘crm off’ means Cluster Resource Manager(crm) is off. ‘auto_failback off’ means standby is working and it will not return its resource whether master is recovered or not. ‘node node-0’ means config every node need connect through heartbeat and ‘node-0’ is server name, you can use ‘uname -n’ get it.<br>haresource will configure a virtual IP address to make heartbeat nodes act as one server. Below is configuration example:</p>
+<p><img src="img/201504013.png" alt="Example configuration of virtual ip"></p>
+<p>‘192.168.40.1’ is a virtual IP, the most important here you need specify is when your nodes real IP and virtual IP are not in the same subnet, please add netmask, in this configuration file is ‘24’<br>authkeys stores how authenticate among heartbeat nodes. generally speaking there are three authentication types. ‘crc’, ‘md5’ and ‘sha1’, if you network is secure, use ‘crc’ is enough. If not please use ‘sha1’.<br>Here is the example:</p>
+<p><img src="img/201504012.png" alt="Example configuration of authentication methods"></p>
+<p>Some useful commands of start / stop heartbeat as a service.<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">service</span> heartbeat <span class="literal">start</span></span><br><span class="line">sudo <span class="keyword">service</span> heartbeat <span class="literal">stop</span></span><br></pre></td></tr></table></figure></p>
+<p>But please always remember it is only useful under Ubuntu and install heartbeat as a service.</p>
+<h2 id="Debug">Debug</h2><p>Frankly speaking, if you setup your configuration file as above example, you maybe configure heartbeat successfully without debug. But if it is just not work, so we still need to learn how to debug with heartbeat.</p>
+<h3 id="Logs">Logs</h3><p>Every mature software or service should have logs, no exception for heartbeat. The log addresses is right in the ha.cf config file.<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tail -<span class="keyword">f</span> /var/<span class="built_in">log</span>/<span class="keyword">ha</span>-<span class="keyword">debug</span></span><br><span class="line"><span class="keyword">vim</span> /var/<span class="built_in">log</span>/<span class="keyword">ha</span>-<span class="built_in">log</span></span><br></pre></td></tr></table></figure></p>
+<p>Use ‘tail -f’ or ‘vim’ depends on yourself.</p>
+<h3 id="Virtual_IP_Interface">Virtual IP Interface</h3><p>When every heartbeat starts it will try to setup a Virtual IP address, this address is specified in haresource file. We can use ‘ifconfig’ command easily observe this. But It reports an error, here is an useful command to debug.<br>sudo ifconfig eth0:100 192.168.40.1 netmask 255.255.255.0 broadcast 192.168.40.255<br>This command will setup a virtual IP Interface with specified IP 192.168.40.1 and also netmask, broadcast. </p>
+<h3 id="ARP">ARP</h3><p>Using arp, we can find whether heartbeat nodes are connected with each other or not. Command is like this:<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp -<span class="literal">a</span></span><br></pre></td></tr></table></figure></p>
+<p>Actually every IP Interface would have a arp list, it will store mappings between IP address and MAC address. If they are connected, we can got a record like this:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">node-0</span> (192<span class="class">.168</span><span class="class">.40</span><span class="class">.64</span>) <span class="tag">at</span> 00<span class="pseudo">:50</span><span class="pseudo">:56</span><span class="pseudo">:cc</span><span class="pseudo">:ee</span><span class="pseudo">:ff</span> <span class="attr_selector">[ehter]</span> <span class="tag">on</span> <span class="tag">eth0</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="SEND_ARP_&amp;_TCPDUMP">SEND_ARP &amp; TCPDUMP</h3><p>Using send_arp to mock a virtual IP and use TCPDUMP to detect is there any arp requests online. Some commands are listed as below:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">send_arp</span> 192<span class="class">.168</span><span class="class">.40</span><span class="class">.4</span> 00<span class="pseudo">:11</span><span class="pseudo">:22</span><span class="pseudo">:aa</span><span class="pseudo">:bb</span><span class="pseudo">:cc</span> 192<span class="class">.168</span><span class="class">.40</span><span class="class">.4</span> <span class="tag">fffffffffff</span></span><br></pre></td></tr></table></figure></p>
+<p>Using ‘tcpdump’ to catch every arp request and response. Here is the example command:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tcpdump -<span class="tag">i</span> eth0 arp</span><br></pre></td></tr></table></figure></p>
+<p>Example result is listed as below:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">07<span class="pseudo">:46</span><span class="pseudo">:07</span><span class="class">.651105</span> <span class="tag">ARP</span>, <span class="tag">Request</span> <span class="tag">who-has</span> 127<span class="class">.0</span><span class="class">.1</span><span class="class">.1</span> <span class="tag">tell</span> 127<span class="class">.0</span><span class="class">.1</span><span class="class">.1</span>, <span class="tag">length</span> 46</span><br><span class="line">07<span class="pseudo">:46</span><span class="pseudo">:08</span><span class="class">.151360</span> <span class="tag">ARP</span>, <span class="tag">Reply</span> 127<span class="class">.0</span><span class="class">.1</span><span class="class">.1</span> <span class="tag">is-at</span> 00<span class="pseudo">:00</span><span class="pseudo">:00</span><span class="pseudo">:56</span><span class="pseudo">:00</span><span class="pseudo">:05</span> (<span class="tag">oui</span> <span class="tag">Ethernet</span>), <span class="tag">length</span> 46</span><br></pre></td></tr></table></figure></p>
+<h3 id="Nats_Server_working_with_heartbeat">Nats Server working with heartbeat</h3><p>Regarding to our team, heartbeat will work for nats server to promise that nats-server will always alive.<br>In terms of nats server, we’ve one useful command ‘nats-top’ to check whether which is working.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> nats-installation-directory</span><br><span class="line">./bin/nats-top</span><br></pre></td></tr></table></figure></p>
+<h2 id="Conclusion">Conclusion</h2><p>Debug with heartbeat is not only focus on heartbeat, but also know about environment context, research on arp protocol. In this means what we are doing is totally based on what we learned before such as arp, IP Interface. But we need to use what we learn in real work and also try it, fix it as quick as possible. To profit our team, even our company.</p>
 
         
 
@@ -201,13 +204,11 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="../../30/gem_example/">如何创建一个简单的gem包</a>
-              
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="../../../02/27/Cloud-Foundry-社区三月第一周周报/">Cloud Foundry 社区二月第四周周报</a>
+                <a href="../../../03/30/gem_example/">如何创建一个简单的gem包</a>
               
             </div>
           </div>
@@ -224,8 +225,8 @@
   
     <div class="comments" id="comments">
       
-        <div class="ds-thread" data-thread-key="2015/03/03/Cloud-Foundry-社区二月第四周周报/"
-             data-title="Cloud Foundry 社区三月第一周周报" data-url="http://clongbupt.github.io/2015/03/03/Cloud-Foundry-社区二月第四周周报/">
+        <div class="ds-thread" data-thread-key="2015/04/01/one_method_of_heartbeat_debugging/"
+             data-title="One Method of Heartbeat Debugging" data-url="http://clongbupt.github.io/2015/04/01/one_method_of_heartbeat_debugging/">
         </div>
 
       
@@ -313,7 +314,7 @@
 
     
       <div class="post-toc sidebar-panel-active">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prerequirements"><span class="nav-number">1.</span> <span class="nav-text">Prerequirements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment"><span class="nav-number">2.</span> <span class="nav-text">Environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug"><span class="nav-number">3.</span> <span class="nav-text">Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logs"><span class="nav-number">3.1.</span> <span class="nav-text">Logs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual_IP_Interface"><span class="nav-number">3.2.</span> <span class="nav-text">Virtual IP Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP"><span class="nav-number">3.3.</span> <span class="nav-text">ARP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SEND_ARP_&_TCPDUMP"><span class="nav-number">3.4.</span> <span class="nav-text">SEND_ARP & TCPDUMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nats_Server_working_with_heartbeat"><span class="nav-number">3.5.</span> <span class="nav-text">Nats Server working with heartbeat</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">4.</span> <span class="nav-text">Conclusion</span></a></li></ol>
       </div>
     
   </div>
