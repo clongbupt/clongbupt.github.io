@@ -1,0 +1,835 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="../../../../vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="../../../../vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="一个不会煮面的码农的小窝" />
+
+
+
+  <meta name="keywords" content="centos,micro-paas," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="../../../..//favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="本文主要是描述如何将单机版的CFV2移植到CentOS6上">
+<meta property="og:type" content="website">
+<meta property="og:title" content="micro-paas 在 CentOS6 上安装">
+<meta property="og:url" content="http://clongbupt.github.io/2013/07/21/cig6ozy1t0010daqk7faad73l/index.html">
+<meta property="og:site_name" content="clongbupt的小窝">
+<meta property="og:description" content="本文主要是描述如何将单机版的CFV2移植到CentOS6上">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="micro-paas 在 CentOS6 上安装">
+<meta name="twitter:description" content="本文主要是描述如何将单机版的CFV2移植到CentOS6上">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> micro-paas 在 CentOS6 上安装 | clongbupt的小窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50c15455e37f70aea674ff4a663eef27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">clongbupt的小窝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">好的，老婆。那我就开始吐槽了。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="../../../..//" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="../../../..//about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="../../../..//archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                micro-paas 在 CentOS6 上安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2013-07-21T00:00:00+09:00" content="2013-07-21">
+              2013-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="../../../../categories/云计算/" itemprop="url" rel="index">
+                    <span itemprop="name">云计算</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/07/21/cig6ozy1t0010daqk7faad73l/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>参考资料</p>
+<ul>
+<li><a href="https://github.com/youdao-cf/docs/tree/master/install" target="_blank" rel="external">有道CF组的CentOS 6安装文档</a></li>
+</ul>
+<h4 id="1-1_nats安装">1.1 nats安装</h4><p>build.rb步骤</p>
+<pre><code><span class="bullet">* </span>安装ruby   # 可以先尝试yum安装  而后尝试编译安装, 具体可以参考[<span class="link_label">网址</span>](<span class="link_url">https://github.com/limengyun2008/vcap/blob/yae/dev_setup/cookbooks/ruby/libraries/ruby_install.rb</span>)
+
+<span class="bullet">* </span>git clone http://git.ebcloud.com/paas-cf-v2/nats.git  # 自行寻找详细地址
+<span class="bullet">* </span>git checkout  #固定版本
+<span class="bullet">* </span>git submodule update --init   # 进行子模块更新
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 生成nats的配置文件
+
+<span class="keyword">*</span> ./bin/nats-server -d -c router.yml   <span class="comment"># 执行启动命令 -d命令是启动debug</span>
+</code></pre><h4 id="1-2_gorouter安装">1.2 gorouter安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> go语言环境    <span class="comment"># 推荐寻找yum安装的方式</span>
+
+<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/gorouter.git
+<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
+<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> ./bin/go install router/router   <span class="comment"># router构建</span>
+</code></pre><p>control.rb步骤</p>
+<pre><code>* 修改<span class="keyword">router</span>的配置文件
+
+* ./bin/<span class="keyword">router</span> -c <span class="keyword">router</span>.yml   <span class="comment"># 执行启动命令</span>
+</code></pre><h4 id="1-3_uaa安装">1.3 uaa安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> 安装java和maven环境
+
+<span class="keyword">*</span> 安装postgres数据库    <span class="comment"># 此处不推荐用yum安装, 安装的版本可能不对, 版本务必统一为9.2.4, 最好编译安装, 如果遇到问题再一起研究</span>
+<span class="keyword">*</span> 编译citext拓展  <span class="comment"># 这个CC数据库需要用到</span>
+
+<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/uaa.git
+<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
+<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> 删除bin/uaa里面的<span class="string">"-P vcap"</span>这一块，是对uaa启动代码进行hack
+<span class="keyword">*</span> 调整maven repo的位置
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 判断是否第一次执行
+    如果是 创建uaa数据库 并创建访问uaa数据库的root角色
+
+<span class="keyword">*</span> 修改uaa的配置文件
+
+<span class="keyword">*</span> bin/uaa   <span class="comment"># 执行启动命令</span>
+</code></pre><h4 id="1-4_cloud_controller安装">1.4 cloud_controller安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/cloud_controller_ng.git
+<span class="keyword">*</span> git checkout  <span class="comment">#固定版本</span>
+<span class="keyword">*</span> git submodule update --init   <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> 安装基础库，主要包括libxml2-dev libmysql libsqlite libpq 它们分别是xml/mysql/sqlte/postgres的ruby支持
+不过在redhat下面的支持库不是以lib为前缀， 尝试执行
+sudo yum -y install mysql-devel postgresql-devel sqlite-devel
+
+<span class="keyword">*</span> bundle install
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="comment">* 判断是否第一次执行</span>
+    如果是 创建<span class="keyword">CC</span>数据库 并创建访问<span class="keyword">CC</span>数据库的root角色
+
+<span class="comment">* 修改cloud_controller的配置文件</span>
+
+<span class="comment">* bin/cloud_controller   # 执行启动命令</span>
+</code></pre><h4 id="1-5_health_manager安装">1.5 health_manager安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/health_manager.git
+<span class="keyword">*</span> git checkout  <span class="comment"># 固定版本</span>
+
+<span class="keyword">*</span> bundle install
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 修改health_manager的配置文件
+
+<span class="keyword">*</span> 设置BUNDLE_GEMFILE的env
+<span class="keyword">*</span> ./health_manager   <span class="comment"># 执行启动命令 health_manager必须要到bin目录下执行, 不能通过bin/health_manager执行</span>
+</code></pre><h4 id="1-6_dea安装">1.6 dea安装</h4><p>build.rb步骤</p>
+<pre><code><span class="bullet">* </span>先安装warden 参考之前的ubuntu下的build和control   TODO  考虑平台问题debootstrap quota apparmor-profiles在CentOS下是什么？具体请参考[<span class="link_label">网址</span>](<span class="link_url">https://github.com/youdao-cf/docs/blob/master/install/warden.html.md</span>)
+
+<span class="bullet">* </span>git clone http://git.ebcloud.com/paas-cf-v2/dea_ng.git
+<span class="bullet">* </span>git checkout  #固定版本
+<span class="bullet">* </span>git submodule update --init   # 进行子模块更新
+
+<span class="bullet">* </span>bundle install  # 如果带false参数 表示当前项目下的Gemfile中的test/production等group不会被调用
+
+<span class="bullet">* </span>go/bin/go get launchpad.net/goyaml   # 这一步是干什么
+
+<span class="bullet">* </span>bundle exec rake dir<span class="emphasis">_server:install  # 安装directory_</span>server
+
+<span class="bullet">* </span>修改buildpack获取语言包的位置
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="keyword">*</span> 修改dea的配置文件
+
+<span class="keyword">*</span> bin/dea config_file   <span class="comment"># 之前需要先启动warden directory_server</span>
+</code></pre><h4 id="1-7_service安装">1.7 service安装</h4><p>build.rb步骤</p>
+<pre><code><span class="keyword">*</span> 预先安装mysql    <span class="comment"># 可以先用yum安装, 再编译安装  不过得注意版本统一</span>
+<span class="keyword">*</span> 预先安装redis    <span class="comment"># 编译安装即可</span>
+
+<span class="keyword">*</span> git clone http://git.ebcloud.com/paas-cf-v2/cf-services-release.git
+<span class="keyword">*</span> git checkout  <span class="comment"># 固定版本</span>
+<span class="keyword">*</span> git submodule update --init  <span class="comment"># 进行子模块更新</span>
+
+<span class="keyword">*</span> bundle install
+</code></pre><p>control.rb步骤</p>
+<pre><code><span class="bullet">* </span>修改mysql<span class="emphasis">_gateway 和 mysql_</span>node 的配置文件
+
+<span class="bullet">* </span>bin/mysql<span class="emphasis">_gateway config_</span>file
+<span class="bullet">* </span>bin/mysql<span class="emphasis">_node config_</span>file
+</code></pre></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/centos/" rel="tag">#centos</a>
+          
+            <a href="../../../../tags/micro-paas/" rel="tag">#micro-paas</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../20/cig6ozy2k001jdaqkmiyf19hd/" rel="next" title="Cloud Foundry PPT 总结">
+                <i class="fa fa-chevron-left"></i> Cloud Foundry PPT 总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../../08/05/cig6ozy1g000fdaqkqqi8kmt1/" rel="prev" title="Uaa Varz 相关">
+                Uaa Varz 相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2013/07/21/cig6ozy1t0010daqk7faad73l/"
+     data-title="micro-paas 在 CentOS6 上安装"
+     data-content=""
+     data-url="http://clongbupt.github.io/2013/07/21/cig6ozy1t0010daqk7faad73l/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-32">
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a></li>
+      <li><a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a></li>
+    </ul>
+  </div>
+</div>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2013/07/21/cig6ozy1t0010daqk7faad73l/"
+                   data-title="micro-paas 在 CentOS6 上安装" data-url="http://clongbupt.github.io/2013/07/21/cig6ozy1t0010daqk7faad73l/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/avatar.png" alt="clongbupt" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">clongbupt</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">一个不会煮面的码农的小窝</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="../../../..//archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/clongbupt/" target="_blank">
+                  <i class="fa fa-github fa-fw"></i> GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/clongbupt/" target="_blank">
+                  <i class="fa fa-facebook fa-fw"></i> Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/clongbupt" target="_blank">
+                  <i class="fa fa-twitter fa-fw"></i> Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/1085595672" target="_blank">
+                  <i class="fa fa-weibo fa-fw"></i> Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/clongbupt" target="_blank">
+                  <i class="fa fa-douban fa-fw"></i> DouBan
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="../../../../images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1_nats安装"><span class="nav-number">1.</span> <span class="nav-text">1.1 nats安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2_gorouter安装"><span class="nav-number">2.</span> <span class="nav-text">1.2 gorouter安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3_uaa安装"><span class="nav-number">3.</span> <span class="nav-text">1.3 uaa安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4_cloud_controller安装"><span class="nav-number">4.</span> <span class="nav-text">1.4 cloud_controller安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5_health_manager安装"><span class="nav-number">5.</span> <span class="nav-text">1.5 health_manager安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6_dea安装"><span class="nav-number">6.</span> <span class="nav-text">1.6 dea安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7_service安装"><span class="nav-number">7.</span> <span class="nav-text">1.7 service安装</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clongbupt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="../../../../vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"clongbupt"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="../../../../vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="../../../../js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="../../../../js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="../../../../js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="../../../../js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="../../../../vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="../../../../js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "../../../../images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
