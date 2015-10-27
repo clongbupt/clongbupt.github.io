@@ -1,0 +1,834 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="../../../../vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="../../../../vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="一个不会煮面的码农的小窝" />
+
+
+
+  <meta name="keywords" content="chef,knife," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="../../../..//favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="本文主要介绍knife工具。knife是一个命令行工具, 它提供了一个本地的chef库和Chef服务器.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="knife 命令">
+<meta property="og:url" content="http://clongbupt.github.io/2013/08/11/cig9jnwgi0017thqkuc7mko70/index.html">
+<meta property="og:site_name" content="clongbupt的小窝">
+<meta property="og:description" content="本文主要介绍knife工具。knife是一个命令行工具, 它提供了一个本地的chef库和Chef服务器.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="knife 命令">
+<meta name="twitter:description" content="本文主要介绍knife工具。knife是一个命令行工具, 它提供了一个本地的chef库和Chef服务器.">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> knife 命令 | clongbupt的小窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50c15455e37f70aea674ff4a663eef27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">clongbupt的小窝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">好的，老婆。那我就开始吐槽了。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="../../../..//" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="../../../..//about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="../../../..//archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                knife 命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2013-08-11T00:00:00+09:00" content="2013-08-11">
+              2013-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="../../../../categories/云计算/" itemprop="url" rel="index">
+                    <span itemprop="name">云计算</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/08/11/cig9jnwgi0017thqkuc7mko70/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="概述">概述</h2><p>knife是一个命令行工具, 它提供了一个本地的chef库和Chef服务器. Knife可以帮助用户进行如下管理：</p>
+<pre><code><span class="bullet">* </span>待部署机器节点Nodes
+<span class="bullet">* </span>Cookbook和Recipe
+<span class="bullet">* </span>Roles
+<span class="bullet">* </span>Json数据
+<span class="bullet">* </span>环境数据
+<span class="bullet">* </span>chef-client的部署安装
+<span class="bullet">* </span>查询chef-server上的索引数据
+</code></pre><p>Knife位于chef workstation和chef server之间. 通过REST API同Chef Server进行交互, 这个API也可以被chef client使用. Knife使用RBAC(Role-based authentication controls)基于角色的鉴权控制来跟Chef Server通信. Knife在workstation初始化的时候会被配置好, 配置文件是knife.rb 一般位于用户目录下的<code>~/.chef/knife.rb</code></p>
+<p>knife有很多内置的命令, 这些命令一起可以提供很多功能来设置一个机构的所有资源, 如cookbook, nodes, roles, data bags, environments 以及users.</p>
+<p>Knife插件可以拓展这些内置的命令.</p>
+<p>Knife主要有如下命令：</p>
+<pre><code><span class="bullet">* </span>bootstrap 该命令是执行bootstrap操作, 在目标系统上安装chef-client. boostrap操作必须有FQDN的支持
+
+<span class="bullet">* </span>client 该命令是用来管理API的客户端列表和与他们关联的RSA公钥. 通过它可以允许任何实体, 包括chef-client和Knife来访问Chef-Server
+
+<span class="bullet">* </span>configure 该命令用来创建knife.rb和client.rb文件. 用来配置chef workstation和chef nodes
+
+<span class="bullet">* </span>cookbook 该命令用来跟位于Chef Server和本地chef-repo上的cookbook交互
+
+<span class="bullet">* </span>cookbook site 该命令是用来跟位于https://cookbooks.opscode.com上的cookbook交互. 不过如果要写入权限的话得申请公用账号
+
+<span class="bullet">* </span>data bag 该命令是用来管理全局变量的JSON数据
+
+<span class="bullet">* </span>delete 该命令是用来删除Chef Server上的对象
+
+<span class="bullet">* </span>diff 该命令是用来比较Chef Server和本地之间的chef-repo的文件和目录的不同
+
+<span class="bullet">* </span>download 该命令是用来从Chef Server上下载roles, cookbooks, environments, nodes, data bags到当前工作目录
+
+<span class="bullet">* </span>environment 该命令是用来管理Chef Server上的一个机构的环境
+
+<span class="bullet">* </span>exec 该命令是用来执行Ruby脚本, 其上下文环境是chef-client. 该命令是执行一些当前的knife子命令还没有覆盖到的操作
+
+<span class="bullet">* </span>index rebuild 该命令是用来执行在Chef Server上重建搜索索引. 这个操作会花费一些时间
+
+<span class="bullet">* </span>list 该命令是用来查看Chef Server上的对象列表
+
+<span class="bullet">* </span>node 该命令是用来管理Chef Server上的node列表
+
+<span class="bullet">* </span>recipe list 该命令是用来查看Chef Server上所有的recipes. 此处可以通过简单的正则表达式来查看recipe. 
+
+<span class="bullet">* </span>role 该命令用来管理Chef Server上的跟nodes关联的各种角色
+
+<span class="bullet">* </span>search 该命令用来执行在Chef Server上执行一个搜索查询语句
+
+<span class="bullet">* </span>show 该命令是用来查看Chef Server一个或多个对象的详细信息
+
+<span class="bullet">* </span>ssh 该命令是用来在一个组织的一个或多个节点上执行SSH命令(支持并发), 这些节点可以是基于查询拿到的结果值
+
+<span class="bullet">* </span>status 该命令是用来呈现Chef Server的概要信息, 主要包括最近的成功运行的chef-client信息
+
+<span class="bullet">* </span>tag 该命令是用来在Chef Server上应用tags到nodes
+
+<span class="bullet">* </span>upload 该命令是用来从当前工作路径的chef-repo上传roles, cookbooks, environments和data bags到Chef Server.
+
+<span class="bullet">* </span>user 该命令是用来管理用户列表和他们的RSA公钥对
+</code></pre><p>Knife包含一系列的由动词组成的子命令: delete, deps, diff, download, edit, list, show, upload, xargs. 这些子命令允许Knife通过这些命令跟存储在chef-repo里或Chef Server内的任何对象进行交互. 这些子命令的重要的准则主要如下：</p>
+<pre><code>* 当命令用在chef-repo的对象上时, 命令首先是目标行为: 也就是上面的verb, 然后是对象所在的目录, 如(clients, cookbooks/,data_bags/, environments/, nodes, roles/, users/). 命令可以组成为: download cookbooks/
+
+* 当命令作用在外部的Chef <span class="built_in">Server</span>上时, 主要操作acls, groups, containers等
+
+* 当把Chef <span class="built_in">Server</span>看成是一个文件系统时, 可以将Chef <span class="built_in">Server</span>上的chef-repo看成是workstation上的一个chef-repo备份. Chef <span class="built_in">Server</span>会有跟本地一样的chef-repo. 在修改文件时, 只需要从Chef <span class="built_in">Server</span>上下载下来， 修改后，再上传上去
+
+* 运行命令的时候要注意上下文环境. 比如当在roles目录下shi, Knife会有上下文环境的嘻嘻你. 即输入knife show base.json和输入knife show roles/base.json显示的信息一样, 都是返回Chef <span class="built_in">Server</span>上的基本角色.
+
+* Chef <span class="built_in">Server</span>支持并发的请求，不过得基于每个指令的配置
+</code></pre><h2 id="Knife命令的基础参数">Knife命令的基础参数</h2><p>以下这些参数可以在knife的任何一个子命令中或插件中有效:</p>
+<p>-c CONFIG, —config CONFIG   设置配置文件</p>
+<p>—color  指明输出的颜色</p>
+<p>-d, —disable-editing   指明$EDITOR不会被使用, 呈现出最原始的数据</p>
+<p>—defaults 指明Knife将使用默认值, 而不是用户提供的</p>
+<p>-e EDITOR, —editor EDITOR 指明$EDITOR在所有交互命令中被使用</p>
+<p>-E ENVIRONMENT, —environment ENVIRONMENT 环境名. 当这个参数被添加时, 命令将只会运行被指明的环境名</p>
+<p>-f FILE_NAME, —file FILE_NAME 指明私有密钥会被存储的文件</p>
+<p>-F FORMAT, —format FORMAT  指明输出文件格式: summary(默认), text, json, yaml 和 pp</p>
+<p>-h, —help 显示help信息</p>
+<p>-k KEY, —key KEY Knife将会使用的跟Chef Server通信的私有密钥</p>
+<p>—no-color 指明输出不会有颜色区分</p>
+<p>-p PASSWORD, —password PASSWORD  用户密码</p>
+<p>—print-after 指明shuu会在解构后显示</p>
+<p>-s URL, —server-url URL Cher Server的URL地址</p>
+<p>-u USER, —user USER Knife用来登录Chef Server的用户名, 如果该参数被使用后，请确定带的key也是该用户的, 否则会失败</p>
+<p>-v, —version  Chef-Client的版本</p>
+<p>-V, —verbose  设置更多的输出 -VV是最大输出</p>
+<p>-y, —yes 指明会对所有的确认操作回答”yes”, Knife可以不用向用户确认</p>
+<h2 id="如何创建一个chef-repo">如何创建一个chef-repo</h2><p>主要有如下几个方法:</p>
+<pre><code><span class="bullet">* </span>从github上clone下来
+<span class="bullet">* </span>下载源码包, 然后放到本地的源码管理上
+</code></pre><p><strong>注意</strong> Opscode强烈建议在chef-repo目录上使用源码管理. Opscode使用git来管理所有东西, 包括cookbooks.</p>
+<h3 id="Clone">Clone</h3><p>clone的位置：<a href="https://github.com/opscode/chef-repo" target="_blank" rel="external">https://github.com/opscode/chef-repo</a></p>
+<p>大致步骤：</p>
+<pre><code><span class="bullet">1. </span>安装git
+<span class="bullet">2. </span>git clone https://github.com/opscode/chef-repo
+<span class="bullet">3. </span>如果使用其他源码管理工具, 可以手动移除.git目录,然后用其他工具对其进行初始化
+</code></pre><h3 id="下载">下载</h3><p>大致步骤：</p>
+<pre><code><span class="bullet">1. </span>wget http://github.com/opscode/chef-repo/tarball/master
+<span class="bullet">2. </span>tar -zxvf master
+<span class="bullet">3. </span>mv opscode-chef-repo-* chef-repo
+</code></pre><h3 id="TODO_待阅读资料">TODO 待阅读资料</h3><p>创建chef-repo  <a href="http://docs.opscode.com/essentials_repository_create.html" target="_blank" rel="external">http://docs.opscode.com/essentials_repository_create.html</a></p>
+<p>Knife的基础命令  <a href="http://docs.opscode.com/knife_common_options.html" target="_blank" rel="external">http://docs.opscode.com/knife_common_options.html</a></p>
+<p>使用Knife   <a href="http://docs.opscode.com/knife_using.html" target="_blank" rel="external">http://docs.opscode.com/knife_using.html</a> 正在阅读 未完成</p>
+<p>Knife的子命令介绍  <a href="http://docs.opscode.com/knife.html" target="_blank" rel="external">http://docs.opscode.com/knife.html</a>   重点弄明白如何下载一个cookbook, 如何自制一个cookbook, 如何向node节点传送一个cookbook</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/chef/" rel="tag">#chef</a>
+          
+            <a href="../../../../tags/knife/" rel="tag">#knife</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../05/cig9jnwg6000gthqkewmwejdo/" rel="next" title="Uaa Varz 相关">
+                <i class="fa fa-chevron-left"></i> Uaa Varz 相关
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../12/cig9jnwgt001rthqkojg1h0yk/" rel="prev" title="Chef相关知识">
+                Chef相关知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2013/08/11/cig9jnwgi0017thqkuc7mko70/"
+     data-title="knife 命令"
+     data-content=""
+     data-url="http://clongbupt.github.io/2013/08/11/cig9jnwgi0017thqkuc7mko70/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-32">
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a></li>
+      <li><a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a></li>
+    </ul>
+  </div>
+</div>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2013/08/11/cig9jnwgi0017thqkuc7mko70/"
+                   data-title="knife 命令" data-url="http://clongbupt.github.io/2013/08/11/cig9jnwgi0017thqkuc7mko70/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/avatar.png" alt="clongbupt" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">clongbupt</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">一个不会煮面的码农的小窝</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="../../../..//archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/clongbupt/" target="_blank">
+                  <i class="fa fa-github fa-fw"></i> GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/clongbupt/" target="_blank">
+                  <i class="fa fa-facebook fa-fw"></i> Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/clongbupt" target="_blank">
+                  <i class="fa fa-twitter fa-fw"></i> Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/1085595672" target="_blank">
+                  <i class="fa fa-weibo fa-fw"></i> Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/clongbupt" target="_blank">
+                  <i class="fa fa-douban fa-fw"></i> DouBan
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="../../../../images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knife命令的基础参数"><span class="nav-number">2.</span> <span class="nav-text">Knife命令的基础参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何创建一个chef-repo"><span class="nav-number">3.</span> <span class="nav-text">如何创建一个chef-repo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clone"><span class="nav-number">3.1.</span> <span class="nav-text">Clone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载"><span class="nav-number">3.2.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO_待阅读资料"><span class="nav-number">3.3.</span> <span class="nav-text">TODO 待阅读资料</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clongbupt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="../../../../vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"clongbupt"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="../../../../vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="../../../../js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="../../../../js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="../../../../js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="../../../../js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="../../../../vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="../../../../js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "../../../../images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
