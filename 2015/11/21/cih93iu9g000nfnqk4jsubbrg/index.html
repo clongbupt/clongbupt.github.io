@@ -1,0 +1,802 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="../../../../vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="../../../../vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="一个不会煮面的码农的小窝" />
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="../../../..//favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="今儿天气不错，起了个大早，为了大老远赶到公司参加一年一次的技术会议，名曰乐天技术会议。
+乐天技术会议跟世界大部分的技术会议一样：以技术的名义…恩，你懂的，耍牛氓，比如做个广告、秀下业务、搞个招聘。
+但是因为有Matz等嘉宾，所以每年对它还有个属于技术本身的期待。
+此外，今年还有计算机视觉方向的泰斗级人物——Takeo Kanade，以及设计了一个非线性模式匹配语言的80后新生小将——Egison">
+<meta property="og:type" content="website">
+<meta property="og:title" content="像外行一样思考————记2015乐天技术会议">
+<meta property="og:url" content="http://clongbupt.github.io/2015/11/21/cih93iu9g000nfnqk4jsubbrg/index.html">
+<meta property="og:site_name" content="clongbupt的小窝">
+<meta property="og:description" content="今儿天气不错，起了个大早，为了大老远赶到公司参加一年一次的技术会议，名曰乐天技术会议。
+乐天技术会议跟世界大部分的技术会议一样：以技术的名义…恩，你懂的，耍牛氓，比如做个广告、秀下业务、搞个招聘。
+但是因为有Matz等嘉宾，所以每年对它还有个属于技术本身的期待。
+此外，今年还有计算机视觉方向的泰斗级人物——Takeo Kanade，以及设计了一个非线性模式匹配语言的80后新生小将——Egison">
+<meta property="og:image" content="/img/rakuten_tech_conf_2015.png">
+<meta property="og:image" content="/img/with_matz.jpg">
+<meta property="og:image" content="/img/matz_egi.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="像外行一样思考————记2015乐天技术会议">
+<meta name="twitter:description" content="今儿天气不错，起了个大早，为了大老远赶到公司参加一年一次的技术会议，名曰乐天技术会议。
+乐天技术会议跟世界大部分的技术会议一样：以技术的名义…恩，你懂的，耍牛氓，比如做个广告、秀下业务、搞个招聘。
+但是因为有Matz等嘉宾，所以每年对它还有个属于技术本身的期待。
+此外，今年还有计算机视觉方向的泰斗级人物——Takeo Kanade，以及设计了一个非线性模式匹配语言的80后新生小将——Egison">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> 像外行一样思考————记2015乐天技术会议 | clongbupt的小窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50c15455e37f70aea674ff4a663eef27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">clongbupt的小窝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">好的，老婆。那我就开始吐槽了。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="../../../..//" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="../../../..//about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="../../../..//archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                像外行一样思考————记2015乐天技术会议
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-11-21T00:00:00+09:00" content="2015-11-21">
+              2015-11-21
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/21/cih93iu9g000nfnqk4jsubbrg/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><img src="/img/rakuten_tech_conf_2015.png" alt="2015乐天技术会议"></p>
+<p>今儿天气不错，起了个大早，为了大老远赶到公司参加一年一次的技术会议，名曰乐天技术会议。</p>
+<p>乐天技术会议跟世界大部分的技术会议一样：以技术的名义…恩，你懂的，耍牛氓，比如做个广告、秀下业务、搞个招聘。</p>
+<p>但是因为有Matz等嘉宾，所以每年对它还有个属于技术本身的期待。</p>
+<p>此外，今年还有计算机视觉方向的泰斗级人物——Takeo Kanade，以及设计了一个非线性模式匹配语言的80后新生小将——Egison</p>
+<h2 id="计算机视觉的有趣研究：从机器人、体育到药品">计算机视觉的有趣研究：从机器人、体育到药品</h2><p>Speaker : <a href="https://en.wikipedia.org/wiki/Takeo_Kanade" target="_blank" rel="external">Takeo Kanade</a></p>
+<blockquote>
+<p>木有找到百科简介，委屈读者大大勉力翻墙啦。</p>
+</blockquote>
+<p>金教授主要谈了他在计算机视觉领域近30年的各种研究或开发的有趣点。具体来说有如下几个：基于视觉的自主机器人、电子眼的视觉、生物活细胞追踪、人脸图像分析和水滴照明。（很晕对吧，别慌，我当时也是）</p>
+<p>关于演讲内容，金教授显然做过精心准备，考虑到普通听众的专业领域知识水平有限，介绍每个点基本围绕轶事经验、策略和研究哲学来介绍，听起来不怎么吃力。</p>
+<p>同时整个演讲，教授的哲学始终贯彻如一：像外行一样思考，像专家一样行动 (Think like an amateur, do as an expert)</p>
+<p>难忘的是，演讲中有不少段子，而情到处，金教授以70岁高龄，笑起来还像孩子一样</p>
+<p>演讲前还翻到一篇<a href="http://chijianqiang.baijia.baidu.com/" target="_blank" rel="external">池建强</a>介绍其著书《像外行一样思考》的文章————<a href="http://chijianqiang.baijia.baidu.com/article/40759" target="_blank" rel="external">你需要多久才能变成一个傻瓜</a></p>
+<blockquote>
+<p>作者是美国卡耐基·梅隆大学（CMU）的计算机科学和机器人研究所的金出武雄教授。金教授的学术固然在同行眼里高山仰止，行文也极为流畅。关于写作，他的观点是，无论写科普还是论文，都要像创作小说那样写出引人入胜的独特观点。这一点和 MacTalk 秉承的写作原则一脉相承。</p>
+<p>金教授在1980年的春天从日本到了美国，开始了自己的学术研究生涯。他信誓旦旦的对自己的妻子说：咱们只去五年。三十年过去了，伊带着这个弥天大谎参与了人工智能和机器人领域相关的各种研究，工作兢兢业业，为美国人民的人工智能事业做出了卓越的贡献，这包括：自动驾驶汽车，能够进行火星探查和火山口探查的机器人，自动驾驶直升飞机，虚拟现实和三维视频，等。</p>
+</blockquote>
+<p>对教授背景或研究感兴趣的童鞋们拿走不谢</p>
+<blockquote>
+<p><a href="http://www.ri.cmu.edu/news_view.html?news_id=164&amp;menu_id=239" target="_blank" rel="external">Takeo Kanade resume in CMU</a></p>
+<p><a href="http://www.ri.cmu.edu/events/tk60/" target="_blank" rel="external">TK60</a></p>
+<p><a href="https://scholar.google.nl/citations?user=LQ87h3sAAAAJ&amp;hl=nl" target="_blank" rel="external">h-index</a></p>
+</blockquote>
+<h2 id="如何设计编程语言">如何设计编程语言</h2><p>Speaker : Matz</p>
+<p>Matz一如既往，带来自己对于编程，对于程序员的新思考。去年是<a href="https://ruby-china.org/topics/22263" target="_blank" rel="external">从Ruby中学到的经验</a>，今年则是《如何设计编程语言》。</p>
+<ol>
+<li>英语、日语、Java、Ruby都是语言，本质一样</li>
+<li>没有人特意地去设计语言</li>
+<li>你设计过语言吗？每个人都设计过语言，比如你设计过Interface、API、文档等等</li>
+<li>Programming is a process of design your own disable —- (The) Dave Thomas</li>
+<li>Coc (Convention over Configuration) 约定大于配置</li>
+<li>DRY (Don’t repeat yourself) 避免重复</li>
+<li>Avoid Guessing Games</li>
+<li>Avoid Alpha syndrome</li>
+</ol>
+<p>这次因为时间的关系，Matz讲的没有上次那么多，那么细，但很直白、很容易GET到他的点。那些年，那些优雅那些坑。</p>
+<p>最后，补上去年没能上的照片(右一)，回想当年我还…没现在这么老呀。</p>
+<p><img src="/img/with_matz.jpg" alt="与Matz的合照_2014年"></p>
+<h2 id="Philosophy_behind_the_Creation_of_Egison">Philosophy behind the Creation of Egison</h2><p>Speaker : <a href="http://www.egison.org/~egi/" target="_blank" rel="external">Satoshi Egi</a></p>
+<p>先上个问题，会后有好事者问Egi，目前公司有人用Egison么？ 答曰：目前只有我。泪奔…</p>
+<p>学Egi不难，目测官网既有入门手册，又有交互界面，还有Cheatsheet，更别说还有文档和源码。</p>
+<p>然后…就没有然后了…</p>
+<p>演讲主要有三个部分：(果然Egi还年轻，07年才入读大学，只会总-分-总)</p>
+<ul>
+<li>计算机科学中的各种抽象表示</li>
+<li>创造一种新的抽象表示的过程</li>
+<li>Egison的诞生历史</li>
+</ul>
+<blockquote>
+<p>住： Representation，暂翻译为 抽象表示。 求更好的翻译，请直接留言。</p>
+</blockquote>
+<h3 id="计算机科学中的抽象表示">计算机科学中的抽象表示</h3><p>举了很多栗子：如数字标记、数学表达式、化学公式、编程语言等等都是人类对自然现象的一种抽象表示。</p>
+<p>同一种表示也有很多种：如数字标记就可以分阿拉伯数字、罗马数字、中文数字等等。不过根据语言、地域区分的不同表示，仅仅影响到可读性，在功能上是一样的。</p>
+<h3 id="创造一种新的抽象表示的过程">创造一种新的抽象表示的过程</h3><p>整个过程沿着这个过程：大自然 -&gt; 人类直觉 -&gt; 抽象表示</p>
+<p>下面举例分析</p>
+<p>n = a + b <em> 10^1 + c </em> 10^2 + … + z * 10^r</p>
+<ul>
+<li>识别字符和数字, 如a-z, 1-10</li>
+<li>识别加号</li>
+<li><p>识别乘号</p>
+</li>
+<li><p>表达式中的所有数字是唯一的</p>
+</li>
+</ul>
+<p>如何设计</p>
+<ul>
+<li>给每个数字一个名字</li>
+<li>造一个数值系统</li>
+<li>造一个0作为占位符</li>
+</ul>
+<h2 id="Egison的诞生历史">Egison的诞生历史</h2><p>Egison作为一种语言，主要致力于更好地解决非线性的模式匹配问题，所以他不是一门大而全的语言，更像一种Lisp方言。</p>
+<p>余下参考<a href="https://ruby-china.org/luikore" target="_blank" rel="external">luikore</a>在<a href="https://ruby-china.org/topics/24127" target="_blank" rel="external">Egison: 非线性模式匹配的Lisp方言</a>中的解释：</p>
+<blockquote>
+<ol>
+<li>Egison支持的matcher主要是三种：List、Multiset、Set</li>
+<li>Egison的模式构造器主要是：cons，join、snoc、nioj</li>
+<li>模式运算: | (或), &amp; (与), ^ (非)</li>
+</ol>
+</blockquote>
+<p><img src="/img/matz_egi.jpg" alt="Matz和Egi"></p>
+<h2 id="参考资料">参考资料</h2><blockquote>
+<p><a href="http://www.egison.org/blog/RTC2015.html" target="_blank" rel="external">Egison’s slides</a></p>
+<p><a href="https://ruby-china.org/topics/24127" target="_blank" rel="external">Egison: 非线性模式匹配的Lisp方言</a></p>
+</blockquote>
+<p>注: 15年官方资料还没公布，更新后会补充发布</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../../08/09/cih93iu9b000efnqk79mhs7jy/" rel="next" title="富士山归来">
+                <i class="fa fa-chevron-left"></i> 富士山归来
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/11/21/cih93iu9g000nfnqk4jsubbrg/"
+     data-title="像外行一样思考————记2015乐天技术会议"
+     data-content=""
+     data-url="http://clongbupt.github.io/2015/11/21/cih93iu9g000nfnqk4jsubbrg/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-32">
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a></li>
+      <li><a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a></li>
+    </ul>
+  </div>
+</div>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/21/cih93iu9g000nfnqk4jsubbrg/"
+                   data-title="像外行一样思考————记2015乐天技术会议" data-url="http://clongbupt.github.io/2015/11/21/cih93iu9g000nfnqk4jsubbrg/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/avatar.png" alt="clongbupt" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">clongbupt</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">一个不会煮面的码农的小窝</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="../../../..//archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/clongbupt/" target="_blank">
+                  <i class="fa fa-github fa-fw"></i> GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/clongbupt/" target="_blank">
+                  <i class="fa fa-facebook fa-fw"></i> Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/clongbupt" target="_blank">
+                  <i class="fa fa-twitter fa-fw"></i> Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/1085595672" target="_blank">
+                  <i class="fa fa-weibo fa-fw"></i> Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/clongbupt" target="_blank">
+                  <i class="fa fa-douban fa-fw"></i> DouBan
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="../../../../images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机视觉的有趣研究：从机器人、体育到药品"><span class="nav-number">1.</span> <span class="nav-text">计算机视觉的有趣研究：从机器人、体育到药品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何设计编程语言"><span class="nav-number">2.</span> <span class="nav-text">如何设计编程语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Philosophy_behind_the_Creation_of_Egison"><span class="nav-number">3.</span> <span class="nav-text">Philosophy behind the Creation of Egison</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机科学中的抽象表示"><span class="nav-number">3.1.</span> <span class="nav-text">计算机科学中的抽象表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创造一种新的抽象表示的过程"><span class="nav-number">3.2.</span> <span class="nav-text">创造一种新的抽象表示的过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Egison的诞生历史"><span class="nav-number">4.</span> <span class="nav-text">Egison的诞生历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clongbupt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="../../../../vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"clongbupt"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="../../../../vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="../../../../js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="../../../../js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="../../../../js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="../../../../js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="../../../../vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="../../../../js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "../../../../images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

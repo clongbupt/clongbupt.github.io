@@ -1,0 +1,759 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+  <meta name="google-site-verification" content="VvyjvVXcJQa0QklHipu6pwm2PJGnnchIqX7s5JbbT_0" />
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="../../../../vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="../../../../vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="../../../../css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="一个不会煮面的码农的小窝" />
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="../../../..//favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="gem_example通过rubygem内置的工具可以轻松地把代码打包成gem。下面创建一个简单的gem_example案例.
+开始首先，新建一个目录，并创建一个gem_example.ruby和gem_example.gemspec的文件，具体的目录结构如下:123-gem_example.gemspec`--lib    `--gem_example.rb
+注意
+
+代码一般放在lib目录中
+约">
+<meta property="og:type" content="website">
+<meta property="og:title" content="如何创建一个简单的gem包">
+<meta property="og:url" content="http://clongbupt.github.io/2015/03/30/cih93iu9t001ffnqkpf1uobf1/index.html">
+<meta property="og:site_name" content="clongbupt的小窝">
+<meta property="og:description" content="gem_example通过rubygem内置的工具可以轻松地把代码打包成gem。下面创建一个简单的gem_example案例.
+开始首先，新建一个目录，并创建一个gem_example.ruby和gem_example.gemspec的文件，具体的目录结构如下:123-gem_example.gemspec`--lib    `--gem_example.rb
+注意
+
+代码一般放在lib目录中
+约">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何创建一个简单的gem包">
+<meta name="twitter:description" content="gem_example通过rubygem内置的工具可以轻松地把代码打包成gem。下面创建一个简单的gem_example案例.
+开始首先，新建一个目录，并创建一个gem_example.ruby和gem_example.gemspec的文件，具体的目录结构如下:123-gem_example.gemspec`--lib    `--gem_example.rb
+注意
+
+代码一般放在lib目录中
+约">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> 如何创建一个简单的gem包 | clongbupt的小窝 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?50c15455e37f70aea674ff4a663eef27";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">clongbupt的小窝</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">好的，老婆。那我就开始吐槽了。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="../../../..//" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="../../../..//about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="../../../..//archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何创建一个简单的gem包
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-03-30T00:00:00+09:00" content="2015-03-30">
+              2015-03-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/cih93iu9t001ffnqkpf1uobf1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="gem_example">gem_example</h2><p>通过<code>rubygem</code>内置的工具可以轻松地把代码打包成<code>gem</code>。下面创建一个简单的<code>gem_example</code>案例.</p>
+<h3 id="开始">开始</h3><p>首先，新建一个目录，并创建一个<code>gem_example.ruby</code>和<code>gem_example.gemspec</code>的文件，具体的目录结构如下:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-gem_example.gemspec</span><br><span class="line">`<span class="comment">--lib</span></span><br><span class="line">    `<span class="comment">--gem_example.rb</span></span><br></pre></td></tr></table></figure></p>
+<p><em>注意</em></p>
+<ol>
+<li>代码一般放在<code>lib</code>目录中</li>
+<li>约定俗成，<code>lib</code>内有一个文件的文件名与<code>gem</code>名称一样</li>
+</ol>
+<p>下面开始在<code>lib/gem_example.rb</code>中编写一点内容，具体如下:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi</span><br><span class="line">    puts <span class="string">"Hello world!"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>最后，介绍一下<code>gemspec</code>。其内部主要定义改<code>gem</code>的版本、依赖等。示例如下：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.<span class="built_in">new</span> <span class="built_in">do</span> |s|</span><br><span class="line">  s.name              = <span class="string">'gem_example'</span></span><br><span class="line">  s.<span class="built_in">version</span>           = <span class="string">'0.0.1'</span></span><br><span class="line">  s.<span class="built_in">date</span>              = <span class="string">'2015-02-24'</span></span><br><span class="line">  s.summary           = <span class="string">"An Simple Gem Example!"</span></span><br><span class="line">  s.description       = <span class="string">"A simple example of introducing how to use gem"</span></span><br><span class="line">  s.authors           = [<span class="string">"Changlong Wu"</span>]</span><br><span class="line">  s.email             = <span class="string">'clongbupt@gmail.com'</span></span><br><span class="line">  s.<span class="built_in">files</span>             = [<span class="string">"lib/gem_example.rb"</span>, <span class="string">"lib/gem_example/translator.rb"</span>]</span><br><span class="line">  s.executables &lt;&lt; <span class="string">'gem_example'</span> </span><br><span class="line">  s.homepage          = </span><br><span class="line">    <span class="string">'http://github.com/clongbupt/gem_example'</span></span><br><span class="line">  s.license           = <span class="string">'MIT'</span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<p><code>gem build</code>会读取<code>gemspec</code>，并以此标识和分发<code>gem</code>。具体命令如下：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">gem</span> build gem_example.gemspec</span><br></pre></td></tr></table></figure></p>
+<p>控制台输出的结果为:<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ gem build gem_example.gemspec</span><br><span class="line">  Successfully built RubyGem</span><br><span class="line">  Name: gem_example</span><br><span class="line">  <span class="keyword">Version</span>: <span class="number">0.0</span><span class="number">.1</span></span><br><span class="line">  <span class="keyword">File</span>: gem_example-<span class="number">0.0</span><span class="number">.1</span>.gem</span><br></pre></td></tr></table></figure></p>
+<p>在<code>irb</code>中可以对其进行测试。示例如下：<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">irb </span><br><span class="line"><span class="built_in">require</span> ‘gem_example’ </span><br><span class="line"><span class="literal">true</span> </span><br><span class="line">GemExample.hi</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为<code>hello world</code>。</p>
+<h3 id="发布">发布</h3><p>发布之前，首先要配置登录到<code>rubygem</code>的信息:<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; curl -u yourusername_on_rubygem</span><br><span class="line"><span class="symbol">https:</span>/<span class="regexp">/rubygems.org/api</span><span class="regexp">/v1/api</span>_key.yaml &gt;</span><br><span class="line">~<span class="regexp">/.gem/credentials</span>; chmod <span class="number">0600</span> ~<span class="regexp">/.gem/credentials</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Enter </span>host password <span class="keyword">for</span> user <span class="string">'yourusername_on_rubygem'</span><span class="symbol">:</span></span><br></pre></td></tr></table></figure></p>
+<p>如果系统限制等,无法使用<code>curl</code>，<code>openssl</code>等,可以通过浏览器访问链接<code>https://rubygems.org/api/v1/api_key.yaml</code>,它会让你登录的,<br>成功则会下载一个认证信息文件<code>api_key.yaml</code>,完了直接把它放到<code>~/.gem/</code>文件夹下,重命名为<strong>credentials</strong><br>一切设置妥当之后,就可以<code>push</code>你的<code>gem</code>了。具体示例如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gem push hola-<span class="number">0.0</span>.<span class="number">0</span><span class="class">.gem</span></span><br><span class="line">    Pushing gem to RubyGems<span class="class">.org</span>...</span><br><span class="line">    Successfully registered gem: hola (<span class="number">0.0</span>.<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>上传成功后，你就可以通过下面命令<code>check</code>到自己的<code>gem</code>了:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="type">list</span> -r gem_example</span><br></pre></td></tr></table></figure></p>
+<p>然后尝试安装:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem <span class="keyword">install</span> gem_example</span><br></pre></td></tr></table></figure></p>
+<h3 id="进阶">进阶</h3><p>修改文件<code>lib/gem_example.rb</code>中的内容为：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi(language = <span class="string">"english"</span>)</span><br><span class="line">    translator = <span class="constant">Translator</span>.new(language)</span><br><span class="line">    translator.hi</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample::Translator</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>initialize(language)</span><br><span class="line">    <span class="variable">@language</span> = language</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>hi</span><br><span class="line">    <span class="keyword">case</span> <span class="variable">@language</span></span><br><span class="line">    <span class="keyword">when</span> <span class="string">"spanish"</span></span><br><span class="line">      <span class="string">"hola mundo"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="string">"hello world"</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>其中，可以将<code>Translator</code>进行拆分。一般推荐把目录结构调整为如示例所示样子:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">├── gem_example<span class="class">.gemspec</span></span><br><span class="line">└── lib</span><br><span class="line">    ├── gem_example</span><br><span class="line">    │   └── translator<span class="class">.rb</span></span><br><span class="line">    └── gem_example.rb</span><br></pre></td></tr></table></figure></p>
+<p>接着，修改<code>lib/gem_example.rb</code>文件:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'lib/translator'</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi(language = <span class="string">"english"</span>)</span><br><span class="line">        translator = <span class="constant">Translator</span>.new(language)</span><br><span class="line">        translator.hi</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p><em>注意</em>同时还需要修改<code>gemspec</code>文件, 把新添加的目录和文件索引进去, 否则打包时无法找到新文件。<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.<span class="built_in">new</span> <span class="built_in">do</span> |s|</span><br><span class="line">  s.name              = <span class="string">'gem_example'</span></span><br><span class="line">  s.<span class="built_in">version</span>           = <span class="string">'0.0.1'</span></span><br><span class="line">  s.<span class="built_in">date</span>              = <span class="string">'2015-02-24'</span></span><br><span class="line">  s.summary           = <span class="string">"An Simple Gem Example!"</span></span><br><span class="line">  s.description       = <span class="string">"A simple example of introducing how to use gem"</span></span><br><span class="line">  s.authors           = [<span class="string">"Changlong Wu"</span>]</span><br><span class="line">  s.email             = <span class="string">'clongbupt@gmail.com'</span></span><br><span class="line">  s.<span class="built_in">files</span>             = [<span class="string">"lib/gem_example.rb"</span>, <span class="string">"lib/gem_example/translator.rb"</span>]</span><br><span class="line">  s.executables &lt;&lt; <span class="string">'gem_example'</span> </span><br><span class="line">  s.homepage          = </span><br><span class="line">    <span class="string">'http://github.com/clongbupt/gem_example'</span></span><br><span class="line">  s.license           = <span class="string">'MIT'</span></span><br><span class="line"><span class="function"><span class="keyword">end</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="添加可执行文件">添加可执行文件</h3><p>在与<code>lib/</code>目录同级的地方新建<code>bin/</code>目录。然后在<code>gemspec</code>里添加他们。具体操作如下：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mkdir</span> bin</span><br><span class="line">touch bin/gem_example</span><br><span class="line"><span class="keyword">chmod</span> a+<span class="keyword">x</span> bin/gem_example</span><br></pre></td></tr></table></figure></p>
+<p>在文件中添加如下代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env ruby</span><br><span class="line"></span><br><span class="line">require <span class="string">'gem_example'</span></span><br><span class="line">puts GemExample.<span class="function"><span class="title">hi</span><span class="params">(ARGV[<span class="number">0</span>])</span></span></span><br></pre></td></tr></table></figure></p>
+<p>之后在<code>gemspec</code>文件里添加可执行的文件配置说明:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s<span class="class">.name</span>        = <span class="string">'gem_example'</span></span><br><span class="line">s<span class="class">.version</span>     = <span class="string">'0.0.1'</span></span><br><span class="line">s<span class="class">.executables</span> &lt;&lt; <span class="string">'gem_example'</span>  #可执行文件</span><br></pre></td></tr></table></figure></p>
+<h3 id="测试">测试</h3><p>TEST YOUR GEM!<br>一般会用<code>TEST::Unit</code>。它是<code>ruby</code>内置的测试框架，有很多的教程在网上可以找到。<br>首先创建文件<code>Rakefile</code>和文件夹<code>test</code>，如下所示：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Rakefile</span><br><span class="line">├── bin</span><br><span class="line">│   └── gem_example</span><br><span class="line">├── gem_example<span class="class">.gemspec</span></span><br><span class="line">├── lib</span><br><span class="line">│   ├── gem_example</span><br><span class="line">│   │   └── translator<span class="class">.rb</span></span><br><span class="line">│   └── gem_example<span class="class">.rb</span></span><br><span class="line">└── test</span><br><span class="line">    └── test_gem_example.rb</span><br></pre></td></tr></table></figure></p>
+<p>编辑test_gem_example.rb。<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">'test/unit'</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">'gem_example'</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExampleTest</span> <span class="inheritance">&lt; <span class="parent">Test::Unit</span></span>::<span class="title">TestCase</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>test_english_hello</span><br><span class="line">    assert_equal <span class="string">"hello world"</span>,</span><br><span class="line">      <span class="constant">GemExample</span>.hi(<span class="string">"english"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>test_any_hello</span><br><span class="line">    assert_equal <span class="string">"hello world"</span>,</span><br><span class="line">      <span class="constant">GemExample</span>.hi(<span class="string">"ruby"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>test_spanish_hello</span><br><span class="line">    assert_equal <span class="string">"hola mundo"</span>,</span><br><span class="line">      <span class="constant">GemExample</span>.hi(<span class="string">"spanish"</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<p>在<code>Rakefile</code>里添加一些简单的测试用例。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">require <span class="string">'rake/testtask'</span></span><br><span class="line"></span><br><span class="line"><span class="constant">Rake:</span><span class="symbol">:TestTask</span>.new <span class="keyword">do</span> |t|</span><br><span class="line">  t.libs &lt;&lt; <span class="string">'test'</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">desc <span class="string">"Run tests"</span></span><br><span class="line">task <span class="symbol">:default</span> =&gt; <span class="symbol">:test</span></span><br></pre></td></tr></table></figure></p>
+<p>之后执行命令<code>rake test</code>或者直接<code>rake</code>，执行结果如下：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">% rake <span class="keyword">test</span></span><br><span class="line">Loaded suite</span><br><span class="line">Started</span><br><span class="line">....</span><br><span class="line">Finished <span class="keyword">in</span> 0.000943 seconds.</span><br><span class="line"></span><br><span class="line">4 tests, 4 assertions, 0 failures, 0 errors, 0 skips</span><br><span class="line"></span><br><span class="line"><span class="keyword">Test</span> <span class="keyword">run</span> options: --seed 15331</span><br></pre></td></tr></table></figure></p>
+<h2 id="文档">文档</h2><p>大部分的gem会使用默认内建RDoc来生成文档.有很多的教程可以学习.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GemExample</span></span></span><br><span class="line">  <span class="comment"># Say hi to the world!</span></span><br><span class="line">  <span class="comment">#</span></span><br><span class="line">  <span class="comment"># Example:</span></span><br><span class="line">  <span class="comment">#   &gt;&gt; Hola.hi("spanish")</span></span><br><span class="line">  <span class="comment">#   =&gt; hola mundo</span></span><br><span class="line">  <span class="comment">#</span></span><br><span class="line">  <span class="comment"># Arguments:</span></span><br><span class="line">  <span class="comment">#   language: (String)</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span><span class="keyword">self</span>.hi(language = <span class="string">"english"</span>)</span><br><span class="line">    translator = <span class="constant">Translator</span>.new(language)</span><br><span class="line">    puts translator.hi</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2><blockquote>
+<ol>
+<li><a href="http://guides.rubygems.org/gems-with-extensions/" target="_blank" rel="external">http://guides.rubygems.org/gems-with-extensions/</a> </li>
+<li><a href="http://qiita.com/xiangzhuyuan/items/7d3659bcebbaf52a1f12" target="_blank" rel="external">http://qiita.com/xiangzhuyuan/items/7d3659bcebbaf52a1f12</a></li>
+</ol>
+</blockquote>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../../03/cih93iua5001vfnqkswjtvhbd/" rel="next" title="Cloud Foundry 社区三月第一周周报">
+                <i class="fa fa-chevron-left"></i> Cloud Foundry 社区三月第一周周报
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../../04/01/cih93iu9i000ofnqk35fznkd8/" rel="prev" title="One Method of Heartbeat Debugging">
+                One Method of Heartbeat Debugging <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/03/30/cih93iu9t001ffnqkpf1uobf1/"
+     data-title="如何创建一个简单的gem包"
+     data-content=""
+     data-url="http://clongbupt.github.io/2015/03/30/cih93iu9t001ffnqkpf1uobf1/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-32">
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat"></a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo"></a></li>
+      <li><a class="ds-facebook" href="javascript:void(0);" data-service="facebook"></a></li>
+    </ul>
+  </div>
+</div>
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/03/30/cih93iu9t001ffnqkpf1uobf1/"
+                   data-title="如何创建一个简单的gem包" data-url="http://clongbupt.github.io/2015/03/30/cih93iu9t001ffnqkpf1uobf1/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/img/avatar.png" alt="clongbupt" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">clongbupt</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">一个不会煮面的码农的小窝</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="../../../..//archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">标签</span>
+              
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/clongbupt/" target="_blank">
+                  <i class="fa fa-github fa-fw"></i> GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://facebook.com/clongbupt/" target="_blank">
+                  <i class="fa fa-facebook fa-fw"></i> Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/clongbupt" target="_blank">
+                  <i class="fa fa-twitter fa-fw"></i> Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.weibo.com/u/1085595672" target="_blank">
+                  <i class="fa fa-weibo fa-fw"></i> Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/clongbupt" target="_blank">
+                  <i class="fa fa-douban fa-fw"></i> DouBan
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="../../../../images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gem_example"><span class="nav-number">1.</span> <span class="nav-text">gem_example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始"><span class="nav-number">1.1.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布"><span class="nav-number">1.2.</span> <span class="nav-text">发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进阶"><span class="nav-number">1.3.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加可执行文件"><span class="nav-number">1.4.</span> <span class="nav-text">添加可执行文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">1.5.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档"><span class="nav-number">2.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clongbupt</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="../../../../vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"clongbupt"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+  
+  <script type="text/javascript" src="../../../../vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="../../../../js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="../../../../js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="../../../../vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="../../../../js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="../../../../js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="../../../../vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="../../../../js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "../../../../images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
